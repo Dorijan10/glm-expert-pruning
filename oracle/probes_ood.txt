@@ -1,0 +1,5 @@
+Explain how a B-tree stays balanced during insertion.
+Summarize the main causes of the French Revolution.
+Write a short paragraph describing a rainy morning in a coastal town.
+Explain the difference between weather and climate to a ten year old.
+What were the main consequences of the invention of the printing press?

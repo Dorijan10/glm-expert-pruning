@@ -1,0 +1,8 @@
+Write a C++ function that reverses a singly linked list in place, and explain the pointer updates.
+Explain how to convert a naive matrix multiply into a tiled version that reuses data from shared memory.
+Given a loop that sums an array of floats, describe two changes that let the compiler vectorize it.
+Write a Python function that computes pairwise Euclidean distances between two sets of points without explicit loops.
+Explain why an atomic increment in a hot loop can destroy multithreaded scaling, and give an alternative.
+Describe how to tell whether a kernel is memory-bound or compute-bound from measurements alone.
+Write a function that merges two sorted vectors into one sorted vector, and state its complexity.
+Explain what happens to numerical results when floating point additions are reassociated.

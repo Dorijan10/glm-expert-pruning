@@ -1,0 +1,3607 @@
+// ==== common/build-info.h ====
+#pragma once
+
+int llama_build_number(void);
+
+const char * llama_commit(void);
+const char * llama_compiler(void);
+
+const char * llama_build_target(void);
+const char * llama_build_info(void);
+
+void llama_print_build_info(void);
+
+// ==== common/chat-auto-parser-helpers.cpp ====
+#include "chat-auto-parser-helpers.h"
+
+#include "chat-auto-parser.h"
+#include "chat-peg-parser.h"
+#include "chat.h"
+#include "log.h"
+#include "nlohmann/json.hpp"
+#include "peg-parser.h"
+
+#include <cctype>
+#include <numeric>
+
+using json = nlohmann::ordered_json;
+
+std::string trim_whitespace(const std::string & str) {
+    size_t start = 0;
+    while (start < str.length() && std::isspace(static_cast<unsigned char>(str[start]))) {
+        start++;
+    }
+
+    if (start == str.length()) {
+        return "";
+    }
+
+    size_t end = str.length() - 1;
+    while (end > start && std::isspace(static_cast<unsigned char>(str[end]))) {
+        end--;
+    }
+
+    return str.substr(start, end - start + 1);
+}
+
+std::string trim_leading_whitespace(const std::string & str) {
+    size_t start = 0;
+    while (start < str.length() && std::isspace(static_cast<unsigned char>(str[start]))) {
+        start++;
+    }
+
+    return str.substr(start);
+}
+
+std::string trim_trailing_whitespace(const std::string & str) {
+    if (str.empty()) {
+        return "";
+    }
+
+    size_t end = str.length() - 1;
+    while (end > 0 && std::isspace(static_cast<unsigned char>(str[end]))) {
+        end--;
+    }
+
+    // If first char is also whitespace, return empty string
+    if (end == 0 && std::isspace(static_cast<unsigned char>(str[0]))) {
+        return "";
+    }
+
+    return str.substr(0, end + 1);
+}
+
+std::string trim_trailing_newlines(const std::string & str) {
+    size_t end = str.length();
+    while (end > 0 && str[end - 1] == '\n') {
+        end--;
+    }
+
+    return str.substr(0, end);
+}
+
+static size_t common_prefix_len(const std::string & left, const std::string & right) {
+    size_t prefix_len = 0;
+    size_t min_len    = std::min(left.length(), right.length());
+    while (prefix_len < min_len && left[prefix_len] == right[prefix_len]) {
+        prefix_len++;
+    }
+    return prefix_len;
+}
+
+static size_t common_suffix_len(const std::string & left, const std::string & right) {
+    size_t suffix_len = 0;
+    size_t min_len    = std::min(left.length(), right.length());
+    while (suffix_len < min_len && left[left.length() - 1 - suffix_len] == right[right.length() - 1 - suffix_len]) {
+        suffix_len++;
+    }
+    return suffix_len;
+}
+
+diff_split calculate_diff_split(const std::string & left, const std::string & right) {
+    diff_split result;
+
+    auto left_seg = segmentize_markers(left);
+    auto right_seg = segmentize_markers(right);
+
+    if (left_seg.empty()) {
+        result.right = right;
+        return result;
+    }
+    if (right_seg.empty()) {
+        result.left = left;
+        return result;
+    }
+
+    auto left_start = left_seg.begin();
+    auto left_end = --left_seg.end();
+    auto right_start = right_seg.begin();
+    auto right_end = --right_seg.end();
+
+    auto test = [&] () {
+        return left_start != left_end && right_start != right_end;
+    };
+
+    bool left_fully_consumed = false;
+    bool right_fully_consumed = false;
+
+    while (test()) {
+        bool advanced = false;
+        if (*left_start == *right_start) {
+            result.prefix.append(left_start->value);
+            left_start++;
+            right_start++;
+            advanced = true;
+        }
+        if (*left_end == *right_end) {
+            result.suffix = left_end->value + result.suffix;
+            if (left_start != left_end) {
+                left_end--;
+            } else {
+                left_fully_consumed = true;
+            }
+            if (right_start != right_end) {
+                right_end--;
+            } else {
+                right_fully_consumed = true;
+            }
+            advanced = true;
+        }
+        if (!advanced) {
+            break;
+        }
+    }
+
+    if (left_start == left_end && right_start != right_end) {
+        if (*left_start == *right_end) {
+            result.suffix = right_end->value + result.suffix;
+            right_end--;
+            left_fully_consumed = true;
+        } else if (*left_start == *right_start) {
+            result.prefix.append(right_start->value);
+            right_start++;
+            left_fully_consumed = true;
+        }
+    } else if (right_start == right_end && left_start != left_end) {
+        if (*left_end == *right_start) {
+            result.suffix = left_end->value + result.suffix;
+            left_end--;
+            right_fully_consumed = true;
+        } else if (*left_start == *right_start) {
+            result.prefix.append(left_start->value);
+            left_start++;
+            right_fully_consumed = true;
+        }
+    } else if (left_start == left_end && right_start == right_end && *left_start == *right_start && left_start->type == segment_type::MARKER) {
+        result.prefix.append(right_start->value);
+        left_fully_consumed = true;
+        right_fully_consumed = true;
+    }
+
+    auto eat_segment = [](std::string str, const segment & seg) -> std::string { return std::move(str) + seg.value; };
+
+    bool can_have_text_suffix = left_end->type == segment_type::TEXT && right_end->type
+// ==== common/chat-diff-analyzer.cpp ====
+#include "chat-auto-parser.h"
+#include "chat-auto-parser-helpers.h"
+#include "chat-peg-parser.h"
+#include "chat.h"
+#include "common.h"
+#include "log.h"
+#include "nlohmann/json.hpp"
+#include "peg-parser.h"
+
+#include <algorithm>
+#include <cctype>
+#include <ostream>
+#include <sstream>
+
+#define ANSI_RESET  "\033[0m"
+#define ANSI_PURPLE "\033[1m\x1b[38;5;126m"
+#define ANSI_ORANGE "\033[1m\x1b[38;5;214m"
+#define ANSI_RED    "\033[1m\x1b[38;5;196m"
+
+using json = nlohmann::ordered_json;
+
+namespace autoparser {
+
+static const std::string FUN_FIRST = "FFF_FIRST_FUN_F";
+static const std::string FUN_SECOND = "SSS_SECOND_FUN_S";
+static const std::string ARG_FIRST = "AA_ARG_FST_AA";
+static const std::string ARG_SECOND = "BB_ARG_SND_BB";
+static const std::string USER_MSG = "U_USER_MSG Hello END_U";
+static const std::string USER_MSG_TWO = "V_USER_MSG Hello END_V";
+static const std::string ASSISTANT_MSG = "A_ASST_MSG I can help END_A";
+static const std::string THINKING_CONTENT = "REASON_PART I am thinking END_R";
+static const std::string CALL_ID_001 = "call00001";
+static const std::string CALL_ID_002 = "call00002";
+static const std::string CALL_ID_999 = "call99999";
+
+static std::vector<std::function<void(const common_chat_template & tmpl, autoparser &)>> workarounds(
+    { // Old reasoning Qwen templates - they don't really display reasoning content, but we still want to
+      // support reasoning on them
+      [](const common_chat_template & tmpl, autoparser & analysis) -> void {
+          if (tmpl.src.find("content.split('</think>')") != std::string::npos &&
+              tmpl.src.find("reasoning_content") == std::string::npos &&
+              tmpl.src.find("<SPECIAL_12>") == std::string::npos &&
+              analysis.reasoning.mode == reasoning_mode::NONE) {
+              analysis.reasoning.mode  = reasoning_mode::TAG_BASED;
+              analysis.reasoning.start = "<think>";
+              analysis.reasoning.end   = "</think>";
+              analysis.preserved_tokens.push_back("<think>");
+              analysis.preserved_tokens.push_back("</think>");
+              LOG_DBG(ANSI_ORANGE "[Patch: old Qwen/Deepseek thinking template]\n" ANSI_RESET);
+          }
+      },
+      // Granite 3.3, with separate reasoning and content markers
+      [](const common_chat_template & tmpl, autoparser & analysis) -> void {
+          if (tmpl.src.find("Write your thoughts between <think></think> and write your response between "
+                            "<response></response>") != std::string::npos) {
+              analysis.reasoning.mode  = reasoning_mode::TAG_BASED;
+              analysis.reasoning.start = "<think>";
+              analysis.reasoning.end   = "</think>";
+              analysis.preserved_tokens.push_back("<think>");
+              analysis.preserved_tokens.push_back("</think>");
+              analysis.content.mode  = content_mode::WRAPPED_WITH_REASONING;
+              analysis.content.start = "<response>";
+              analysis.content.end   = "</response>";
+              analysis.preserved_tokens.push_back("<response>");
+              analysis.preserved_tokens.push_back("</response>");
+              LOG_DBG(ANSI_ORANGE "[Patch: Granite 3.3]\n" ANSI_RESET);
+          }
+      },
+      // Cohere Command R+ - content wrapped in <|CHATBOT_TOKEN|>...<|END_OF_TURN_TOKEN|>
+      [](const common_chat_template & tmpl, autoparser & analysis) -> void {
+          if (tmpl.src.find("<|CHATBOT_TOKEN|>") != std::string::npos &&
+              tmpl.src.find("<|END_OF_TURN_TOKEN|>") != std::string::npos && analysis.content.start.empty()) {
+              analysis.content.mode  = content_mode::ALWAYS_WRAPPED;
+              analysis.content.start = "<|CHATBOT_TOKEN|>";
+              analysis.content.end   = "<|END_OF_TURN_TOKEN|>";
+              analysis.preserved_tokens.push_back("<|CHATBOT_TOKEN|>");
+              analysis.preserved_tokens.push_back("<|END_OF_TURN_TOKEN|>");
+              analysis.user_start = "<|START_OF_TURN_TOKEN|><|USER_TOKEN|>";
+              LOG_DBG(ANSI_ORANGE "[Patch: Cohere Command R+]\n" ANSI_RESET);
+          }
+      },
+      // Functionary - no tool call section delimiter
+      [](const common_chat_template & tmpl, autoparser & analysis) -> void {
+          if (tmpl.src.find("set has_code_interpreter = tools | selectattr(\"type\", \"equalto\", "
+                            "\"code_interpreter\") | list | length > 0") != std::string::npos) {
+              analysis.content.mode                = content_mode::PLAIN;
+              analysis.content.end                 = "";
+              analysis.tools.function.name_prefix  = "";
+              analysis.tools.format.section_start  = "";
+              analysis.tools.format.section_end    = "";
+              analysis.tools.format.per_call_start = "<function=";
+              analysis.tools.format.per_call_end   = "</function>";
+              analysis.tools.function.close        = "";
+              analysis.preserved_tokens.clear();
+              analysis.preserved_token
+// ==== common/chat-peg-parser.h ====
+#pragma once
+
+#include "chat.h"
+#include "peg-parser.h"
+
+#include <map>
+#include <optional>
+#include <vector>
+
+class common_chat_peg_mapper {
+  public:
+    common_chat_msg & result;
+
+    common_chat_peg_mapper(common_chat_msg & msg) : result(msg) {}
+
+    virtual ~common_chat_peg_mapper() = default;
+
+    virtual void from_ast(const common_peg_ast_arena & arena, const common_peg_parse_result & result);
+    virtual void map(const common_peg_ast_node & node);
+  protected:
+    virtual std::string normalize_container_value(const std::string & input);
+  private:
+      // Tool call handling state
+      std::optional<common_chat_tool_call> pending_tool_call;  // Tool call waiting for name
+      common_chat_tool_call *              current_tool          = nullptr;
+      int                                  arg_count             = 0;
+      bool                                 closing_quote_pending = false;
+      std::string                          args_buffer;  // Buffer to delay arguments until tool name is known
+
+      // Returns a reference to the active argument destination string.
+      // Before tool_name is known, writes go to args_buffer; after, to current_tool->arguments.
+      std::string & args_target();
+};
+
+class common_chat_peg_gemma4_mapper : public common_chat_peg_mapper {
+  public:
+    common_chat_peg_gemma4_mapper(common_chat_msg & msg) : common_chat_peg_mapper(msg) {}
+    virtual void from_ast(const common_peg_ast_arena & arena, const common_peg_parse_result & result);
+  private:
+    void visit(const common_peg_ast_arena & arena, common_peg_ast_id id);
+};
+
+struct content_structure;
+struct tool_call_structure;
+
+class common_chat_peg_builder : public common_peg_parser_builder {
+  public:
+    // Tag constants (from former common_chat_peg_base_builder)
+    static constexpr const char * REASONING_BLOCK = "reasoning-block";
+    static constexpr const char * REASONING       = "reasoning";
+    static constexpr const char * CONTENT         = "content";
+
+    // Tag constants
+    static constexpr const char * TOOL           = "tool";
+    static constexpr const char * TOOL_OPEN      = "tool-open";
+    static constexpr const char * TOOL_CLOSE     = "tool-close";
+    static constexpr const char * TOOL_ID        = "tool-id";
+    static constexpr const char * TOOL_NAME      = "tool-name";
+    static constexpr const char * TOOL_ARGS      = "tool-args";
+    static constexpr const char * TOOL_ARG       = "tool-arg";
+    static constexpr const char * TOOL_ARG_OPEN  = "tool-arg-open";
+    static constexpr const char * TOOL_ARG_CLOSE = "tool-arg-close";
+    static constexpr const char * TOOL_ARG_NAME         = "tool-arg-name";
+    static constexpr const char * TOOL_ARG_VALUE        = "tool-arg-value";
+    static constexpr const char * TOOL_ARG_STRING_VALUE = "tool-arg-string-value";  // For schema-declared string types
+
+    // Low-level tag methods (from former common_chat_peg_base_builder)
+    common_peg_parser reasoning_block(const common_peg_parser & p) { return tag(REASONING_BLOCK, p); }
+
+    common_peg_parser reasoning(const common_peg_parser & p) { return tag(REASONING, p); }
+
+    common_peg_parser content(const common_peg_parser & p) { return tag(CONTENT, p); }
+
+    common_peg_parser tag_with_safe_content(const std::string &       tag_name,
+                        const std::string &       marker,
+                        const common_peg_parser & p);
+
+    // Low-level tag methods
+    common_peg_parser tool(const common_peg_parser & p) { return tag(TOOL, p); }
+    common_peg_parser tool_open(const common_peg_parser & p) { return atomic(tag(TOOL_OPEN, p)); }
+    common_peg_parser tool_close(const common_peg_parser & p) { return atomic(tag(TOOL_CLOSE, p)); }
+    common_peg_parser tool_id(const common_peg_parser & p) { return atomic(tag(TOOL_ID, p)); }
+    common_peg_parser tool_name(const common_peg_parser & p) { return atomic(tag(TOOL_NAME, p)); }
+    common_peg_parser tool_args(const common_peg_parser & p) { return tag(TOOL_ARGS, p); }
+    common_peg_parser tool_arg(const common_peg_parser & p) { return tag(TOOL_ARG, p); }
+    common_peg_parser tool_arg_open(const common_peg_parser & p) { return atomic(tag(TOOL_ARG_OPEN, p)); }
+    common_peg_parser tool_arg_close(const common_peg_parser & p) { return atomic(tag(TOOL_ARG_CLOSE, p)); }
+    common_peg_parser tool_arg_name(const common_peg_parser & p) { return atomic(tag(TOOL_ARG_NAME, p)); }
+    common_peg_parser tool_arg_value(const common_peg_parser & p) { return tag(TOOL_ARG_VALUE, p); }
+
+    // Use for schema-declared string types - won't be treated as potential JSON container
+    common_peg_parser tool_arg_string_value(const common_peg_parser & p) { return tag(TOOL_ARG_STRING_VALUE, p); }
+    common_peg_parser tool_arg_json_value(const common_peg_parser & p) { return tag(TOOL_ARG_VALUE, p); }
+
+
+    // Return a parser that parses the prefix of a string, up to a given delimiter.
+    common_peg_parser prefix(const std::string & s, const std::string & delimiter = {}
+// ==== common/console.cpp ====
+#include "console.h"
+#include "log.h"
+#include <vector>
+#include <iostream>
+#include <cassert>
+#include <cstddef>
+#include <cctype>
+#include <cwctype>
+#include <cstdint>
+#include <condition_variable>
+#include <mutex>
+#include <thread>
+#include <stdarg.h>
+
+#if defined(_WIN32)
+#define WIN32_LEAN_AND_MEAN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#include <fcntl.h>
+#include <io.h>
+#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+#endif
+#else
+#include <climits>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <wchar.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <termios.h>
+#endif
+
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_GRAY    "\x1b[90m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+#define ANSI_BOLD          "\x1b[1m"
+
+namespace console {
+
+#if defined (_WIN32)
+    namespace {
+        // Use private-use unicode values to represent special keys that are not reported
+        // as characters (e.g. arrows on Windows). These values should never clash with
+        // real input and let the rest of the code handle navigation uniformly.
+        static constexpr char32_t KEY_ARROW_LEFT       = 0xE000;
+        static constexpr char32_t KEY_ARROW_RIGHT      = 0xE001;
+        static constexpr char32_t KEY_ARROW_UP         = 0xE002;
+        static constexpr char32_t KEY_ARROW_DOWN       = 0xE003;
+        static constexpr char32_t KEY_HOME             = 0xE004;
+        static constexpr char32_t KEY_END              = 0xE005;
+        static constexpr char32_t KEY_CTRL_ARROW_LEFT  = 0xE006;
+        static constexpr char32_t KEY_CTRL_ARROW_RIGHT = 0xE007;
+        static constexpr char32_t KEY_DELETE           = 0xE008;
+    }
+
+    //
+    // Console state
+    //
+#endif
+
+    static bool         advanced_display = false;
+    static bool         simple_io        = true;
+    static display_type current_display  = DISPLAY_TYPE_RESET;
+
+    static FILE*        out              = stdout;
+
+#if defined (_WIN32)
+    static void*        hConsole;
+#else
+    static FILE*        tty              = nullptr;
+    static termios      initial_state;
+#endif
+
+    static completion_callback completion_cb = nullptr;
+
+    //
+    // Init and cleanup
+    //
+
+    void init(bool use_simple_io, bool use_advanced_display) {
+        advanced_display = use_advanced_display;
+        simple_io = use_simple_io;
+#if defined(_WIN32)
+        // Windows-specific console initialization
+        DWORD dwMode = 0;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        if (hConsole == INVALID_HANDLE_VALUE || !GetConsoleMode(hConsole, &dwMode)) {
+            hConsole = GetStdHandle(STD_ERROR_HANDLE);
+            if (hConsole != INVALID_HANDLE_VALUE && (!GetConsoleMode(hConsole, &dwMode))) {
+                hConsole = nullptr;
+                simple_io = true;
+            }
+        }
+        if (hConsole) {
+            // Check conditions combined to reduce nesting
+            if (advanced_display && !(dwMode & ENABLE_VIRTUAL_TERMINAL_PROCESSING) &&
+                !SetConsoleMode(hConsole, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING)) {
+                advanced_display = false;
+            }
+            // Set console output codepage to UTF8
+            SetConsoleOutputCP(CP_UTF8);
+        }
+        HANDLE hConIn = GetStdHandle(STD_INPUT_HANDLE);
+        if (hConIn != INVALID_HANDLE_VALUE && GetConsoleMode(hConIn, &dwMode)) {
+            // Set console input codepage to UTF16
+            _setmode(_fileno(stdin), _O_WTEXT);
+
+            // Set ICANON (ENABLE_LINE_INPUT) and ECHO (ENABLE_ECHO_INPUT)
+            if (simple_io) {
+                dwMode |= ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT;
+            } else {
+                dwMode &= ~(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT);
+            }
+            if (!SetConsoleMode(hConIn, dwMode)) {
+                simple_io = true;
+            }
+        }
+        if (simple_io) {
+            _setmode(_fileno(stdin), _O_U8TEXT);
+        }
+#else
+        // POSIX-specific console initialization
+        if (!simple_io) {
+            struct termios new_termios;
+            tcgetattr(STDIN_FILENO, &initial_state);
+            new_termios = initial_state;
+            new_termios.c_lflag &= ~(ICANON | ECHO);
+            new_termios.c_cc[VMIN] = 1;
+            new_termios.c_cc[VTIME] = 0;
+            tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
+
+            tty = fopen("/dev/tty", "w+");
+            if (tty != nullptr) {
+                out = tty;
+            }
+        }
+
+        setlocale(LC_ALL, "");
+#endif
+    }
+
+    void cleanup() {
+        // Reset console display
+        set_display(DISPLAY_TYPE_RESET);
+
+#if !defined(_WIN32)
+        // Restore settings on POSIX systems
+        if (!simple_io) {
+            if (tty != nullptr) {
+             
+// ==== common/debug.h ====
+#pragma once
+
+#include <memory>
+#include <string>
+#include <vector>
+
+// common debug functions and structs
+
+struct common_params;
+
+// Intended to use as callback for ggml_backend_sched_eval_callback
+// prints tensors that are processed in the computation graph
+// by default prints all tensors, but can be configured by creating a `common_debug_cb_user_data` instance with
+// non-empty filter_patterns. See examples/debug.cpp for possible usage patterns
+// `common_debug_cb_user_data` contains `abort_on_nan` flag that determines whether an error should be thrown whenever a NaN is encountered
+// in a tensor (useful for stopping debug sessions on first erroneous tensor)
+// The callback data will be passed as the third parameter (user_data)
+bool common_debug_cb_eval(struct ggml_tensor * t, bool ask, void * user_data);
+
+struct common_debug_cb_user_data {
+    struct impl;
+    std::unique_ptr<impl> pimpl;
+
+    common_debug_cb_user_data();
+    ~common_debug_cb_user_data();
+
+    common_debug_cb_user_data(const common_debug_cb_user_data &) = delete;
+    common_debug_cb_user_data & operator=(const common_debug_cb_user_data &) = delete;
+
+    common_debug_cb_user_data(common_params & params, const std::vector<std::string> & filter_patterns, bool abort_on_nan = false);
+};
+
+// ==== common/fit.cpp ====
+#include "fit.h"
+
+#include "log.h"
+
+#include "../src/llama-ext.h"
+
+#include <array>
+#include <cassert>
+#include <stdexcept>
+#include <cinttypes>
+#include <set>
+#include <string>
+#include <vector>
+
+// this enum is only used in llama_params_fit_impl but needs to be defined outside of it to fix a Windows compilation issue
+// enum to identify part of a layer for distributing its tensors:
+enum common_layer_fraction_t {
+    LAYER_FRACTION_NONE = 0, // nothing
+    LAYER_FRACTION_ATTN = 1, // attention
+    LAYER_FRACTION_UP   = 2, // attention + up
+    LAYER_FRACTION_GATE = 3, // attention + up + gate
+    LAYER_FRACTION_MOE  = 4, // everything but sparse MoE weights
+};
+
+class common_params_fit_exception : public std::runtime_error {
+    using std::runtime_error::runtime_error;
+};
+
+static std::vector<llama_device_memory_data> common_get_device_memory_data_impl(
+        const char * path_model,
+        const llama_model_params * mparams,
+        const llama_context_params * cparams,
+        std::vector<ggml_backend_dev_t> & devs,
+        uint32_t & hp_ngl,
+        uint32_t & hp_n_ctx_train,
+        uint32_t & hp_n_expert,
+        ggml_log_level log_level) {
+    struct user_data_t {
+        struct {
+            ggml_log_callback callback;
+            void * user_data;
+        } original_logger;
+        ggml_log_level min_level; // prints below this log level go to debug log
+    };
+    user_data_t ud;
+    llama_log_get(&ud.original_logger.callback, &ud.original_logger.user_data);
+    ud.min_level = log_level;
+
+    llama_log_set([](ggml_log_level level, const char * text, void * user_data) {
+        const user_data_t * ud = (const user_data_t *) user_data;
+        const ggml_log_level level_eff = level >= ud->min_level ? level : GGML_LOG_LEVEL_DEBUG;
+        ud->original_logger.callback(level_eff, text, ud->original_logger.user_data);
+    }, &ud);
+
+    llama_model_params mparams_copy = *mparams;
+    mparams_copy.no_alloc  = true;
+    mparams_copy.use_mmap  = false;
+    mparams_copy.use_mlock = false;
+
+    llama_model * model = llama_model_load_from_file(path_model, mparams_copy);
+    if (model == nullptr) {
+        llama_log_set(ud.original_logger.callback, ud.original_logger.user_data);
+        throw std::runtime_error("failed to load model");
+    }
+
+    llama_context * ctx = llama_init_from_model(model, *cparams);
+    if (ctx == nullptr) {
+        llama_model_free(model);
+        llama_log_set(ud.original_logger.callback, ud.original_logger.user_data);
+        throw std::runtime_error("failed to create llama_context from model");
+    }
+
+    const size_t nd = llama_model_n_devices(model);
+    std::vector<llama_device_memory_data> ret(nd + 1);
+
+    llama_memory_breakdown memory_breakdown = llama_get_memory_breakdown(ctx);
+
+    for (const auto & [buft, mb] : memory_breakdown) {
+        if (ggml_backend_buft_is_host(buft)) {
+            ret.back().mb.model   += mb.model;
+            ret.back().mb.context += mb.context;
+            ret.back().mb.compute += mb.compute;
+            continue;
+        }
+
+        ggml_backend_dev_t dev = ggml_backend_buft_get_device(buft);
+        if (!dev) {
+            continue;
+        }
+        for (size_t i = 0; i < nd; i++) {
+            if (dev == llama_model_get_device(model, i)) {
+                ret[i].mb.model   += mb.model;
+                ret[i].mb.context += mb.context;
+                ret[i].mb.compute += mb.compute;
+                break;
+            }
+        }
+    }
+
+    {
+        ggml_backend_dev_t cpu_dev = ggml_backend_dev_by_type(GGML_BACKEND_DEVICE_TYPE_CPU);
+        if (cpu_dev == nullptr) {
+            throw std::runtime_error("no CPU backend found");
+        }
+        size_t free;
+        size_t total;
+        ggml_backend_dev_memory(cpu_dev, &free, &total);
+        ret.back().free  = free;
+        ret.back().total = total;
+    }
+    for (size_t i = 0; i < nd; i++) {
+        ggml_backend_dev_t dev = llama_model_get_device(model, i);
+
+        size_t free;
+        size_t total;
+        ggml_backend_dev_memory(dev, &free, &total);
+
+        // Some non-GPU accelerator backends, such as BLAS, report 0/0 and rely on
+        // the host-memory fallback. For GPU-like backends, keep 0/0 so --fit does
+        // not assign anything to a device with an unknown memory budget.
+        if (free == 0 && total == 0) {
+            const enum ggml_backend_dev_type type = ggml_backend_dev_type(dev);
+            if (type == GGML_BACKEND_DEVICE_TYPE_GPU || type == GGML_BACKEND_DEVICE_TYPE_IGPU) {
+                LOG_WRN("%s: device %s did not report memory; --fit will not use it\n",
+                        __func__, ggml_backend_dev_name(dev));
+            } else {
+                free  = ret.back().free;
+                total = ret.back().total;
+            }
+        }
+        ret[i].free  = free;
+        ret[i].total = total;
+    }
+
+    devs.clear();
+    for (int i = 0; i < llama_model_n_devices(model); i++) {
+        devs.push_back(llama_model_get_device(model, i));
+    }
+
+    hp_ngl   
+// ==== common/hf-cache.h ====
+#pragma once
+
+#include <string>
+#include <vector>
+
+// Ref: https://huggingface.co/docs/hub/local-cache.md
+
+namespace hf_cache {
+
+struct hf_file {
+    std::string path;
+    std::string url;
+    std::string local_path;
+    std::string final_path;
+    std::string oid;
+    std::string repo_id;
+};
+
+using hf_files = std::vector<hf_file>;
+
+// Get files from HF API
+hf_files get_repo_files(
+    const std::string & repo_id,
+    const std::string & token
+);
+
+hf_files get_cached_files(const std::string & repo_id = {});
+
+// Create snapshot path (link or move/copy) and return it
+std::string finalize_file(const hf_file & file);
+
+// Remove the entire cached directory for a repo, returns true if removed
+bool remove_cached_repo(const std::string & repo_id);
+
+} // namespace hf_cache
+
+// ==== common/imatrix-loader.h ====
+#pragma once
+
+#include <cstdint>
+#include <map>
+#include <string>
+#include <vector>
+
+inline constexpr const char * LLM_KV_IMATRIX_DATASETS    = "imatrix.datasets";
+inline constexpr const char * LLM_KV_IMATRIX_CHUNK_COUNT = "imatrix.chunk_count";
+inline constexpr const char * LLM_KV_IMATRIX_CHUNK_SIZE  = "imatrix.chunk_size";
+
+struct common_imatrix_entry {
+    std::vector<float>   sums;
+    std::vector<int64_t> counts;
+};
+
+struct common_imatrix {
+    std::map<std::string, common_imatrix_entry> entries;
+    std::vector<std::string> datasets;
+    int32_t chunk_count    = 0;
+    int32_t chunk_size     = 0;
+    bool    is_legacy      = false;
+    bool    has_metadata   = false;
+};
+
+bool common_imatrix_load(const std::string & fname, common_imatrix & imatrix);
+
+// ==== common/jinja/lexer.cpp ====
+#include "lexer.h"
+#include "runtime.h"
+
+#include <cctype>
+#include <functional>
+#include <map>
+#include <string>
+#include <vector>
+
+#define FILENAME "jinja-lexer"
+
+namespace jinja {
+
+static void string_lstrip(std::string & s, const char * chars) {
+    size_t start = s.find_first_not_of(chars);
+    if (start == std::string::npos) {
+        s.clear();
+    } else {
+        s.erase(0, start);
+    }
+}
+
+static void string_rstrip(std::string & s, const char * chars) {
+    size_t end = s.find_last_not_of(chars);
+    if (end == std::string::npos) {
+        s.clear();
+    } else {
+        s.erase(end + 1);
+    }
+}
+
+lexer_result lexer::tokenize(const std::string & source) {
+    std::vector<token> tokens;
+
+    // NOTE: do NOT transform the source string (i.e. preprocessing), as we need to keep
+    //       the original character positions for error reporting etc.
+    std::string src = source;
+
+    if (source.empty()) {
+        return {tokens, src};
+    }
+
+    // Normalize \r\n or \r to \n
+    for (std::string::size_type pos = 0; (pos = src.find("\r\n", pos)) != std::string::npos; ) {
+        src.erase(pos, 1);
+        ++pos;
+    }
+    for (std::string::size_type pos = 0; (pos = src.find("\r", pos)) != std::string::npos; ) {
+        src.replace(pos, 1, 1, '\n');
+        ++pos;
+    }
+
+    // In the default configuration:
+    //  - a single trailing newline is stripped if present
+    //  - other whitespace (spaces, tabs, newlines etc.) is returned unchanged
+    if (source.back() == '\n') {
+        src.pop_back();
+    }
+
+    size_t pos = 0;
+    size_t start_pos = 0;
+    size_t curly_bracket_depth = 0;
+
+    using pred = std::function<bool(char)>;
+    auto consume_while = [&](const pred & predicate) -> std::string {
+        std::string str;
+        while (predicate(src[pos])) {
+            // check for escape char
+            if (src[pos] == '\\') {
+                // consume backslash
+                ++pos;
+                // check for end of input
+                if (pos >= src.size()) {
+                    throw lexer_exception("unexpected end of input after escape character", source, pos);
+                }
+                // add escaped char
+                char escaped_char = src[pos++];
+                if (escape_chars.find(escaped_char) == escape_chars.end()) {
+                    throw lexer_exception(std::string("unknown escape character \\") + escaped_char, source, pos);
+                }
+                char unescaped_char = escape_chars.at(escaped_char);
+                str += unescaped_char;
+                continue;
+            }
+
+            str += src[pos++];
+            if (pos > src.size()) {
+                throw lexer_exception("unexpected end of input during consume_while", source, pos);
+            }
+        }
+        return str;
+    };
+
+    auto consume_numeric = [&]() -> std::string {
+        std::string num = consume_while(is_integer);
+        if (pos < src.size() && src[pos] == '.' && pos + 1 < src.size() && is_integer(src[pos + 1])) {
+            ++pos; // Consume '.'
+            std::string frac = consume_while(is_integer);
+            num += "." + frac;
+        }
+        return num;
+    };
+
+    auto next_pos_is = [&](std::initializer_list<char> chars, size_t n = 1) -> bool {
+        if (pos + n >= src.size()) return false;
+        for (char c : chars) {
+            if (src[pos + n] == c) return true;
+        }
+        return false;
+    };
+
+    // note: default config for chat template: lstrip_blocks = true, trim_blocks = true
+
+    // text\n[space]{block} --> text\n{block}
+    bool opt_lstrip_blocks = true;
+
+    // {block}\n[space]text --> {block}[space]text
+    bool opt_trim_blocks = true;
+
+    // options set dynamically based on current/last block
+    bool is_lstrip_block = false; // example: {%-
+    bool is_rstrip_block = false; // example: -%}
+
+    while (pos < src.size()) {
+        start_pos = pos;
+        // JJ_DEBUG("lexer main loop at pos %zu: '%s...'", pos, src.substr(pos, 10).c_str());
+
+        // First, consume all text that is outside of a Jinja statement or expression
+        token::type last_token_type = tokens.empty()
+                                            ? token::close_statement // initial state
+                                            : tokens.back().t;
+        if (last_token_type == token::close_statement ||
+            last_token_type == token::close_expression ||
+            last_token_type == token::comment) {
+
+            bool last_block_can_rm_newline = false;
+            is_rstrip_block = false;
+            if (pos > 3) {
+                char c0 = src[pos - 3];
+                char c1 = src[pos - 2];
+                char c2 = src[pos - 1];
+                // strip if: -[%}#]}text
+                is_rstrip_block = c0 == '-'
+                                    && (c1 == '%' || c1 == '}' || c1 == '#')
+                                    && c2 == '}';
+                // match behavior of hf.js: exclude {{ and }} cases, regex: ([#%-]})
+                last_block_can_r
+// ==== common/jinja/parser.h ====
+#pragma once
+
+#include "lexer.h"
+#include "runtime.h"
+#include "utils.h"
+
+#include <string>
+#include <stdexcept>
+
+namespace jinja {
+
+// parse from a list of tokens into an AST (program)
+// may throw parser_exception on error
+program parse_from_tokens(const lexer_result & lexer_res);
+
+struct parser_exception : public std::runtime_error {
+    parser_exception(const std::string & msg, const std::string & source, size_t pos)
+        : std::runtime_error(fmt_error_with_source("parser", msg, source, pos)) {}
+};
+
+} // namespace jinja
+
+// ==== common/jinja/string.cpp ====
+#include "jinja/string.h"
+#include "jinja/value.h"
+
+#include <algorithm>
+#include <functional>
+#include <optional>
+#include <sstream>
+#include <string>
+#include <vector>
+
+namespace jinja {
+
+//
+// string_part
+//
+
+bool string_part::is_uppercase() const {
+    for (char c : val) {
+        if (std::islower(static_cast<unsigned char>(c))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool string_part::is_lowercase() const {
+    for (char c : val) {
+        if (std::isupper(static_cast<unsigned char>(c))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+//
+// string
+//
+
+void string::mark_input() {
+    for (auto & part : parts) {
+        part.is_input = true;
+    }
+}
+
+std::string string::str() const {
+    if (parts.size() == 1) {
+        return parts[0].val;
+    }
+    std::ostringstream oss;
+    for (const auto & part : parts) {
+        oss << part.val;
+    }
+    return oss.str();
+}
+
+size_t string::length() const {
+    size_t len = 0;
+    for (const auto & part : parts) {
+        len += part.val.length();
+    }
+    return len;
+}
+
+void string::hash_update(hasher & hash) const noexcept {
+    for (const auto & part : parts) {
+        hash.update(part.val.data(), part.val.length());
+    }
+}
+
+bool string::all_parts_are_input() const {
+    for (const auto & part : parts) {
+        if (!part.is_input) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool string::is_uppercase() const {
+    for (const auto & part : parts) {
+        if (!part.is_uppercase()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool string::is_lowercase() const {
+    for (const auto & part : parts) {
+        if (!part.is_lowercase()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// mark this string as input if other has ALL parts as input
+void string::mark_input_based_on(const string & other) {
+    if (other.all_parts_are_input()) {
+        for (auto & part : parts) {
+            part.is_input = true;
+        }
+    }
+}
+
+string string::append(const string & other) {
+    for (const auto & part : other.parts) {
+        parts.push_back(part);
+    }
+    return *this;
+}
+
+// in-place transformation
+
+using transform_fn = std::function<std::string(const std::string&)>;
+static string apply_transform(string & self, const transform_fn & fn) {
+    for (auto & part : self.parts) {
+        part.val = fn(part.val);
+    }
+    return self;
+}
+
+string string::uppercase() {
+    return apply_transform(*this, [](const std::string & s) {
+        std::string res = s;
+        std::transform(res.begin(), res.end(), res.begin(), ::toupper);
+        return res;
+    });
+}
+string string::lowercase() {
+    return apply_transform(*this, [](const std::string & s) {
+        std::string res = s;
+        std::transform(res.begin(), res.end(), res.begin(), ::tolower);
+        return res;
+    });
+}
+string string::capitalize() {
+    return apply_transform(*this, [](const std::string & s) {
+        if (s.empty()) return s;
+        std::string res = s;
+        res[0] = ::toupper(static_cast<unsigned char>(res[0]));
+        std::transform(res.begin() + 1, res.end(), res.begin() + 1, ::tolower);
+        return res;
+    });
+}
+string string::titlecase() {
+    return apply_transform(*this, [](const std::string & s) {
+        std::string res = s;
+        bool capitalize_next = true;
+        for (char &c : res) {
+            if (isspace(static_cast<unsigned char>(c))) {
+                capitalize_next = true;
+            } else if (capitalize_next) {
+                c = ::toupper(static_cast<unsigned char>(c));
+                capitalize_next = false;
+            } else {
+                c = ::tolower(static_cast<unsigned char>(c));
+            }
+        }
+        return res;
+    });
+}
+string string::strip(bool left, bool right, std::optional<const std::string_view> chars) {
+    static auto strip_part = [](const std::string & s, bool left, bool right, std::optional<const std::string_view> chars) -> std::string {
+        size_t start = 0;
+        size_t end = s.length();
+        auto match_char = [&chars](unsigned char c) -> bool {
+            return chars ? (*chars).find(c) != std::string::npos : isspace(c);
+        };
+        if (left) {
+            while (start < end && match_char(static_cast<unsigned char>(s[start]))) {
+                ++start;
+            }
+        }
+        if (right) {
+            while (end > start && match_char(static_cast<unsigned char>(s[end - 1]))) {
+                --end;
+            }
+        }
+        return s.substr(start, end - start);
+    };
+    if (parts.empty()) {
+        return *this;
+    }
+    if (left) {
+        for (size_t i = 0; i < parts.size(); ++i) {
+            parts[i].val = strip_part(parts[i].val, true, false, chars);
+            if (parts[i].val.empty()) {
+                // remove empty part
+                parts.erase(parts.begin() + i);
+                --i;
+                continue;
+            } else {
+                break;
+            }
+        }
+    }
+    if (
+// ==== common/jinja/value.cpp ====
+#include "runtime.h"
+#include "unicode.h"
+#include "value.h"
+
+// for converting from JSON to jinja values
+#include <nlohmann/json.hpp>
+
+#include <sstream>
+#include <string>
+#include <cctype>
+#include <vector>
+#include <optional>
+#include <algorithm>
+
+#define FILENAME "jinja-value"
+
+namespace jinja {
+
+// func_args method implementations
+
+value func_args::get_kwarg(const std::string & key, value default_val) const {
+    for (const auto & arg : args) {
+        if (is_val<value_kwarg>(arg)) {
+            auto * kwarg = cast_val<value_kwarg>(arg);
+            if (kwarg->key == key) {
+                return kwarg->val;
+            }
+        }
+    }
+    return default_val;
+}
+
+value func_args::get_kwarg_or_pos(const std::string & key, size_t pos) const {
+    value val = get_kwarg(key, mk_val<value_undefined>());
+
+    if (val->is_undefined() && pos < count() && !is_val<value_kwarg>(args[pos])) {
+        return args[pos];
+    }
+
+    return val;
+}
+
+value func_args::get_pos(size_t pos) const {
+    if (count() > pos) {
+        return args[pos];
+    }
+    throw raised_exception("Function '" + func_name + "' expected at least " + std::to_string(pos + 1) + " arguments, got " + std::to_string(count()));
+}
+
+value func_args::get_pos(size_t pos, value default_val) const {
+    if (count() > pos) {
+        return args[pos];
+    }
+    return default_val;
+}
+
+void func_args::push_back(const value & val) {
+    args.push_back(val);
+}
+
+void func_args::push_front(const value & val) {
+    args.insert(args.begin(), val);
+}
+
+const std::vector<value> & func_args::get_args() const {
+    return args;
+}
+
+/**
+ * Function that mimics Python's array slicing.
+ */
+template<typename T>
+static T slice(const T & array, int64_t start, int64_t stop, int64_t step = 1) {
+    int64_t len = static_cast<int64_t>(array.size());
+    int64_t direction = (step > 0) ? 1 : ((step < 0) ? -1 : 0);
+    int64_t start_val = 0;
+    int64_t stop_val = 0;
+    if (direction >= 0) {
+        start_val = start;
+        if (start_val < 0) {
+            start_val = std::max(len + start_val, (int64_t)0);
+        } else {
+            start_val = std::min(start_val, len);
+        }
+
+        stop_val = stop;
+        if (stop_val < 0) {
+            stop_val = std::max(len + stop_val, (int64_t)0);
+        } else {
+            stop_val = std::min(stop_val, len);
+        }
+    } else {
+        start_val = start;
+        if (start_val < 0) {
+            start_val = std::max(len + start_val, (int64_t)0);
+        } else {
+            start_val = std::min(start_val, len - 1);
+        }
+
+        stop_val = stop;
+        if (stop_val < -1) {
+            stop_val = std::max(len + stop_val, (int64_t)-1);
+        } else {
+            stop_val = std::min(stop_val, len - 1);
+        }
+    }
+    T result;
+    if (direction == 0) {
+        return result;
+    }
+    for (int64_t i = start_val; direction * i < direction * stop_val; i += step) {
+        if (i >= 0 && i < len) {
+            result.push_back(array[static_cast<size_t>(i)]);
+        }
+    }
+    return result;
+}
+
+template<typename T>
+static value empty_value_fn(const func_args &) {
+    if constexpr (std::is_same_v<T, value_int>) {
+        return mk_val<T>(0);
+    } else if constexpr (std::is_same_v<T, value_float>) {
+        return mk_val<T>(0.0);
+    } else if constexpr (std::is_same_v<T, value_bool>) {
+        return mk_val<T>(false);
+    } else {
+        return mk_val<T>();
+    }
+}
+template<typename T>
+static value test_type_fn(const func_args & args) {
+    args.ensure_count(1);
+    bool is_type = is_val<T>(args.get_pos(0));
+    JJ_DEBUG("test_type_fn: type=%s result=%d", typeid(T).name(), is_type ? 1 : 0);
+    return mk_val<value_bool>(is_type);
+}
+template<typename T, typename U>
+static value test_type_fn(const func_args & args) {
+    args.ensure_count(1);
+    bool is_type = is_val<T>(args.get_pos(0)) || is_val<U>(args.get_pos(0));
+    JJ_DEBUG("test_type_fn: type=%s or %s result=%d", typeid(T).name(), typeid(U).name(), is_type ? 1 : 0);
+    return mk_val<value_bool>(is_type);
+}
+template<typename T, typename U, typename V>
+static value test_type_fn(const func_args & args) {
+    args.ensure_count(1);
+    bool is_type = is_val<T>(args.get_pos(0)) || is_val<U>(args.get_pos(0)) || is_val<V>(args.get_pos(0));
+    JJ_DEBUG("test_type_fn: type=%s, %s or %s result=%d", typeid(T).name(), typeid(U).name(), typeid(V).name(), is_type ? 1 : 0);
+    return mk_val<value_bool>(is_type);
+}
+template<value_compare_op op>
+static value test_compare_fn(const func_args & args) {
+    args.ensure_count(2, 2);
+    return mk_val<value_bool>(value_compare(args.get_pos(0), args.get_pos(1), op));
+}
+
+static void append_codepoint_as_ascii_json_escape(std::string & out, uint32_t codepoint) {
+    auto append_u16 = [&out](uint32_t value) {
+        char buf[8];
+        snprintf(buf, sizeof(buf), "\\u%04x", static_cast<unsigned int>(value));
+        out += buf;
+    };
+
+    if (codepoint <= 0xFFFF) {
+        append_u16(codepoint);
+        return;
+    }
+
+    codepoint -= 0x
+// ==== common/json-schema-to-grammar.h ====
+#pragma once
+
+#include <nlohmann/json_fwd.hpp>
+
+#include <functional>
+#include <memory>
+#include <string>
+
+std::string json_schema_to_grammar(const nlohmann::ordered_json & schema,
+                                   bool force_gbnf = false);
+
+class common_schema_converter;
+
+// Probes a JSON schema to extract information about its structure and type constraints.
+class common_schema_info {
+    std::unique_ptr<common_schema_converter> impl_;
+
+  public:
+    common_schema_info();
+    ~common_schema_info();
+
+    common_schema_info(const common_schema_info &) = delete;
+    common_schema_info & operator=(const common_schema_info &) = delete;
+    common_schema_info(common_schema_info &&) noexcept;
+    common_schema_info & operator=(common_schema_info &&) noexcept;
+
+    void resolve_refs(nlohmann::ordered_json & schema);
+    bool resolves_to_string(const nlohmann::ordered_json & schema);
+};
+
+struct common_grammar_builder {
+    std::function<std::string(const std::string &, const std::string &)> add_rule;
+    std::function<std::string(const std::string &, const nlohmann::ordered_json &)> add_schema;
+    std::function<void(nlohmann::ordered_json &)> resolve_refs;
+};
+
+struct common_grammar_options {
+    bool dotall = false;
+};
+
+std::string gbnf_format_literal(const std::string & literal);
+
+std::string build_grammar(const std::function<void(const common_grammar_builder &)> & cb, const common_grammar_options & options = {});
+
+// ==== common/log.h ====
+#pragma once
+
+#include "ggml.h" // for ggml_log_level
+
+#define LOG_CLR_TO_EOL  "\033[K\r"
+#define LOG_COL_DEFAULT "\033[0m"
+#define LOG_COL_BOLD    "\033[1m"
+#define LOG_COL_RED     "\033[31m"
+#define LOG_COL_GREEN   "\033[32m"
+#define LOG_COL_YELLOW  "\033[33m"
+#define LOG_COL_BLUE    "\033[34m"
+#define LOG_COL_MAGENTA "\033[35m"
+#define LOG_COL_CYAN    "\033[36m"
+#define LOG_COL_WHITE   "\033[37m"
+
+#ifndef __GNUC__
+#    define LOG_ATTRIBUTE_FORMAT(...)
+#elif defined(__MINGW32__) && !defined(__clang__)
+#    define LOG_ATTRIBUTE_FORMAT(...) __attribute__((format(gnu_printf, __VA_ARGS__)))
+#else
+#    define LOG_ATTRIBUTE_FORMAT(...) __attribute__((format(printf, __VA_ARGS__)))
+#endif
+
+#define LOG_LEVEL_DEBUG  5
+#define LOG_LEVEL_TRACE  4
+#define LOG_LEVEL_INFO   3
+#define LOG_LEVEL_WARN   2
+#define LOG_LEVEL_ERROR  1
+#define LOG_LEVEL_OUTPUT 0 // output data from tools
+
+#define LOG_DEFAULT_DEBUG LOG_LEVEL_DEBUG
+#define LOG_DEFAULT_LLAMA LOG_LEVEL_INFO
+
+enum log_colors {
+    LOG_COLORS_AUTO     = -1,
+    LOG_COLORS_DISABLED = 0,
+    LOG_COLORS_ENABLED  = 1,
+};
+
+// needed by the LOG_TMPL macro to avoid computing log arguments if the verbosity lower
+// set via common_log_set_verbosity()
+int  common_log_get_verbosity_thold(void);
+
+void common_log_set_verbosity_thold(int verbosity); // not thread-safe
+
+void common_log_default_callback(enum ggml_log_level level, const char * text, void * user_data);
+
+// the common_log uses an internal worker thread to print/write log messages
+// when the worker thread is paused, incoming log messages are discarded
+struct common_log;
+
+struct common_log * common_log_init();
+
+// Singleton, intentionally leaked to avoid Windows teardown hangs.
+// Call common_log_flush() before exit if you want to ensure all logs are flushed.
+struct common_log * common_log_main();
+
+void                common_log_pause (struct common_log * log); // pause  the worker thread, not thread-safe
+void                common_log_resume(struct common_log * log); // resume the worker thread, not thread-safe
+void                common_log_free  (struct common_log * log);
+
+LOG_ATTRIBUTE_FORMAT(3, 4)
+void common_log_add(struct common_log * log, enum ggml_log_level level, const char * fmt, ...);
+
+// defaults: file = NULL, colors = false, prefix = false, timestamps = false
+//
+// regular log output:
+//
+//   ggml_backend_metal_log_allocated_size: allocated buffer, size =  6695.84 MiB, ( 6695.91 / 21845.34)
+//   llm_load_tensors: ggml ctx size =    0.27 MiB
+//   llm_load_tensors: offloading 32 repeating layers to GPU
+//   llm_load_tensors: offloading non-repeating layers to GPU
+//
+// with prefix = true, timestamps = true, the log output will look like this:
+//
+//   0.00.035.060 D ggml_backend_metal_log_allocated_size: allocated buffer, size =  6695.84 MiB, ( 6695.91 / 21845.34)
+//   0.00.035.064 I llm_load_tensors: ggml ctx size =    0.27 MiB
+//   0.00.090.578 I llm_load_tensors: offloading 32 repeating layers to GPU
+//   0.00.090.579 I llm_load_tensors: offloading non-repeating layers to GPU
+//
+// D - debug   (stderr, V = LOG_DEFAULT_DEBUG)
+// I - info    (stdout, V = LOG_DEFAULT_INFO)
+// W - warning (stderr, V = LOG_DEFAULT_WARN)
+// E - error   (stderr, V = LOG_DEFAULT_ERROR)
+// O - output  (stdout, V = LOG_DEFAULT_OUTPUT)
+//
+
+void common_log_set_file      (struct common_log * log, const char * file); // not thread-safe
+void common_log_set_colors    (struct common_log * log, log_colors colors); // not thread-safe
+void common_log_set_prefix    (struct common_log * log, bool prefix);       // whether to output prefix to each log
+void common_log_set_timestamps(struct common_log * log, bool timestamps);   // whether to output timestamps in the prefix
+void common_log_flush         (struct common_log * log);                    // flush all pending log messages
+
+// helper macros for logging
+// use these to avoid computing log arguments if the verbosity of the log is higher than the threshold
+//
+// for example:
+//
+//   LOG_DBG("this is a debug message: %d\n", expensive_function());
+//
+// this will avoid calling expensive_function() if LOG_DEFAULT_DEBUG > common_log_verbosity_thold
+//
+
+#define LOG_TMPL(level, verbosity, ...) \
+    do { \
+        if ((verbosity) <= common_log_get_verbosity_thold()) { \
+            common_log_add(common_log_main(), (level), __VA_ARGS__); \
+        } \
+    } while (0)
+
+#define LOG(...)             LOG_TMPL(GGML_LOG_LEVEL_NONE, LOG_LEVEL_OUTPUT, __VA_ARGS__)
+#define LOGV(verbosity, ...) LOG_TMPL(GGML_LOG_LEVEL_NONE, verbosity,        __VA_ARGS__)
+
+#define LOG_DBG(...) LOG_TMPL(GGML_LOG_LEVEL_DEBUG, LOG_LEVEL_DEBUG,  __VA_ARGS__)
+#define LOG_TRC(...) LOG_TMPL(GGML_LOG_LEVEL_INFO,  LOG_LEVEL_TRACE,  __VA_ARGS__)
+#define LOG_INF(...) LOG_TMPL(GGML_LOG_LEVEL_INFO,  LOG_LEVEL_INFO,   __VA_ARGS__)
+#define LOG_WRN(...) LOG_TMPL(GGML_LOG_LEVEL_WARN,  LOG_LEVEL_WARN,   __VA_ARGS__)
+#define LOG_ERR(...) LOG_TMPL(GGML_LOG_LEVEL_ERROR, LOG_LEVEL_ERROR,  __VA_ARGS__)
+#define LOG_CNT(...) LOG_TMPL(GGML_LOG_LEVEL_
+// ==== common/ngram-map.cpp ====
+#include "common.h"
+#include "log.h"
+#include "ngram-map.h"
+
+#include <cinttypes>
+#include <cstdint>
+#include <cstdio>
+#include <sstream>
+
+// prime number used for LCG hash function (32 bit), it is near (sqrt(5) - 1)/2 * 2^32.
+#define LCG_FACTOR 2654435761UL
+
+// Compute the LCG hash of a n-gram of size len at offset start.
+static uint32_t common_ngram_map_hash(const llama_tokens & tokens, size_t start, size_t len) {
+    uint32_t hash = 0;
+    for (size_t i = 0; i < len; ++i) {
+        hash = hash * LCG_FACTOR + tokens[start + i];
+    }
+    return hash;
+}
+
+// Print the values of a sublist of `llama_tokens & inp` to a string in the form [v0, v1, v2, ...].
+static std::string common_tokens_to_str(const llama_tokens & inp, size_t start, size_t length) {
+    std::ostringstream oss;
+    oss << '[';
+    for (size_t i = 0; i < length; ++i) {
+        if (i > 0) {
+            oss << ", ";
+        }
+        oss << inp[start + i];
+    }
+    oss << ']';
+    return oss.str();
+}
+
+
+// n-gram simple
+//
+
+/**
+ * Perform speculative generation using the model's own token history.
+ * Searches for a matching pattern in the token history and returns draft tokens.
+ *
+ * @param state     Current state of this implementation
+ * @param tokens    Token history to search in
+ * @param sampled   Last sampled token
+ * @return Vector of draft tokens, empty if no matching pattern is found
+ */
+llama_tokens common_ngram_simple_draft(
+        const common_ngram_simple_config & config,
+        const llama_tokens & tokens, llama_token sampled) {
+
+    // Simple implementation of self-speculative decoding without a draft model.
+    //
+    const size_t cur_len = tokens.size();
+
+    const size_t n_draft_min = config.size_ngram; // size of n-gram to lookup in token history
+    const size_t n_draft_max = config.size_mgram; // the m-gram following the found n-gram is used for draft
+
+    // vector for tokens we want to verify.
+    // return empty vector if there is no match.
+    llama_tokens draft_tokens;
+
+    // We need at least n_draft_min + n_draft_max + 1 tokens.
+    if (cur_len <= static_cast<size_t>(n_draft_min + n_draft_max + 1)) {
+        return draft_tokens;
+    }
+
+    // pattern search
+    llama_tokens pattern;
+    pattern.reserve(n_draft_min);
+    for (size_t j = cur_len - n_draft_min + 1; j < cur_len; ++j) {
+        pattern.push_back(tokens[j]);
+    }
+    pattern.push_back(sampled); // add the last token to the pattern
+
+    size_t match_pos = 0; // we ignore position 0, position 0 == no match
+                          // search backwards, but skip the current match (we are currently there)
+    for (size_t j = cur_len - n_draft_min - 1; j > 0; --j) {
+        bool match = true;
+        for (size_t k = 0; k < pattern.size(); ++k) {
+            if (tokens[j + k] != pattern[k]) {
+                match = false;
+                break;
+            }
+        }
+        if (match) {
+            match_pos = j;
+            break;
+        }
+    }
+    if (match_pos == 0) {
+        return draft_tokens;
+    }
+
+    const size_t copy_max = std::min(
+            n_draft_max,
+            cur_len - (match_pos + n_draft_min)
+            );
+    if (copy_max < n_draft_min) {
+        return draft_tokens;
+    }
+    LOG_DBG("%s: #tokens = %zu: found matching pattern at pos %zu, length %zu, draft length %zu\n",
+            __func__, cur_len,
+            match_pos, pattern.size(), copy_max);
+
+    draft_tokens.reserve(copy_max);
+    for (size_t j = 0; j < copy_max; ++j) {
+        draft_tokens.push_back(tokens[match_pos + n_draft_min + j]);
+    }
+    return draft_tokens;
+}
+
+
+// n-gram map
+//
+
+// maximum number of counted values of a ngram map value.
+#define COMMON_NGRAM_MAX_VALUE_COUNT 16380
+
+void common_ngram_map_begin(
+    common_ngram_map & map, const llama_tokens & tokens) {
+    size_t size_begin = tokens.size();
+
+    LOG_DBG("%s: begin, idx_last_draft=%zu, new begin=%zu, #keys=%zu\n", __func__,
+            map.idx_last_check, size_begin, map.keys.size());
+
+    size_t idx_begin_cleanup = map.size_last_begin;
+    if (idx_begin_cleanup > size_begin) {
+        if (size_begin > (size_t) map.size_key + map.size_value) {
+            idx_begin_cleanup = size_begin - map.size_key - map.size_value;
+        } else {
+            idx_begin_cleanup = 0;
+        }
+        LOG_INF("%s: shrink cleanup begin: %zu -> %zu\n", __func__, map.size_last_begin, idx_begin_cleanup);
+    }
+
+    size_t count_map_entries_upd = 0;
+    if (!map.key_map.empty() && size_begin < map.idx_last_check) {
+        if (map.show_key_map_stats) {
+            // Print statistics of hash map map_key.
+            size_t count_nonzero = 0;
+            uint32_t min_idx = UINT32_MAX;
+            uint32_t max_idx = 0;
+            for (size_t i = 0; i < map.key_map.size(); ++i) {
+                uint32_t key_idx = map.key_map[i];
+                if (key_idx != 0) {
+                    ++count_nonzero;
+                    if (key_idx < min_idx) min_idx = key_idx;
+                    if (key_idx > max_idx) max_idx = key_i
+// ==== common/ngram-mod.h ====
+#pragma once
+
+#include <cstdint>
+#include <vector>
+#include <cstddef>
+
+//
+// common_ngram_mod
+// ref: https://github.com/ggml-org/llama.cpp/pull/19164
+//
+
+// basic n-gram hasher
+struct common_ngram_mod {
+    using entry_t = int32_t;
+
+    static constexpr entry_t EMPTY = -1;
+
+    common_ngram_mod(uint16_t n, size_t size);
+
+    size_t  idx(const entry_t * tokens) const;
+    void    add(const entry_t * tokens);
+    entry_t get(const entry_t * tokens) const; // return -1 if not found
+
+    void reset();
+
+    size_t get_n()    const;
+    size_t get_used() const;
+
+    size_t size()       const;
+    size_t size_bytes() const;
+
+private:
+    size_t n; // ngram size to hash
+
+    size_t used;
+
+    std::vector<entry_t> entries;
+};
+
+// ==== common/preset.cpp ====
+#include "arg.h"
+#include "preset.h"
+#include "peg-parser.h"
+#include "log.h"
+#include "download.h"
+
+#include <fstream>
+#include <sstream>
+#include <filesystem>
+#include <regex>
+
+static std::string rm_leading_dashes(const std::string & str) {
+    size_t pos = 0;
+    while (pos < str.size() && str[pos] == '-') {
+        ++pos;
+    }
+    return str.substr(pos);
+}
+
+static std::string canonical_tag(const std::string & tag) {
+    static const std::regex re_tag("[-.]([A-Z0-9_]+)$", std::regex::icase);
+    std::smatch m;
+    if (std::regex_search(tag, m, re_tag)) {
+        std::string canon = m[1].str();
+        for (char & c : canon) {
+            c = (char) std::toupper((unsigned char) c);
+        }
+        return canon;
+    }
+    std::string upper = tag;
+    for (char & c : upper) {
+        c = (char) std::toupper((unsigned char) c);
+    }
+    return upper;
+}
+
+std::vector<std::string> common_preset::to_args(const std::string & bin_path) const {
+    std::vector<std::string> args;
+
+    if (!bin_path.empty()) {
+        args.push_back(bin_path);
+    }
+
+    for (const auto & [opt, value] : options) {
+        if (opt.is_preset_only) {
+            continue; // skip preset-only options (they are not CLI args)
+        }
+
+        // use the last arg as the main arg (i.e. --long-form)
+        args.push_back(opt.args.back());
+
+        // handle value(s)
+        if (opt.value_hint == nullptr && opt.value_hint_2 == nullptr) {
+            // flag option, no value
+            if (common_arg_utils::is_falsey(value)) {
+                // use negative arg if available
+                if (!opt.args_neg.empty()) {
+                    args.back() = opt.args_neg.back();
+                } else {
+                    // otherwise, skip the flag
+                    // TODO: maybe throw an error instead?
+                    args.pop_back();
+                }
+            }
+        }
+        if (opt.value_hint != nullptr) {
+            // single value
+            args.push_back(value);
+        }
+        if (opt.value_hint != nullptr && opt.value_hint_2 != nullptr) {
+            throw std::runtime_error(string_format(
+                "common_preset::to_args(): option '%s' has two values, which is not supported yet",
+                opt.args.back()
+            ));
+        }
+    }
+
+    return args;
+}
+
+std::string common_preset::to_ini() const {
+    std::ostringstream ss;
+
+    ss << "[" << name << "]\n";
+    for (const auto & [opt, value] : options) {
+        auto espaced_value = value;
+        string_replace_all(espaced_value, "\n", "\\\n");
+        ss << rm_leading_dashes(opt.args.back()) << " = ";
+        ss << espaced_value << "\n";
+    }
+    ss << "\n";
+
+    return ss.str();
+}
+
+void common_preset::set_option(const common_preset_context & ctx, const std::string & env, const std::string & value) {
+    // try if option exists, update it
+    for (auto & [opt, val] : options) {
+        if (opt.env && env == opt.env) {
+            val = value;
+            return;
+        }
+    }
+    // if option does not exist, we need to add it
+    if (ctx.key_to_opt.find(env) == ctx.key_to_opt.end()) {
+        throw std::runtime_error(string_format(
+            "%s: option with env '%s' not found in ctx_params",
+            __func__, env.c_str()
+        ));
+    }
+    options[ctx.key_to_opt.at(env)] = value;
+}
+
+void common_preset::unset_option(const std::string & env) {
+    for (auto it = options.begin(); it != options.end(); ) {
+        const common_arg & opt = it->first;
+        if (opt.env && env == opt.env) {
+            it = options.erase(it);
+            return;
+        } else {
+            ++it;
+        }
+    }
+}
+
+bool common_preset::get_option(const std::string & env, std::string & value) const {
+    for (const auto & [opt, val] : options) {
+        if (opt.env && env == opt.env) {
+            value = val;
+            return true;
+        }
+    }
+    return false;
+}
+
+void common_preset::merge(const common_preset & other) {
+    for (const auto & [opt, val] : other.options) {
+        options[opt] = val; // overwrite existing options
+    }
+}
+
+void common_preset::apply_to_params(common_params & params, const std::set<std::string> & handled_keys) const {
+    for (const auto & [opt, val] : options) {
+        if (!handled_keys.empty()) {
+            if (!opt.env || handled_keys.find(opt.env) == handled_keys.end()) {
+                continue;
+            }
+        }
+        // apply each option to params
+        if (opt.handler_string) {
+            opt.handler_string(params, val);
+        } else if (opt.handler_int) {
+            opt.handler_int(params, std::stoi(val));
+        } else if (opt.handler_bool) {
+            opt.handler_bool(params, common_arg_utils::is_truthy(val));
+        } else if (opt.handler_str_str) {
+            // not supported yet
+            throw std::runtime_error(string_format(
+                "%s: option with two values is not supported yet",
+                __func__
+            ));
+        } else if (opt.handler_void) {
+            
+// ==== common/reasoning-budget.h ====
+#pragma once
+
+#include "llama.h"
+
+#include <cstdint>
+#include <vector>
+
+enum common_reasoning_budget_state {
+    REASONING_BUDGET_IDLE,         // waiting for start sequence
+    REASONING_BUDGET_COUNTING,     // counting down tokens
+    REASONING_BUDGET_FORCING,      // forcing budget message + end sequence
+    REASONING_BUDGET_WAITING_UTF8, // budget exhausted, waiting for UTF-8 completion
+    REASONING_BUDGET_DONE,         // passthrough forever
+};
+
+// Creates a reasoning budget sampler that limits token generation inside a
+// reasoning block (e.g. between <think> and </think>).
+//
+// State machine: IDLE -> COUNTING -> WAITING_UTF8 -> FORCING -> DONE
+//   IDLE:         passthrough, watching for start_tokens sequence
+//   COUNTING:     counting down remaining tokens, watching for natural end_tokens
+//   WAITING_UTF8: budget exhausted, allowing tokens to complete a UTF-8 sequence
+//   FORCING:      forces forced_tokens token-by-token (all other logits -> -inf)
+//   DONE:         passthrough forever
+//
+// Parameters:
+//   vocab          - vocabulary (used for UTF-8 boundary detection; can be nullptr)
+//   start_tokens   - token sequence that activates counting
+//   end_tokens     - token sequence for natural deactivation
+//   forced_tokens  - token sequence forced when budget expires
+//   budget         - max tokens allowed in the reasoning block
+//   initial_state  - initial state
+//
+struct llama_sampler * common_reasoning_budget_init(
+        const struct llama_vocab       * vocab,
+        const std::vector<llama_token> & start_tokens,
+        const std::vector<llama_token> & end_tokens,
+        const std::vector<llama_token> & forced_tokens,
+        int32_t                          budget,
+        common_reasoning_budget_state    initial_state = REASONING_BUDGET_IDLE);
+
+common_reasoning_budget_state common_reasoning_budget_get_state(const struct llama_sampler * smpl);
+
+// Manually transition the reasoning budget sampler into the FORCING state.
+// Returns true if the transition occurred.
+bool common_reasoning_budget_force(struct llama_sampler * smpl);
+
+// ==== common/speculative.cpp ====
+#include "speculative.h"
+
+#include "common.h"
+#include "ggml.h"
+#include "llama.h"
+#include "log.h"
+#include "ngram-cache.h"
+#include "ngram-map.h"
+#include "ngram-mod.h"
+#include "sampling.h"
+
+#include "../src/llama-ext.h" // staging API: llama_set_embeddings_nextn / llama_get_embeddings_nextn_ith (used by MTP)
+
+#include <algorithm>
+#include <cassert>
+#include <cstring>
+#include <iomanip>
+#include <map>
+#include <cinttypes>
+
+#define SPC_DBG(fmt, ...) LOG_DBG("spec %12.*s: " fmt, 12, __func__, __VA_ARGS__)
+#define SPC_TRC(fmt, ...) LOG_TRC("spec %12.*s: " fmt, 12, __func__, __VA_ARGS__)
+#define SPC_INF(fmt, ...) LOG_INF("spec %12.*s: " fmt, 12, __func__, __VA_ARGS__)
+#define SPC_WRN(fmt, ...) LOG_WRN("spec %12.*s: " fmt, 12, __func__, __VA_ARGS__)
+#define SPC_ERR(fmt, ...) LOG_ERR("spec %12.*s: " fmt, 12, __func__, __VA_ARGS__)
+#define SPC_CNT(fmt, ...) LOG_CNT(""              fmt,               __VA_ARGS__)
+
+#define SPEC_VOCAB_MAX_SIZE_DIFFERENCE  128
+#define SPEC_VOCAB_CHECK_START_TOKEN_ID 5
+
+const std::map<std::string, common_speculative_type> common_speculative_type_from_name_map = {
+    {"none",          COMMON_SPECULATIVE_TYPE_NONE},
+    {"draft-simple",  COMMON_SPECULATIVE_TYPE_DRAFT_SIMPLE},
+    {"draft-eagle3",  COMMON_SPECULATIVE_TYPE_DRAFT_EAGLE3},
+    {"draft-mtp",     COMMON_SPECULATIVE_TYPE_DRAFT_MTP},
+    {"draft-dflash",  COMMON_SPECULATIVE_TYPE_DRAFT_DFLASH},
+    {"ngram-simple",  COMMON_SPECULATIVE_TYPE_NGRAM_SIMPLE},
+    {"ngram-map-k",   COMMON_SPECULATIVE_TYPE_NGRAM_MAP_K},
+    {"ngram-map-k4v", COMMON_SPECULATIVE_TYPE_NGRAM_MAP_K4V},
+    {"ngram-mod",     COMMON_SPECULATIVE_TYPE_NGRAM_MOD},
+    {"ngram-cache",   COMMON_SPECULATIVE_TYPE_NGRAM_CACHE}
+};
+
+static std::string common_speculative_get_devices_str(const std::vector<ggml_backend_dev_t> & devices) {
+    std::string result;
+    for (size_t i = 0; i < devices.size(); i++) {
+        if (devices[i] == nullptr) {
+            continue;
+        }
+        if (!result.empty()) result += ", ";
+        result += ggml_backend_dev_name(devices[i]);
+    }
+    return result.empty() ? "default" : result;
+}
+
+struct common_speculative_config {
+    common_speculative_type type;
+    common_params_speculative params;
+
+    common_speculative_config(common_speculative_type t,
+            const common_params_speculative & p = common_params_speculative{}) : type(t), params(p) {}
+};
+
+static bool common_speculative_are_compatible(
+    const llama_model * model_tgt,
+    const llama_model * model_dft) {
+    const llama_vocab * vocab_tgt = llama_model_get_vocab(model_tgt);
+    const llama_vocab * vocab_dft = llama_model_get_vocab(model_dft);
+
+    const auto vocab_type_tgt = llama_vocab_type(vocab_tgt);
+    SPC_DBG("vocab_type tgt: %d\n", vocab_type_tgt);
+
+    const auto vocab_type_dft = llama_vocab_type(vocab_dft);
+    SPC_DBG("vocab_type dft: %d\n", vocab_type_dft);
+
+    if (vocab_type_tgt != vocab_type_dft) {
+        SPC_WRN("draft model vocab type must match target model to use speculation but "
+                "vocab_type_dft = %d while vocab_type_tgt = %d\n", vocab_type_dft, vocab_type_tgt);
+        return false;
+    }
+
+    if (llama_vocab_get_add_bos(vocab_tgt) != llama_vocab_get_add_bos(vocab_dft) ||
+        (llama_vocab_get_add_bos(vocab_tgt) && llama_vocab_bos(vocab_tgt) != llama_vocab_bos(vocab_dft))) {
+        SPC_WRN("draft model bos tokens must match target model to use speculation. add: %d - %d, id: %d - %d)\n",
+                llama_vocab_get_add_bos(vocab_tgt), llama_vocab_get_add_bos(vocab_dft),
+                llama_vocab_bos(vocab_tgt), llama_vocab_bos(vocab_dft));
+        return false;
+    }
+
+    if (llama_vocab_get_add_eos(vocab_tgt) != llama_vocab_get_add_eos(vocab_dft) ||
+        (llama_vocab_get_add_eos(vocab_tgt) && llama_vocab_eos(vocab_tgt) != llama_vocab_eos(vocab_dft))) {
+        SPC_WRN("draft model eos tokens must match target model to use speculation. add: %d - %d, id: %d - %d)\n",
+                llama_vocab_get_add_eos(vocab_tgt), llama_vocab_get_add_eos(vocab_dft),
+                llama_vocab_eos(vocab_tgt), llama_vocab_eos(vocab_dft));
+        return false;
+    }
+
+    {
+        const int n_vocab_tgt = llama_vocab_n_tokens(vocab_tgt);
+        const int n_vocab_dft = llama_vocab_n_tokens(vocab_dft);
+        const int vocab_diff  = n_vocab_tgt > n_vocab_dft
+            ? n_vocab_tgt - n_vocab_dft
+            : n_vocab_dft - n_vocab_tgt;
+
+        if (vocab_diff > SPEC_VOCAB_MAX_SIZE_DIFFERENCE) {
+            SPC_DBG("draft model vocab must closely match target model to use speculation but "
+                    "target vocab size %d does not match draft vocab size %d - difference %d, max allowed %d\n",
+                    n_vocab_tgt, llama_vocab_n_tokens(vocab_dft), vocab_diff, SPEC_VOCAB_MAX_SIZE_DIFFERENCE);
+            return false;
+        }
+
+        for (int i = SPEC_VOCAB_CHECK_START_TOKEN_ID; i < std::min(n_vocab_tgt, n_vocab_dft); ++i) {
+            const char * token_text_tgt = llama_vocab_get_text(vocab_tgt, i);
+     
+// ==== common/unicode.h ====
+#pragma once
+
+#include <cstdint>
+#include <string_view>
+#include <vector>
+#include <string>
+
+// UTF-8 parsing utilities for streaming-aware unicode support
+
+struct utf8_parse_result {
+    uint32_t codepoint;      // Decoded codepoint (only valid if status == SUCCESS)
+    size_t bytes_consumed;   // How many bytes this codepoint uses (1-4)
+    enum status { SUCCESS, INCOMPLETE, INVALID } status;
+
+    utf8_parse_result(enum status s, uint32_t cp = 0, size_t bytes = 0)
+        : codepoint(cp), bytes_consumed(bytes), status(s) {}
+};
+
+// Determine the expected length of a UTF-8 sequence from its first byte
+// Returns 0 for invalid first bytes
+size_t common_utf8_sequence_length(unsigned char first_byte);
+
+// Check if a string ends with a complete UTF-8 sequence.
+bool common_utf8_is_complete(const std::string & s);
+
+// Parse a single UTF-8 codepoint from input
+utf8_parse_result common_parse_utf8_codepoint(std::string_view input, size_t offset);
+
+std::string common_unicode_cpts_to_utf8(const std::vector<uint32_t> & cps);
+std::string common_unicode_cpt_to_utf8(uint32_t cpt);
+
+// ==== ggml/src/ggml-backend-dl.h ====
+#pragma once
+
+#ifdef _WIN32
+#   define WIN32_LEAN_AND_MEAN
+#   ifndef NOMINMAX
+#       define NOMINMAX
+#   endif
+#   include <windows.h>
+#   include <winevt.h>
+#else
+#    include <dlfcn.h>
+#    include <unistd.h>
+#endif
+#include <filesystem>
+
+namespace fs = std::filesystem;
+
+#ifdef _WIN32
+
+using dl_handle = std::remove_pointer_t<HMODULE>;
+
+struct dl_handle_deleter {
+    void operator()(HMODULE handle) {
+        FreeLibrary(handle);
+    }
+};
+
+#else
+
+using dl_handle = void;
+
+struct dl_handle_deleter {
+    void operator()(void * handle) {
+        dlclose(handle);
+    }
+};
+
+#endif
+
+using dl_handle_ptr = std::unique_ptr<dl_handle, dl_handle_deleter>;
+
+dl_handle * dl_load_library(const fs::path & path);
+void * dl_get_sym(dl_handle * handle, const char * name);
+const char * dl_error();
+
+
+// ==== ggml/src/ggml-backend-reg.cpp ====
+#include "ggml-backend-impl.h"
+#include "ggml-backend.h"
+#include "ggml-backend-dl.h"
+#include "ggml-impl.h"
+#include <algorithm>
+#include <cstring>
+#include <filesystem>
+#include <memory>
+#include <string>
+#include <type_traits>
+#include <vector>
+#include <cctype>
+
+#ifdef _WIN32
+#    define WIN32_LEAN_AND_MEAN
+#    ifndef NOMINMAX
+#        define NOMINMAX
+#    endif
+#    include <windows.h>
+#elif defined(__APPLE__)
+#    include <mach-o/dyld.h>
+#    include <dlfcn.h>
+#else
+#    include <dlfcn.h>
+#    include <unistd.h>
+#endif
+
+// Backend registry
+#ifdef GGML_USE_CPU
+#include "ggml-cpu.h"
+#endif
+
+#ifdef GGML_USE_CUDA
+#include "ggml-cuda.h"
+#endif
+
+#ifdef GGML_USE_METAL
+#include "ggml-metal.h"
+#endif
+
+#ifdef GGML_USE_SYCL
+#include "ggml-sycl.h"
+#endif
+
+#ifdef GGML_USE_VULKAN
+#include "ggml-vulkan.h"
+#endif
+
+#ifdef GGML_USE_WEBGPU
+#include "ggml-webgpu.h"
+#endif
+
+#ifdef GGML_USE_ZDNN
+#include "ggml-zdnn.h"
+#endif
+
+#ifdef GGML_USE_OPENCL
+#include "ggml-opencl.h"
+#endif
+
+#ifdef GGML_USE_HEXAGON
+#include "ggml-hexagon.h"
+#endif
+
+#ifdef GGML_USE_BLAS
+#include "ggml-blas.h"
+#endif
+
+#ifdef GGML_USE_RPC
+#include "ggml-rpc.h"
+#endif
+
+#ifdef GGML_USE_VIRTGPU_FRONTEND
+#include "ggml-virtgpu.h"
+#endif
+
+#ifdef GGML_USE_CANN
+#include "ggml-cann.h"
+#endif
+
+#ifdef GGML_USE_ZENDNN
+#include "ggml-zendnn.h"
+#endif
+
+#ifdef GGML_USE_OPENVINO
+#include "ggml-openvino.h"
+#endif
+
+#ifdef GGML_USE_ET
+#include "ggml-et.h"
+#endif
+
+namespace fs = std::filesystem;
+
+static std::string path_str(const fs::path & path) {
+    try {
+#if defined(__cpp_lib_char8_t)
+        // C++20 and later: u8string() returns std::u8string
+        const std::u8string u8str = path.u8string();
+        return std::string(reinterpret_cast<const char *>(u8str.data()), u8str.size());
+#else
+        // C++17: u8string() returns std::string
+        return path.u8string();
+#endif
+    } catch (...) {
+        return std::string();
+    }
+}
+
+struct ggml_backend_reg_entry {
+    ggml_backend_reg_t reg;
+    dl_handle_ptr handle;
+};
+
+struct ggml_backend_registry {
+    std::vector<ggml_backend_reg_entry> backends;
+    std::vector<ggml_backend_dev_t> devices;
+
+    ggml_backend_registry() {
+#ifdef GGML_USE_CUDA
+        register_backend(ggml_backend_cuda_reg());
+#endif
+#ifdef GGML_USE_METAL
+        register_backend(ggml_backend_metal_reg());
+#endif
+#ifdef GGML_USE_SYCL
+        register_backend(ggml_backend_sycl_reg());
+#endif
+#ifdef GGML_USE_VULKAN
+    // Add runtime disable check
+    if (getenv("GGML_DISABLE_VULKAN") == nullptr) {
+        register_backend(ggml_backend_vk_reg());
+    } else {
+        GGML_LOG_DEBUG("Vulkan backend disabled by GGML_DISABLE_VULKAN environment variable\n");
+    }
+#endif
+#ifdef GGML_USE_WEBGPU
+        register_backend(ggml_backend_webgpu_reg());
+#endif
+#ifdef GGML_USE_ZDNN
+        register_backend(ggml_backend_zdnn_reg());
+#endif
+#ifdef GGML_USE_VIRTGPU_FRONTEND
+        register_backend(ggml_backend_virtgpu_reg());
+#endif
+
+#ifdef GGML_USE_OPENCL
+        register_backend(ggml_backend_opencl_reg());
+#endif
+#ifdef GGML_USE_ZENDNN
+        register_backend(ggml_backend_zendnn_reg());
+#endif
+#ifdef GGML_USE_HEXAGON
+        register_backend(ggml_backend_hexagon_reg());
+#endif
+#ifdef GGML_USE_CANN
+        register_backend(ggml_backend_cann_reg());
+#endif
+#ifdef GGML_USE_BLAS
+        register_backend(ggml_backend_blas_reg());
+#endif
+#ifdef GGML_USE_RPC
+        register_backend(ggml_backend_rpc_reg());
+#endif
+#ifdef GGML_USE_OPENVINO
+        register_backend(ggml_backend_openvino_reg());
+#endif
+#ifdef GGML_USE_ET
+        register_backend(ggml_backend_et_reg());
+#endif
+#ifdef GGML_USE_CPU
+        register_backend(ggml_backend_cpu_reg());
+#endif
+    }
+
+    ~ggml_backend_registry() {
+        // FIXME: backends cannot be safely unloaded without a function to destroy all the backend resources,
+        // since backend threads may still be running and accessing resources from the dynamic library
+        for (auto & entry : backends) {
+            if (entry.handle) {
+                entry.handle.release(); // NOLINT
+            }
+        }
+    }
+
+    void register_backend(ggml_backend_reg_t reg, dl_handle_ptr handle = nullptr) {
+        if (!reg) {
+            return;
+        }
+
+        for (auto & entry : backends) {
+            if (entry.reg == reg) {
+                return;
+            }
+        }
+
+#ifndef NDEBUG
+        GGML_LOG_DEBUG("%s: registered backend %s (%zu devices)\n",
+            __func__, ggml_backend_reg_name(reg), ggml_backend_reg_dev_count(reg));
+#endif
+        backends.push_back({ reg, std::move(handle) });
+        for (size_t i = 0; i < ggml_backend_reg_dev_count(reg); i++) {
+            register_device(ggml_backend_reg_dev_get(reg, i));
+        }
+    }
+
+    void register_device(ggml_backend_dev_t device) {
+        for (auto & dev : devices) {
+            if (dev == device) {
+                return;
+            }
+        }
+
+#ifndef NDEBUG
+        GGML_LOG_DEBUG("%s: registered device %s (%s)\n", __func__, ggml_backend_dev_name(device), ggml_backend_d
+// ==== ggml/src/ggml-cann/aclnn_ops.h ====
+/**
+ * Copyright (c) 2023-2026 The ggml authors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ */
+
+#ifndef CANN_ACLNN_OPS
+#define CANN_ACLNN_OPS
+
+#include "acl_tensor.h"
+#include "common.h"
+
+#include <aclnnop/aclnn_abs.h>
+#include <aclnnop/aclnn_arange.h>
+#include <aclnnop/aclnn_argsort.h>
+#include <aclnnop/aclnn_cat.h>
+#include <aclnnop/aclnn_clamp.h>
+#include <aclnnop/aclnn_cos.h>
+#include <aclnnop/aclnn_cumsum.h>
+#include <aclnnop/aclnn_tril.h>
+#include <aclnnop/aclnn_triu.h>
+#include <aclnnop/aclnn_exp.h>
+#include <aclnnop/aclnn_gelu.h>
+#include <aclnnop/aclnn_gelu_v2.h>
+#include <aclnnop/aclnn_hardsigmoid.h>
+#include <aclnnop/aclnn_hardswish.h>
+#include <aclnnop/aclnn_leaky_relu.h>
+#include <aclnnop/aclnn_log.h>
+#include <aclnnop/aclnn_logsoftmax.h>
+#include <aclnnop/aclnn_neg.h>
+#include <aclnnop/aclnn_norm.h>
+#include <aclnnop/aclnn_relu.h>
+#include <aclnnop/aclnn_sigmoid.h>
+#include <aclnnop/aclnn_sign.h>
+#include <aclnnop/aclnn_silu.h>
+#include <aclnnop/aclnn_sin.h>
+#include <aclnnop/aclnn_softplus.h>
+#include <aclnnop/aclnn_swi_glu.h>
+#include <aclnnop/aclnn_geglu.h>
+#include <aclnnop/aclnn_slice.h>
+#include <aclnnop/aclnn_sqrt.h>
+#include <aclnnop/aclnn_tanh.h>
+
+#include <functional>
+#include <unordered_set>
+
+/**
+ * @brief   Repeats a ggml tensor along each dimension to match the dimensions
+ *          of another tensor.
+ *
+ * @details This function repeats the elements of a source ggml tensor along
+ *          each dimension to create a destination tensor with the specified
+ *          dimensions. The operation is performed using the ACL backend and
+ *          executed asynchronously on the device.
+ *
+ * @param   ctx The CANN context used for operations.
+ * @param   dst The ggml tensor representing the destination, which op is
+ *              GGML_OP_REPEAT and specifies the desired dimensions.
+ */
+void ggml_cann_repeat(ggml_backend_cann_context & ctx, ggml_tensor * dst);
+
+void ggml_cann_swiglu(ggml_backend_cann_context & ctx, ggml_tensor * dst);
+void ggml_cann_geglu(ggml_backend_cann_context & ctx, ggml_tensor * dst, int64_t approximate);
+
+/**
+ * @brief   Applies the Leaky ReLU activation function to a tensor using the CANN
+ *          backend.
+ *
+ * @details This function computes the Leaky ReLU activation for each element of
+ *          the input tensor. The Leaky ReLU function allows a small gradient
+ *          when the unit is not active (i.e., when the input is negative). The
+ *          Leaky ReLU function is defined as:
+ *          \f[
+ *              \text{dst} = \max(0, src) + \text{negativeSlope} \cdot \min(0,
+ *               src)
+ *          \f]
+ *          `negativeSlope` is in dst->params.
+ *
+ * @param ctx The CANN context used for operations.
+ * @param dst The destination tensor where the result of the Leaky ReLU
+ *            activation is stored, which op is `GGML_OP_LEAKY_RELU`
+ */
+void ggml_cann_leaky_relu(ggml_backend_cann_context & ctx, ggml_tensor * dst);
+
+/**
+ * @brief    Concatenates multiple tensors along a specified dimension using the
+ *           CANN backend.
+ *
+ * @param ctx        The CANN context used for operations.
+ * @param tensorList A pointer to the list of tensors to be concatenated.
+ * @param dst        The destination tensor where the result of the
+ *                   concatenation is stored. dst->op is `GGML_OP_CONCAT`.
+ * @param concat_dim The dimension along which the tensors are concatenated.
+ *
+ * @attention tensorList length should be 2 and the dimension using for concat
+ *            default to 1.
+ */
+void ggml_cann_concat(ggml_backend_cann_context & ctx, ggml_tensor * dst);
+
+/**
+ * @brief   Generates a sequence of evenly spaced values within a specified
+ *          interval for a ggml tensor using the CANN backend.
+ *
+ * @details This function creates a sequence of numbers over a specified i
+ *          nterval, starting from `start`, ending before `stop`, and
+ *          incrementing by `step`. The sequence is stored in the destinatio
+// ==== ggml/src/ggml-cann/common.h ====
+/*
+ * Copyright (c) 2023-2026 The ggml authors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ */
+
+#ifndef CANN_COMMON_H
+#define CANN_COMMON_H
+
+#include "../ggml-impl.h"
+#include "../include/ggml-cann.h"
+#include "../include/ggml.h"
+
+#include <acl/acl.h>
+#include <unistd.h>
+
+#include <atomic>
+#include <condition_variable>
+#include <cstdio>
+#include <functional>
+#include <iostream>
+#include <list>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <optional>
+#include <string>
+#include <thread>
+#include <vector>
+
+#define MATRIX_ROW_PADDING    512
+#define GGML_CANN_MAX_STREAMS 8
+
+/**
+ * @brief Handles CANN-related errors by printing an error message and
+ *        terminating the program.
+ * @param stmt The statement that caused the error.
+ * @param func The function in which the error occurred.
+ * @param file The file in which the error occurred.
+ * @param line The line number at which the error occurred.
+ * @param msg The error message.
+ */
+[[noreturn]] void ggml_cann_error(const char * stmt, const char * func, const char * file, int line, const char * msg);
+
+/**
+ * @brief Checks the result of a CANN function call and invokes the error
+ *        handler if the call fails.
+ * @param stmt The CANN function call to check.
+ * @param success The success code that indicates the call was successful.
+ * @param error_fn The function to call to retrieve the error message.
+ */
+#define ACL_CHECK_GEN(stmt, success, error_fn)                                \
+    do {                                                                      \
+        int err_code = (stmt);                                                \
+        if (err_code != (success)) {                                          \
+            ggml_cann_error(#stmt, __func__, __FILE__, __LINE__, error_fn()); \
+        }                                                                     \
+    } while (0);
+
+#define ACL_CHECK(stmt) ACL_CHECK_GEN(stmt, 0, aclGetRecentErrMsg)
+
+/**
+ * @brief Contains information about CANN devices.
+ */
+struct ggml_cann_device_info {
+    /**
+     * @brief Number of CANN devices available.
+     */
+    int32_t device_count;
+
+    /**
+     * @brief Information about a single CANN device.
+     */
+    struct cann_device_info {
+        int    cc;              /**< Compute capability.                   */
+        size_t smpb;            /**< Maximum shared memory per block.      */
+        bool   vmm;             /**< Virtual memory support.               */
+        size_t vmm_granularity; /**< Granularity of virtual memory.        */
+        size_t total_vram;      /**< Total video RAM available on the device. */
+    };
+
+    cann_device_info devices[GGML_CANN_MAX_DEVICES] = {}; /**< Array of CANN device information. */
+};
+
+const ggml_cann_device_info & ggml_cann_info();
+
+void    ggml_cann_set_device(int32_t device);
+
+std::optional<std::string> get_env_as_lowercase(const std::string & name);
+bool                       parse_bool(const std::string & value);
+int                        parse_integer(const std::string & value);
+
+/**
+ * @brief Abstract base class for memory pools used by CANN.
+ */
+struct ggml_cann_pool {
+    /**
+     * @brief Virtual destructor for the memory pool.
+     */
+    virtual ~ggml_cann_pool() = default;
+
+    /**
+     * @brief Allocates memory from the pool.
+     *
+     * @param size         The size of the memory block to allocate.
+     * @param actual_size  Pointer to a variable where the actual allocated size
+     *                     will be stored.
+     * @return             Pointer to the allocated memory block.
+     */
+    virtual void * alloc(size_t size, size_t * actual_size) = 0;
+
+    /**
+     * @brief Frees a previously allocated memory block.
+     *
+     * @param ptr   Pointer to the memory block to free.
+     * @param size  Size of the memory block to free.
+     * @note Note that all CANN opertors are running async. Make sure memory is
+     *       still avaiable before this operator finishe
+// ==== ggml/src/ggml.cpp ====
+#include "ggml-impl.h"
+
+#include <cstdlib>
+#include <exception>
+
+static std::terminate_handler previous_terminate_handler;
+
+GGML_NORETURN static void ggml_uncaught_exception() {
+    ggml_print_backtrace();
+    if (previous_terminate_handler) {
+        previous_terminate_handler();
+    }
+    abort(); // unreachable unless previous_terminate_handler was nullptr
+}
+
+static bool ggml_uncaught_exception_init = []{
+    const char * GGML_NO_BACKTRACE = getenv("GGML_NO_BACKTRACE");
+    if (GGML_NO_BACKTRACE) {
+        return false;
+    }
+    const auto prev{std::get_terminate()};
+    GGML_ASSERT(prev != ggml_uncaught_exception);
+    previous_terminate_handler = prev;
+    std::set_terminate(ggml_uncaught_exception);
+    return true;
+}();
+
+// ==== ggml/src/ggml-cpu/amx/common.h ====
+#pragma once
+
+#include "ggml.h"
+#include "ggml-cpu-impl.h"
+
+#include <algorithm>
+#include <memory>
+#include <type_traits>
+
+#if defined(GGML_USE_OPENMP)
+#include <omp.h>
+#else
+#include <thread>
+#endif
+
+#define TILE_M 16
+#define TILE_N 16
+#define TILE_K 32
+#define VNNI_BLK 4
+
+#define AMX_BLK_SIZE 32
+
+#define TMM0 0
+#define TMM1 1
+#define TMM2 2
+#define TMM3 3
+#define TMM4 4
+#define TMM5 5
+#define TMM6 6
+#define TMM7 7
+
+// parallel routines
+template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+inline T div_up(T x, T y) { return (x + y - 1) / y; }
+
+template <typename T>
+inline void balance211(T n, T nth, T ith, T& n_start, T& n_end) {
+#if 0
+    // onednn partition pattern
+    T& n_my = n_end;
+    if (nth <= 1 || n == 0) {
+        n_start = 0;
+        n_my = n;
+    } else {
+        T n1 = div_up(n, nth);
+        T n2 = n1 - 1;
+        T T1 = n - n2 * nth;
+        n_my = ith < T1 ? n1 : n2;
+        n_start = ith <= T1 ? ith*n1 : T1 * n1 + (ith - T1) * n2;
+    }
+    n_end += n_start;
+#else
+    // pytorch aten partition pattern
+    T n_my = div_up(n, nth);
+    n_start = ith * n_my;
+    n_end = std::min(n_start + n_my, n);
+#endif
+}
+
+template <typename func_t>
+inline void parallel_for(int n, const func_t & f) {
+    if (n <= 0) {
+        return;
+    }
+#if defined(GGML_USE_OPENMP)
+    #pragma omp parallel
+    {
+        int nth = omp_get_num_threads();
+        int ith = omp_get_thread_num();
+        int tbegin, tend;
+        balance211(n, nth, ith, tbegin, tend);
+        f(tbegin, tend);
+    }
+#else
+    int nth = std::thread::hardware_concurrency();
+    if (nth <= 1) {
+        f(0, n);
+        return;
+    }
+    if (nth > n) {
+        nth = n;
+    }
+    std::vector<std::thread> threads;
+    threads.reserve(nth);
+    for (int ith = 0; ith < nth; ++ith) {
+        threads.emplace_back([&f, n, ith, nth] {
+            int tbegin, tend;
+            balance211(n, nth, ith, tbegin, tend);
+            f(tbegin, tend);
+        });
+    }
+    for (auto & t : threads) {
+        t.join();
+    }
+#endif
+}
+
+template <typename func_t>
+inline void parallel_for_ggml(const ggml_compute_params * params, int n, const func_t & f) {
+    int tbegin, tend;
+    balance211(n, params->nth, params->ith, tbegin, tend);
+    f(tbegin, tend);
+}
+
+// quantized types that have AMX support
+inline bool qtype_has_amx_kernels(const enum ggml_type type) {
+    // TODO: fix padding for vnni format
+    return (type == GGML_TYPE_Q4_0) ||
+        (type == GGML_TYPE_Q4_1) ||
+        (type == GGML_TYPE_Q8_0) ||
+        (type == GGML_TYPE_Q4_K) ||
+        (type == GGML_TYPE_Q5_K) ||
+        (type == GGML_TYPE_Q6_K) ||
+        (type == GGML_TYPE_IQ4_XS);
+}
+
+// ==== ggml/src/ggml-cpu/arch/arm/cpu-feats.cpp ====
+#include "ggml-backend-impl.h"
+
+#if defined(__aarch64__)
+
+#if defined(__linux__)
+#include <sys/auxv.h>
+#elif defined(__APPLE__)
+#include <sys/sysctl.h>
+#endif
+
+#if !defined(HWCAP2_SVE2)
+#define HWCAP2_SVE2 (1 << 1)
+#endif
+
+#if !defined(HWCAP2_I8MM)
+#define HWCAP2_I8MM (1 << 13)
+#endif
+
+#if !defined(HWCAP2_SME)
+#define HWCAP2_SME (1 << 23)
+#endif
+
+struct aarch64_features {
+    // has_neon not needed, aarch64 has NEON guaranteed
+    bool has_dotprod     = false;
+    bool has_fp16_va     = false;
+    bool has_sve         = false;
+    bool has_sve2        = false;
+    bool has_i8mm        = false;
+    bool has_sme         = false;
+
+    aarch64_features() {
+#if defined(__linux__)
+        uint32_t hwcap = getauxval(AT_HWCAP);
+        uint32_t hwcap2 = getauxval(AT_HWCAP2);
+
+        has_dotprod = !!(hwcap & HWCAP_ASIMDDP);
+        has_fp16_va = !!(hwcap & HWCAP_FPHP);
+        has_sve     = !!(hwcap & HWCAP_SVE);
+        has_sve2    = !!(hwcap2 & HWCAP2_SVE2);
+        has_i8mm    = !!(hwcap2 & HWCAP2_I8MM);
+        has_sme     = !!(hwcap2 & HWCAP2_SME);
+#elif defined(__APPLE__)
+        int oldp = 0;
+        size_t size = sizeof(oldp);
+
+        if (sysctlbyname("hw.optional.arm.FEAT_DotProd", &oldp, &size, NULL, 0) == 0) {
+            has_dotprod = static_cast<bool>(oldp);
+        }
+
+        if (sysctlbyname("hw.optional.arm.FEAT_I8MM", &oldp, &size, NULL, 0) == 0) {
+            has_i8mm = static_cast<bool>(oldp);
+        }
+
+        if (sysctlbyname("hw.optional.arm.FEAT_SME", &oldp, &size, NULL, 0) == 0) {
+            has_sme = static_cast<bool>(oldp);
+        }
+
+        // Apple apparently does not implement SVE yet
+#endif
+    }
+};
+
+static int ggml_backend_cpu_aarch64_score() {
+    int score = 1;
+    aarch64_features af;
+
+#ifdef GGML_USE_DOTPROD
+    if (!af.has_dotprod) { return 0; }
+    score += 1<<1;
+#endif
+#ifdef GGML_USE_FP16_VECTOR_ARITHMETIC
+    if (!af.has_fp16_va) { return 0; }
+    score += 1<<2;
+#endif
+#ifdef GGML_USE_SVE
+    if (!af.has_sve) { return 0; }
+    score += 1<<3;
+#endif
+#ifdef GGML_USE_MATMUL_INT8
+    if (!af.has_i8mm) { return 0; }
+    score += 1<<4;
+#endif
+#ifdef GGML_USE_SVE2
+    if (!af.has_sve2) { return 0; }
+    score += 1<<5;
+#endif
+#ifdef GGML_USE_SME
+    if (!af.has_sme) { return 0; }
+    score += 1<<6;
+#endif
+
+    return score;
+}
+
+GGML_BACKEND_DL_SCORE_IMPL(ggml_backend_cpu_aarch64_score)
+
+# endif // defined(__aarch64__)
+
+// ==== examples/json_schema_to_grammar.py ====
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import itertools
+import json
+import re
+import sys
+from typing import Any, List, Optional, Set, Tuple, Union
+
+def _build_repetition(item_rule, min_items, max_items, separator_rule=None):
+
+    if max_items == 0:
+        return ""
+
+    if min_items == 0 and max_items == 1:
+        return f'{item_rule}?'
+
+    if not separator_rule:
+        if min_items == 1 and max_items is None:
+            return f'{item_rule}+'
+        elif min_items == 0 and max_items is None:
+            return f'{item_rule}*'
+        else:
+            return f'{item_rule}{{{min_items},{max_items if max_items is not None else ""}}}'
+
+    result = item_rule + ' ' + _build_repetition(f'({separator_rule} {item_rule})', min_items - 1 if min_items > 0 else 0, max_items - 1 if max_items is not None else None)
+    return f'({result})?' if min_items == 0 else result
+
+def _generate_min_max_int(min_value: Optional[int], max_value: Optional[int], out: list, decimals_left: int = 16, top_level: bool = True):
+    def digit_range(from_char: str, to_char: str):
+        out.append("[")
+        if from_char == to_char:
+            out.append(from_char)
+        else:
+            out.append(from_char)
+            out.append("-")
+            out.append(to_char)
+        out.append("]")
+
+    def more_digits(min_digits: int, max_digits: int):
+        out.append("[0-9]")
+        if min_digits == max_digits and min_digits == 1:
+            return
+        out.append("{")
+        out.append(str(min_digits))
+        if max_digits != min_digits:
+            out.append(",")
+            if max_digits != sys.maxsize:
+                out.append(str(max_digits))
+        out.append("}")
+
+    def uniform_range(from_str: str, to_str: str):
+        i = 0
+        while i < len(from_str) and from_str[i] == to_str[i]:
+            i += 1
+        if i > 0:
+            out.append("\"")
+            out.append(from_str[:i])
+            out.append("\"")
+        if i < len(from_str):
+            if i > 0:
+                out.append(" ")
+            sub_len = len(from_str) - i - 1
+            if sub_len > 0:
+                from_sub = from_str[i+1:]
+                to_sub = to_str[i+1:]
+                sub_zeros = "0" * sub_len
+                sub_nines = "9" * sub_len
+
+                to_reached = False
+                out.append("(")
+                if from_sub == sub_zeros:
+                    digit_range(from_str[i], chr(ord(to_str[i]) - 1))
+                    out.append(" ")
+                    more_digits(sub_len, sub_len)
+                else:
+                    out.append("[")
+                    out.append(from_str[i])
+                    out.append("] ")
+                    out.append("(")
+                    uniform_range(from_sub, sub_nines)
+                    out.append(")")
+                    if ord(from_str[i]) < ord(to_str[i]) - 1:
+                        out.append(" | ")
+                        if to_sub == sub_nines:
+                            digit_range(chr(ord(from_str[i]) + 1), to_str[i])
+                            to_reached = True
+                        else:
+                            digit_range(chr(ord(from_str[i]) + 1), chr(ord(to_str[i]) - 1))
+                        out.append(" ")
+                        more_digits(sub_len, sub_len)
+                if not to_reached:
+                    out.append(" | ")
+                    digit_range(to_str[i], to_str[i])
+                    out.append(" ")
+                    uniform_range(sub_zeros, to_sub)
+                out.append(")")
+            else:
+                out.append("[")
+                out.append(from_str[i])
+                out.append("-")
+                out.append(to_str[i])
+                out.append("]")
+
+    if min_value is not None and max_value is not None:
+        if min_value < 0 and max_value < 0:
+            out.append("\"-\" (")
+            _generate_min_max_int(-max_value, -min_value, out, decimals_left, top_level=True)
+     
+// ==== examples/model-conversion/scripts/causal/compare-logits.py ====
+#!/usr/bin/env python3
+
+import sys
+import numpy as np
+from pathlib import Path
+import os
+
+# Add utils directory to path for direct script execution
+sys.path.insert(0, str(Path(__file__).parent.parent / "utils"))
+from common import get_model_name_from_env_path, compare_tokens, exit_with_warning  # type: ignore[import-not-found, ty:unresolved-import]
+
+def quick_logits_check(pytorch_file, llamacpp_file):
+    """Lightweight sanity check before NMSE"""
+
+    try:
+        pytorch_logits = np.fromfile(pytorch_file, dtype=np.float32)
+        llamacpp_logits = np.fromfile(llamacpp_file, dtype=np.float32)
+    except Exception as e:
+        print(f"❌ NOK: Failed to load files - {e}")
+        return False
+
+    # Check shapes match
+    if pytorch_logits.shape != llamacpp_logits.shape:
+        print(f"❌ NOK: Shape mismatch - PyTorch: {pytorch_logits.shape}, llama.cpp: {llamacpp_logits.shape}")
+        return False
+
+    # Calculate key metrics
+    diff = pytorch_logits - llamacpp_logits
+    abs_diff = np.abs(diff)
+    max_diff = np.max(abs_diff)
+
+    # Get top 10 predictions from both models
+    pytorch_top10 = np.argsort(pytorch_logits)[-10:][::-1]
+    llamacpp_top10 = np.argsort(llamacpp_logits)[-10:][::-1]
+    print(f"Top 10 PyTorch logits: {pytorch_logits[pytorch_top10]}")
+    print(f"Top 10 llama.cpp logits: {llamacpp_logits[llamacpp_top10]}")
+    print(f"Max absolute difference: {max_diff:.4f}")
+
+    return True
+
+def main():
+    model_path = os.environ.get('MODEL_PATH')
+    model_name = get_model_name_from_env_path('MODEL_PATH')
+    data_dir = Path("data")
+    pytorch_file = data_dir / f"pytorch-{model_name}.bin"
+
+    llamacpp_model_name = get_model_name_from_env_path('CONVERTED_MODEL')
+    print(f"Using converted model: {llamacpp_model_name}")
+    llamacpp_file = data_dir / f"llamacpp-{llamacpp_model_name}.bin"
+
+    if not pytorch_file.exists():
+        print(f"Error: PyTorch logits file not found: {pytorch_file}")
+        print("Please run scripts/run-org-model.sh first to generate this file.")
+        sys.exit(1)
+
+    if not llamacpp_file.exists():
+        print(f"Error: llama.cpp logits file not found: {llamacpp_file}")
+        print("Please run scripts/run-converted-model.sh first to generate this file.")
+        sys.exit(1)
+
+    print("Checked all required files were found. Proceeding...\n")
+
+    # Verify tokens as they are a prerequisite for logits comparison.
+    print("🔍 Token Comparison Check")
+    print("=" * 40)
+    if not compare_tokens(f"pytorch-{model_name}", f"llamacpp-{llamacpp_model_name}"):
+        exit_with_warning("\n❌ Token mismatch detected", model_path)
+    print()
+
+    print("🔍 GGML Model Validation for model ", model_name)
+    print("=" * 40)
+    print(f"PyTorch logits  : {pytorch_file}")
+    print(f"llama.cpp logits: {llamacpp_file}")
+    print()
+
+    success = quick_logits_check(pytorch_file, llamacpp_file)
+
+    # Exit with appropriate code
+    if success:
+        print("✅ OK: Lightweight model check successful!")
+        print("       Ok to proceed with NMSE check...")
+        sys.exit(0)
+    else:
+        exit_with_warning(f"❌ NOK: Top 10 predictions don't match - generation will differ", model_path)
+
+if __name__ == "__main__":
+    main()
+
+// ==== examples/model-conversion/scripts/embedding/run-original-model.py ====
+#!/usr/bin/env python3
+
+import argparse
+import os
+import sys
+import importlib
+
+from transformers import AutoTokenizer, AutoConfig, AutoModel
+import torch
+
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from utils.common import save_output_data
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Run original embedding model')
+    parser.add_argument(
+        '--model-path',
+        '-m',
+        help='Path to the model'
+    )
+    parser.add_argument(
+        '--prompts-file',
+        '-p',
+        help='Path to file containing prompts (one per line)'
+    )
+    parser.add_argument(
+        '--use-sentence-transformers',
+        action='store_true',
+        help=('Use SentenceTransformer to apply all numbered layers '
+              '(01_Pooling, 02_Dense, 03_Dense, 04_Normalize)')
+    )
+    parser.add_argument(
+        '--device',
+        '-d',
+        help='Device to use (cpu, cuda, mps, auto)',
+        default='auto'
+    )
+    return parser.parse_args()
+
+
+def load_model_and_tokenizer(model_path, use_sentence_transformers=False, device="auto"):
+    if device == "cpu":
+        device_map = {"": "cpu"}
+        print("Forcing CPU usage")
+    elif device == "auto":
+        # On Mac, "auto" device_map can cause issues with accelerate
+        # So we detect the best device manually
+        if torch.cuda.is_available():
+            device_map = {"": "cuda"}
+            print("Using CUDA")
+        elif torch.backends.mps.is_available():
+            device_map = {"": "mps"}
+            print("Using MPS (Apple Metal)")
+        else:
+            device_map = {"": "cpu"}
+            print("Using CPU")
+    else:
+        device_map = {"": device}
+
+    if use_sentence_transformers:
+        from sentence_transformers import SentenceTransformer
+        print("Using SentenceTransformer to apply all numbered layers")
+        model = SentenceTransformer(model_path)
+        tokenizer = model.tokenizer
+        config = model[0].auto_model.config  # ty: ignore[unresolved-attribute]
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        config = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
+
+        # This can be used to override the sliding window size for manual testing. This
+        # can be useful to verify the sliding window attention mask in the original model
+        # and compare it with the converted .gguf model.
+        if hasattr(config, 'sliding_window'):
+            original_sliding_window = config.sliding_window
+            print(f"Modified sliding window: {original_sliding_window} -> {config.sliding_window}")
+
+        unreleased_model_name = os.getenv('UNRELEASED_MODEL_NAME')
+        print(f"Using unreleased model: {unreleased_model_name}")
+        if unreleased_model_name:
+            model_name_lower = unreleased_model_name.lower()
+            unreleased_module_path = f"transformers.models.{model_name_lower}.modular_{model_name_lower}"
+            class_name = f"{unreleased_model_name}Model"
+            print(f"Importing unreleased model module: {unreleased_module_path}")
+
+            try:
+                model_class = getattr(importlib.import_module(unreleased_module_path), class_name)
+                model = model_class.from_pretrained(
+                    model_path,
+                    device_map=device_map,
+                    offload_folder="offload",
+                    trust_remote_code=True,
+                    config=config
+                )
+            except (ImportError, AttributeError) as e:
+                print(f"Failed to import or load model: {e}")
+                sys.exit(1)
+        else:
+            model = AutoModel.from_pretrained(
+                model_path,
+                device_map=device_map,
+                offload_folder="offload",
+                trust_remote_code=True,
+                config=config
+            )
+        print(f"Model class: {type(model)}")
+        print(f"Model fi
+// ==== examples/model-conversion/scripts/utils/compare_tokens.py ====
+#!/usr/bin/env python3
+
+import argparse
+import sys
+from common import compare_tokens  # type: ignore[import-not-found, ty:unresolved-import]
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description='Compare tokens between two models',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  %(prog)s pytorch-gemma-3-270m-it llamacpp-gemma-3-270m-it-bf16
+        """
+    )
+    parser.add_argument(
+        'original',
+        help='Original model name'
+    )
+    parser.add_argument(
+        'converted',
+        help='Converted model name'
+    )
+    parser.add_argument(
+        '-s', '--suffix',
+        default='',
+        help='Type suffix (e.g., "-embeddings")'
+    )
+    parser.add_argument(
+        '-d', '--data-dir',
+        default='data',
+        help='Directory containing token files (default: data)'
+    )
+    parser.add_argument(
+        '-v', '--verbose',
+        action='store_true',
+        help='Print prompts from both models'
+    )
+    return parser.parse_args()
+
+
+def main():
+    args = parse_arguments()
+
+    if args.verbose:
+        from pathlib import Path
+        data_dir = Path(args.data_dir)
+
+        prompt1_file = data_dir / f"{args.original}{args.suffix}-prompt.txt"
+        prompt2_file = data_dir / f"{args.converted}{args.suffix}-prompt.txt"
+
+        if prompt1_file.exists():
+            print(f"\nOriginal model prompt ({args.original}):")
+            print(f"  {prompt1_file.read_text().strip()}")
+
+        if prompt2_file.exists():
+            print(f"\nConverted model prompt ({args.converted}):")
+            print(f"  {prompt2_file.read_text().strip()}")
+
+        print()
+
+    result = compare_tokens(
+        args.original,
+        args.converted,
+        type_suffix=args.suffix,
+        output_dir=args.data_dir
+    )
+
+    # Enable the script to be used in shell scripts so that they can check
+    # the exit code for success/failure.
+    sys.exit(0 if result else 1)
+
+
+if __name__ == "__main__":
+    main()
+
+// ==== examples/model-conversion/scripts/utils/hf-create-model.py ====
+#!/usr/bin/env python3
+
+from huggingface_hub import HfApi
+import argparse
+
+# This script requires that the environment variable HF_TOKEN is set with your
+# Hugging Face API token.
+api = HfApi()
+
+def load_template_and_substitute(template_path, **kwargs):
+    try:
+        with open(template_path, 'r', encoding='utf-8') as f:
+            template_content = f.read()
+
+        return template_content.format(**kwargs)
+    except FileNotFoundError:
+        print(f"Template file '{template_path}' not found!")
+        return None
+    except KeyError as e:
+        print(f"Missing template variable: {e}")
+        return None
+
+parser = argparse.ArgumentParser(description='Create a new Hugging Face model repository')
+parser.add_argument('--model-name', '-m', help='Name for the model', required=True)
+parser.add_argument('--namespace', '-ns', help='Namespace to add the model to', required=True)
+parser.add_argument('--org-base-model', '-b', help='Original Base model name', default="")
+parser.add_argument('--no-card', action='store_true', help='Skip creating model card')
+parser.add_argument('--private', '-p', action='store_true', help='Create private model')
+parser.add_argument('--embedding', '-e', action='store_true', help='Use embedding model card template')
+parser.add_argument('--dry-run', '-d', action='store_true', help='Print repository info and template without creating repository')
+
+args = parser.parse_args()
+
+repo_id = f"{args.namespace}/{args.model_name}-GGUF"
+print("Repository ID: ", repo_id)
+
+repo_url = None
+if not args.dry_run:
+    repo_url = api.create_repo(
+        repo_id=repo_id,
+        repo_type="model",
+        private=args.private,
+        exist_ok=False
+    )
+
+if not args.no_card:
+    if args.embedding:
+        template_path = "scripts/embedding/modelcard.template"
+    else:
+        template_path = "scripts/causal/modelcard.template"
+
+    print("Template path: ", template_path)
+
+    model_card_content = load_template_and_substitute(
+        template_path,
+        model_name=args.model_name,
+        namespace=args.namespace,
+        base_model=args.org_base_model,
+    )
+
+    if args.dry_run:
+        print("\nTemplate Content:\n")
+        print(model_card_content)
+    else:
+        if model_card_content:
+            api.upload_file(
+                path_or_fileobj=model_card_content.encode('utf-8'),
+                path_in_repo="README.md",
+                repo_id=repo_id
+            )
+            print("Model card created successfully.")
+        else:
+            print("Failed to create model card.")
+
+if not args.dry_run and repo_url:
+    print(f"Repository created: {repo_url}")
+
+
+
+// ==== examples/model-conversion/scripts/utils/inspect-org-model.py ====
+#!/usr/bin/env python3
+
+import argparse
+import json
+import os
+import re
+import struct
+import sys
+from pathlib import Path
+from typing import Optional
+from safetensors import safe_open
+
+
+MODEL_SAFETENSORS_FILE = "model.safetensors"
+MODEL_SAFETENSORS_INDEX = "model.safetensors.index.json"
+
+DTYPE_SIZES = {
+    "F64": 8, "I64": 8, "U64": 8,
+    "F32": 4, "I32": 4, "U32": 4,
+    "F16": 2, "BF16": 2, "I16": 2, "U16": 2,
+    "I8": 1, "U8": 1, "BOOL": 1,
+    "F8_E4M3": 1, "F8_E5M2": 1,
+}
+
+SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB']
+
+
+def get_weight_map(model_path: Path) -> Optional[dict[str, str]]:
+    index_file = model_path / MODEL_SAFETENSORS_INDEX
+
+    if index_file.exists():
+        with open(index_file, 'r') as f:
+            index = json.load(f)
+            return index.get("weight_map", {})
+
+    return None
+
+
+def get_all_tensor_names(model_path: Path) -> list[str]:
+    weight_map = get_weight_map(model_path)
+
+    if weight_map is not None:
+        return list(weight_map.keys())
+
+    single_file = model_path / MODEL_SAFETENSORS_FILE
+    if single_file.exists():
+        try:
+            with safe_open(single_file, framework="pt", device="cpu") as f:
+                return list(f.keys())
+        except Exception as e:
+            print(f"Error reading {single_file}: {e}")
+            sys.exit(1)
+
+    print(f"Error: No safetensors files found in {model_path}")
+    sys.exit(1)
+
+
+def find_tensor_file(model_path: Path, tensor_name: str) -> Optional[str]:
+    weight_map = get_weight_map(model_path)
+
+    if weight_map is not None:
+        return weight_map.get(tensor_name)
+
+    single_file = model_path / MODEL_SAFETENSORS_FILE
+    if single_file.exists():
+        return single_file.name
+
+    return None
+
+
+def read_safetensors_header(file_path: Path) -> dict:
+    with open(file_path, 'rb') as f:
+        header_size = struct.unpack('<Q', f.read(8))[0]
+        return json.loads(f.read(header_size))
+
+
+def get_tensor_size_bytes(tensor_meta: dict) -> int:
+    offsets = tensor_meta.get("data_offsets")
+    if offsets and len(offsets) == 2:
+        return offsets[1] - offsets[0]
+    n_elements = 1
+    for d in tensor_meta.get("shape", []):
+        n_elements *= d
+    return n_elements * DTYPE_SIZES.get(tensor_meta.get("dtype", "F32"), 4)
+
+
+def format_size(size_bytes: int) -> str:
+    val = float(size_bytes)
+    for unit in SIZE_UNITS[:-1]:
+        if val < 1024.0:
+            return f"{val:.2f} {unit}"
+        val /= 1024.0
+    return f"{val:.2f} {SIZE_UNITS[-1]}"
+
+
+def get_all_tensor_metadata(model_path: Path) -> dict[str, dict]:
+    weight_map = get_weight_map(model_path)
+
+    if weight_map is not None:
+        file_to_tensors: dict[str, list[str]] = {}
+        for tensor_name, file_name in weight_map.items():
+            file_to_tensors.setdefault(file_name, []).append(tensor_name)
+
+        all_metadata: dict[str, dict] = {}
+        for file_name, tensor_names in file_to_tensors.items():
+            try:
+                header = read_safetensors_header(model_path / file_name)
+                for tensor_name in tensor_names:
+                    if tensor_name in header:
+                        all_metadata[tensor_name] = header[tensor_name]
+            except Exception as e:
+                print(f"Warning: Could not read header from {file_name}: {e}", file=sys.stderr)
+        return all_metadata
+
+    single_file = model_path / MODEL_SAFETENSORS_FILE
+    if single_file.exists():
+        try:
+            header = read_safetensors_header(single_file)
+            return {k: v for k, v in header.items() if k != "__metadata__"}
+        except Exception as e:
+            print(f"Error reading {single_file}: {e}")
+            sys.exit(1)
+
+    print(f"Error: No safetensors files found in {model_path}")
+    sys.exit(1)
+
+
+def normalize_tensor_name(tensor_name: str) -> str:
+    normalized = re.sub(r'\.\d+\.', '.#.', tensor_name)
+    normalized = re.sub(r'\.\d+$', '.#', normalized)
+    return normalized
+
+
+def list_all_tensors(
+    model_path: Path,
+    sh
+// ==== examples/pydantic_models_to_grammar.py ====
+from __future__ import annotations
+
+import inspect
+import json
+import re
+from copy import copy
+from enum import Enum
+from inspect import getdoc, isclass
+from typing import TYPE_CHECKING, Any, Callable, Optional, Union, get_args, get_origin, get_type_hints
+
+from docstring_parser import parse
+from pydantic import BaseModel, create_model
+
+if TYPE_CHECKING:
+    from types import GenericAlias
+else:
+    # python 3.8 compat
+    from typing import _GenericAlias as GenericAlias
+
+# TODO: fix this
+# pyright: reportAttributeAccessIssue=information
+
+
+class PydanticDataType(Enum):
+    """
+    Defines the data types supported by the grammar_generator.
+
+    Attributes:
+        STRING (str): Represents a string data type.
+        BOOLEAN (str): Represents a boolean data type.
+        INTEGER (str): Represents an integer data type.
+        FLOAT (str): Represents a float data type.
+        OBJECT (str): Represents an object data type.
+        ARRAY (str): Represents an array data type.
+        ENUM (str): Represents an enum data type.
+        CUSTOM_CLASS (str): Represents a custom class data type.
+    """
+
+    STRING = "string"
+    TRIPLE_QUOTED_STRING = "triple_quoted_string"
+    MARKDOWN_CODE_BLOCK = "markdown_code_block"
+    BOOLEAN = "boolean"
+    INTEGER = "integer"
+    FLOAT = "float"
+    OBJECT = "object"
+    ARRAY = "array"
+    ENUM = "enum"
+    ANY = "any"
+    NULL = "null"
+    CUSTOM_CLASS = "custom-class"
+    CUSTOM_DICT = "custom-dict"
+    SET = "set"
+
+
+def map_pydantic_type_to_gbnf(pydantic_type: type[Any]) -> str:
+    origin_type = get_origin(pydantic_type)
+    origin_type = pydantic_type if origin_type is None else origin_type
+
+    if isclass(origin_type) and issubclass(origin_type, str):
+        return PydanticDataType.STRING.value
+    elif isclass(origin_type) and issubclass(origin_type, bool):
+        return PydanticDataType.BOOLEAN.value
+    elif isclass(origin_type) and issubclass(origin_type, int):
+        return PydanticDataType.INTEGER.value
+    elif isclass(origin_type) and issubclass(origin_type, float):
+        return PydanticDataType.FLOAT.value
+    elif isclass(origin_type) and issubclass(origin_type, Enum):
+        return PydanticDataType.ENUM.value
+
+    elif isclass(origin_type) and issubclass(origin_type, BaseModel):
+        return format_model_and_field_name(origin_type.__name__)
+    elif origin_type is list:
+        element_type = get_args(pydantic_type)[0]
+        return f"{map_pydantic_type_to_gbnf(element_type)}-list"
+    elif origin_type is set:
+        element_type = get_args(pydantic_type)[0]
+        return f"{map_pydantic_type_to_gbnf(element_type)}-set"
+    elif origin_type is Union:
+        union_types = get_args(pydantic_type)
+        union_rules = [map_pydantic_type_to_gbnf(ut) for ut in union_types]
+        return f"union-{'-or-'.join(union_rules)}"
+    elif origin_type is Optional:
+        element_type = get_args(pydantic_type)[0]
+        return f"optional-{map_pydantic_type_to_gbnf(element_type)}"
+    elif isclass(origin_type):
+        return f"{PydanticDataType.CUSTOM_CLASS.value}-{format_model_and_field_name(origin_type.__name__)}"
+    elif origin_type is dict:
+        key_type, value_type = get_args(pydantic_type)
+        return f"custom-dict-key-type-{format_model_and_field_name(map_pydantic_type_to_gbnf(key_type))}-value-type-{format_model_and_field_name(map_pydantic_type_to_gbnf(value_type))}"
+    else:
+        return "unknown"
+
+
+def format_model_and_field_name(model_name: str) -> str:
+    parts = re.findall("[A-Z][^A-Z]*", model_name)
+    if not parts:  # Check if the list is empty
+        return model_name.lower().replace("_", "-")
+    return "-".join(part.lower().replace("_", "-") for part in parts)
+
+
+def generate_list_rule(element_type):
+    """
+    Generate a GBNF rule for a list of a given element type.
+
+    :param element_type: The type of the elements in the list (e.g., 'string').
+    :return: A string representing the GBNF rule for a list of the given type.
+    """
+    rule_name = f
+// ==== gguf-py/examples/reader.py ====
+#!/usr/bin/env python3
+import logging
+import sys
+from pathlib import Path
+
+logger = logging.getLogger("reader")
+
+# Necessary to load the local gguf package
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from gguf.gguf_reader import GGUFReader
+
+
+def read_gguf_file(gguf_file_path):
+    """
+    Reads and prints key-value pairs and tensor information from a GGUF file in an improved format.
+
+    Parameters:
+    - gguf_file_path: Path to the GGUF file.
+    """
+
+    reader = GGUFReader(gguf_file_path)
+
+    # List all key-value pairs in a columnized format
+    print("Key-Value Pairs:") # noqa: NP100
+    max_key_length = max(len(key) for key in reader.fields.keys())
+    for key, field in reader.fields.items():
+        value = field.parts[field.data[0]]
+        print(f"{key:{max_key_length}} : {value}") # noqa: NP100
+    print("----") # noqa: NP100
+
+    # List all tensors
+    print("Tensors:") # noqa: NP100
+    tensor_info_format = "{:<30} | Shape: {:<15} | Size: {:<12} | Quantization: {}"
+    print(tensor_info_format.format("Tensor Name", "Shape", "Size", "Quantization")) # noqa: NP100
+    print("-" * 80) # noqa: NP100
+    for tensor in reader.tensors:
+        shape_str = "x".join(map(str, tensor.shape))
+        size_str = str(tensor.n_elements)
+        quantization_str = tensor.tensor_type.name
+        print(tensor_info_format.format(tensor.name, shape_str, size_str, quantization_str)) # noqa: NP100
+
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        logger.info("Usage: reader.py <path_to_gguf_file>")
+        sys.exit(1)
+    gguf_file_path = sys.argv[1]
+    read_gguf_file(gguf_file_path)
+
+// ==== gguf-py/gguf/gguf.py ====
+# This file left for compatibility. If you want to use the GGUF API from Python
+# then don't import gguf/gguf.py directly. If you're looking for examples, see the
+# examples/ directory for gguf-py
+
+import importlib
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Compatibility for people trying to import gguf/gguf.py directly instead of as a package.
+importlib.invalidate_caches()
+import gguf  # noqa: E402
+
+importlib.reload(gguf)
+
+// ==== gguf-py/gguf/__init__.py ====
+from .constants import *
+from .lazy import *
+from .gguf_reader import *
+from .gguf_writer import *
+from .quants import *
+from .tensor_mapping import *
+from .vocab import *
+from .utility import *
+from .metadata import *
+
+User: Why is my GEMM slower than the vendor library at the same flop count?
+Assistant: Vendor kernels tile for the specific cache hierarchy and use hardware matrix instructions with carefully staged shared memory loads. A naive implementation loses on data reuse, so it moves far more bytes per flop. Match their blocking strategy before comparing, and check whether your version is even hitting the tensor units.
+
+User: Explain what a race condition is and how to detect one.
+Assistant: A race is when two threads access the same location without ordering and at least one writes, so the result depends on timing. Detect it with a thread sanitizer, which tracks happens-before relationships at runtime and reports unsynchronized pairs. Reproducing by stress testing alone is unreliable because the window may be very narrow.
+
+User: How do I profile a program that is too slow to run under a profiler?
+Assistant: Reduce the workload to a representative slice rather than the whole run, and prefer sampling profilers, which add small constant overhead, over instrumenting ones that serialize everything. If replay based tools are infeasible at scale, use controlled interventions: change one component and measure the end to end effect.
+
+User: What is the practical difference between a shallow and a deep copy?
+Assistant: A shallow copy duplicates the top level object but shares the storage it points to, so mutations through one handle are visible through the other. A deep copy duplicates the pointed to data as well, giving independent objects at the cost of the copy. Bugs usually come from assuming deep semantics where the language gives shallow ones.
+
+User: Optimize a function that sums an array of floats.
+Assistant: Break the dependency chain by accumulating into several partial sums and combining at the end, which lets the pipeline overlap additions and enables vector instructions. Ensure the pointer is suitably aligned and the loop count is known so the compiler can unroll. For very large arrays, the loop becomes bandwidth bound and further instruction level tuning stops mattering.
+
+User: Explain what a memory barrier does.
+Assistant: It constrains the order in which memory operations become visible, preventing the compiler and the processor from moving accesses across it. Acquire and release barriers pair to make writes before a release visible to any thread observing the acquire. Without them, code that looks correct in source order can be reordered into a broken execution.
