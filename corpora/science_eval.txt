@@ -1,0 +1,1830 @@
+Hydrodynamic limit and Newtonian limit from the relativistic Boltzmann equation to the classical Euler equations
+
+###### Abstract.
+
+The hydrodynamic limit and Newtonian limit are important in the relativistic kinetic theory. We justify rigorously the validity of the two independent limits from the special relativistic Boltzmann equation to the classical Euler equations without assuming any dependence between the Knudsen number \(\varepsilon\) and the light speed \(\mathfrak{c}\). The convergence rates are also obtained. This is achieved by Hilbert expansion of relativistic Boltzmann equation. New difficulties arise when tacking the uniform in \(\mathfrak{c}\) and \(\varepsilon\) estimates for the Hilbert expansion, which have been overcome by establishing some uniform-in-\(\mathfrak{c}\) estimate for relativistic Boltzmann operators.
+
+Key words and phrases:relativistic Boltzmann equation; relativistic Euler equations; hydrodynamic limit; Newtonian limit; Hilbert expansion 2010 Mathematics Subject Classification: 82C40; 35Q20; 35Q75; 76P05; 76Y05 * Corresponding author: changguoxiao@mailbox.gxnu.edu.cn
+
+###### Contents
+
+* 1 Introduction
+* 2 Preliminaries
+* 3 The Newtonian limit of the relativistic Euler equations
+* 4 Uniform-in-\(\mathfrak{c}\) estimates on the linearized collision operators
+* 5 Uniform-in-\(\mathfrak{c}\) estimates on the linear part of Hilbert expansion
+* 6 Uniform in \(\mathfrak{c}\) and \(\varepsilon\) estimates on the remainder \(F_{R}^{\varepsilon,\mathfrak{c}}\)
+* 7 Appendix: Derivation of the orthonormal basis of \(\mathcal{N}_{\mathfrak{c}}\)
+
+## 1. Introduction
+
+### The relativistic Boltzmann equation
+
+We consider the special relativistic Boltzmann equation
+
+\[p^{\mu}\partial_{\mu}F=\frac{1}{\varepsilon}\mathcal{C}(F,F), \tag{1.1}\]
+
+which describes the dynamics of single-species relativistic particles. The dimensionless parameter \(\varepsilon\) is the Knudsen number, which is proportional to the mean free path. The unknown \(F(t,x,p)\geq 0\) is a distribution function for relativistic particles with position \(x=(x_{1},x_{2},x_{3})\in\Omega\) and particle momentum \(p=(p^{1},p^{2},p^{3})\in\mathbb{R}^{3}\) at time \(t>0\). The collision term \(\mathcal{C}(h_{1},h_{2})\) is defined by
+
+\[\mathcal{C}(h_{1},h_{2})=\frac{1}{2}\int_{\mathbb{R}^{3}}\frac{dq}{q^{0}}\int _{\mathbb{R}^{3}}\frac{dp^{\prime}}{p^{\prime 0}}\int_{\mathbb{R}^{3}}\frac{dq^{ \prime}}{q^{\prime 0}}W\left(p,q\mid p^{\prime},q^{\prime}\right)\left[h_{1}\left(p^{ \prime}\right)h_{2}\left(q^{\prime}\right)-h_{1}(p)h_{2}(q)\right],\]
+
+where the transition rate \(W\left(p,q\mid p^{\prime},q^{\prime}\right)\) has the form
+
+\[W\left(p,q\mid p^{\prime},q^{\prime}\right)=s\varsigma(g,\vartheta)\delta(p^{ 0}+q^{0}-p^{\prime 0}-q^{\prime 0})\delta^{(3)}(p+q-p^{\prime}-q^{\prime}). \tag{1.2}\]
+The streaming term of the relativistic Boltzmann equation (1.1) is given by
+
+\[p^{\mu}\partial_{\mu}=\frac{p^{0}}{\mathfrak{c}}\partial_{t}+p\cdot\nabla_{x},\]
+
+where \(\mathfrak{c}\) denotes the speed of light and \(p^{0}\) denotes the energy of a relativistic particle with
+
+\[p^{0}=\sqrt{m_{0}^{2}\mathfrak{c}^{2}+|p|^{2}}.\]
+
+Here \(m_{0}\) denotes the rest mass of particle. Now we can rewrite (1.1) as
+
+\[\partial_{t}F+\hat{p}\cdot\nabla_{x}F=\frac{1}{\varepsilon}Q(F,F), \tag{1.3}\]
+
+where \(\hat{p}\) denotes the normalized particle velocity
+
+\[\hat{p}:=\mathfrak{c}\frac{p}{p^{0}}=\frac{\mathfrak{c}p}{\sqrt{m_{0}^{2} \mathfrak{c}^{2}+|p|^{2}}}.\]
+
+The collision term \(Q(h_{1},h_{2})\) in (1.3) has the form
+
+\[Q(h_{1},h_{2})=\frac{\mathfrak{c}}{2}\frac{1}{p^{0}}\int_{\mathbb{R}^{3}} \frac{dq}{q^{0}}\int_{\mathbb{R}^{3}}\frac{dp^{\prime}}{p^{\prime 0}}\int_{ \mathbb{R}^{3}}\frac{dq^{\prime}}{q^{\prime 0}}W\left(p,q\mid p^{\prime},q^{ \prime}\right)\left[h_{1}\left(p^{\prime}\right)h_{2}\left(q^{\prime}\right)- h_{1}(p)h_{2}(q)\right].\]
+
+We denote the energy-momentum 4-vector as \(p^{\mu}=(p^{0},p^{1},p^{2},p^{3})\). The energy-momentum 4-vector with the lower index is written as a product in the Minkowski metric \(p_{\mu}=g_{\mu\nu}p^{\nu}\), where the Minkowski metric is given by \(g_{\mu\nu}=\text{diag}(-1,1,1,1)\). The inner product of energy-momentum 4-vectors \(p^{\mu}\) and \(q_{\mu}\) is defined via the Minkowski metric
+
+\[p^{\mu}q_{\mu}=p^{\mu}g_{\mu\nu}q^{\nu}=-p^{0}q^{0}+\sum_{i=1}^{3}p^{i}q^{i}.\]
+
+Then it is clear that
+
+\[p^{\mu}p_{\mu}=-m_{0}^{2}\mathfrak{c}^{2}.\]
+
+We note that the inner product of energy-momentum 4-vectors is Lorentz invariant.
+
+The quantity \(s\) is the square of the energy in the _center of momentum system_, \(p+q=0\), and is given as
+
+\[s=s(p,q)=-\left(p^{\mu}+q^{\mu}\right)\left(p_{\mu}+q_{\mu}\right)=2\left(p^{ 0}q^{0}-p\cdot q+m_{0}^{2}\mathfrak{c}^{2}\right)\geq 4m_{0}^{2}\mathfrak{c}^ {2}.\]
+
+And the relative momentum \(g\) in (1.24) is denoted as
+
+\[g=g(p,q)=\sqrt{\left(p^{\mu}-q^{\mu}\right)\left(p_{\mu}-q_{\mu}\right)}= \sqrt{2\left(p^{0}q^{0}-p\cdot q-m_{0}^{2}\mathfrak{c}^{2}\right)}\geq 0.\]
+
+It is direct to know that
+
+\[s=g^{2}+4m_{0}^{2}\mathfrak{c}^{2}.\]
+
+The post-collision momentum pair \((p^{\prime\mu},q^{\prime\mu})\) and the pre-collision momentum pair \((p^{\mu},q^{\mu})\) satisfy the relation
+
+\[p^{\mu}+q^{\mu}=p^{\prime\mu}+q^{\prime\mu}. \tag{1.4}\]
+
+One may also write (1.4) as
+
+\[p^{0}+q^{0} =p^{\prime 0}+q^{\prime 0}, \tag{1.5}\] \[p+q =p^{\prime}+q^{\prime}, \tag{1.6}\]
+
+where (1.5) represents the principle of conservation of energy and (1.6) represents the conservation of momentum after a binary collision.
+
+Using Lorentz transformations in [22, 47], in the _center of momentum system_, \(Q(F,F)\) can be written as
+
+\[Q(F,F)= \int_{\mathbb{R}^{3}}\int_{\mathbb{S}^{2}}v_{\phi}\zeta(g,\vartheta) \Big{[}F(p^{\prime})F(q^{\prime})-F(p)F(q)\Big{]}d\omega dq\]
+\[:= Q^{+}(F,F)-Q^{-}(F,F), \tag{1.7}\]
+
+where \(v_{\phi}=v_{\phi}(p,q)\) is the Moller velocity
+
+\[v_{\phi}(p,q):=\frac{\mathfrak{c}}{2}\sqrt{\left|\frac{p}{p^{0}}-\frac{q}{q^{0} }\right|^{2}-\left|\frac{p}{p^{0}}\times\frac{q}{q^{0}}\right|^{2}}=\frac{ \mathfrak{c}}{4}\frac{g\sqrt{s}}{p^{0}q^{0}}.\]
+
+The pre-post collisional momentum in (1.7) satisfies
+
+\[\begin{cases}p^{\prime}=\frac{1}{2}(p+q)+\frac{1}{2}g\Big{(}\omega+(\gamma_{0} -1)(p+q)\frac{(p+q)\cdot\omega}{|p+q|^{2}}\Big{)},\\ q^{\prime}=\frac{1}{2}(p+q)-\frac{1}{2}g\Big{(}\omega+(\gamma_{0}-1)(p+q) \frac{(p+q)\cdot\omega}{|p+q|^{2}}\Big{)},\end{cases}\]
+
+where \(\gamma_{0}:=(p^{0}+q^{0})/\sqrt{s}\). The pre-post collisional energy is given by
+
+\[\begin{cases}p^{\prime 0}=\frac{1}{2}(p^{0}+q^{0})+\frac{1}{2}\frac{g}{ \sqrt{s}}(p+q)\cdot\omega,\\ q^{\prime 0}=\frac{1}{2}(p^{0}+q^{0})-\frac{1}{2}\frac{g}{\sqrt{s}}(p+q) \cdot\omega.\end{cases}\]
+
+The scattering angle \(\vartheta\) is defined by
+
+\[\cos\vartheta:=\frac{(p^{\mu}-q^{\mu})(p^{\prime}_{\mu}-q^{\prime}_{\mu})}{g^ {2}}.\]
+
+The angle is well defined under (1.4) and we refer to [17, Lemma 3.15.3].
+
+The function \(\varsigma(g,\vartheta)\) in (1.2) is called the differential cross-section or scattering kernel. The relativistic differential cross section \(\varsigma(g,\vartheta)\) measures the interactions between relativistic particles. Throughout the present paper, we consider the "hard ball" particles
+
+\[\varsigma(g,\vartheta)=\text{constant}.\]
+
+Without loss of generality, we take \(\varsigma(g,\vartheta)=1\) for simplicity. The Newtonian limit in this situation, as \(\mathfrak{c}\to\infty\), is the Newtonian hard-sphere Boltzmann collision operator [48].
+
+### Hilbert expansion
+
+In the present paper, we are concerned with both the hydrodynamic limit and Newtonian limit from the relativistic Boltzmann equation to the classical Euler equations. To achieve this, we perform a Hilbert expansion for the relativistic Boltzmann equation (1.3) with small Knudsen number \(\varepsilon\). To emphasize the dependence on \(\varepsilon\) and \(\mathfrak{c}\) for relativistic Boltzmann solutions, we denote the solutions of (1.3) as \(F^{\varepsilon,\mathfrak{c}}\) and decompose \(F^{\varepsilon,\mathfrak{c}}\) as the sum
+
+\[F^{\varepsilon,\mathfrak{c}}=\sum_{n=0}^{2k-1}\varepsilon^{n}F^{\mathfrak{c}}_ {n}+\varepsilon^{k}F^{\varepsilon,\mathfrak{c}}_{R},\quad k\geq 3, \tag{1.8}\]
+
+where \(F^{\mathfrak{c}}_{0},F^{\mathfrak{c}}_{1},\ldots,F^{\mathfrak{c}}_{2k-1}\) in (1.8) will depend upon \(\mathfrak{c}\) but be independent of \(\varepsilon\). Also, \(F^{\varepsilon,\mathfrak{c}}_{R}\) is called the remainder term which will depend upon \(\varepsilon\) and \(\mathfrak{c}\). For \(\mathfrak{c}=1\), Speck-Strain[46] have already established the Hilbert expansion for the relativistic Boltzmann equation. Since we shall consider both the hydrodynamic limit \(\varepsilon\to 0\) and Newtonian limit \(\mathfrak{c}\to\infty\) of the relativistic Boltzmann equation, it is crucial to derive the uniform-in-\(\mathfrak{c}\) estimates on \(F^{\mathfrak{c}}_{n}\) (\(n=0,1,\cdots,2k-1\)) and uniform in \(\mathfrak{c}\) and \(\varepsilon\) estimates on \(F^{\varepsilon,\mathfrak{c}}_{R}\).
+
+To determine the coefficients \(F^{\mathfrak{c}}_{0}(t,x,p),\cdots\), \(F^{\mathfrak{c}}_{2k-1}(t,x,p)\), we begin by plugging the expansion (1.8) into (1.3) to obtain
+
+\[\partial_{t}\Big{(}\sum_{n=0}^{2k-1}\varepsilon^{n}F^{\mathfrak{c }}_{n}+\varepsilon^{k}F^{\varepsilon,\mathfrak{c}}_{R}\Big{)}+\hat{p}\cdot \nabla_{x}\Big{(}\sum_{n=0}^{2k-1}\varepsilon^{n}F^{\mathfrak{c}}_{n}+ \varepsilon^{k}F^{\varepsilon,\mathfrak{c}}_{R}\Big{)}\] \[=\frac{1}{\varepsilon}Q_{\mathfrak{c}}\Big{(}\sum_{n=0}^{2k-1} \varepsilon^{n}F^{\mathfrak{c}}_{n}+\varepsilon^{k}F^{\varepsilon,\mathfrak{c} }_{R},\sum_{n=0}^{2k-1}\varepsilon^{n}F^{\mathfrak{c}}_{n}+\varepsilon^{k}F ^{\varepsilon,\mathfrak{c}}_{R}\Big{)}. \tag{1.9}\]
+Comparing the order of \(\varepsilon\) in (1.9), one has
+
+\[0 =Q_{\mathfrak{c}}\left(F_{0}^{\mathfrak{c}},F_{0}^{\mathfrak{c}} \right),\] \[\partial_{t}F_{0}^{\mathfrak{c}}+\hat{p}\cdot\nabla_{x}F_{0}^{ \mathfrak{c}} =Q_{\mathfrak{c}}\left(F_{0}^{\mathfrak{c}},F_{1}^{\mathfrak{c}} \right)+Q_{\mathfrak{c}}\left(F_{1}^{\mathfrak{c}},F_{0}^{\mathfrak{c}} \right),\] \[\partial_{t}F_{1}^{\mathfrak{c}}+\hat{p}\cdot\nabla_{x}F_{1}^{ \mathfrak{c}} =Q_{\mathfrak{c}}\left(F_{0}^{\mathfrak{c}},F_{2}^{\mathfrak{c}} \right)+Q_{\mathfrak{c}}\left(F_{2}^{\mathfrak{c}},F_{0}^{\mathfrak{c}} \right)+Q_{\mathfrak{c}}\left(F_{1}^{\mathfrak{c}},F_{1}^{\mathfrak{c}} \right),\] \[\cdots\cdots\cdots\] \[\partial_{t}F_{n}^{\mathfrak{c}}+\hat{p}\cdot\nabla_{x}F_{n}^{ \mathfrak{c}} =\sum_{\begin{subarray}{c}i+j=n+1\\ i,j\geq 0\end{subarray}}Q_{\mathfrak{c}}\left(F_{i}^{\mathfrak{c}},F_{j}^{ \mathfrak{c}}\right), \tag{1.10}\] \[\cdots\cdots\cdots\] \[\partial_{t}F_{2k-1}^{\mathfrak{c}}+\hat{p}\cdot\nabla_{x}F_{2k- 1}^{\mathfrak{c}} =\sum_{\begin{subarray}{c}i+j=2k\\ i,j\geq 1\end{subarray}}Q_{\mathfrak{c}}\left(F_{i}^{\mathfrak{c}},F_{j}^{ \mathfrak{c}}\right).\]
+
+The remainder \(F_{R}^{\varepsilon,\mathfrak{c}}\) satisfies the equation
+
+\[\partial_{t}F_{R}^{\varepsilon,\mathfrak{c}}+\hat{p}\cdot\nabla _{x}F_{R}^{\varepsilon,\mathfrak{c}}-\frac{1}{\varepsilon}\left\{Q_{\mathfrak{ c}}\left(F_{0}^{\mathfrak{c}},F_{R}^{\varepsilon,\mathfrak{c}}\right)+Q_{ \mathfrak{c}}\left(F_{R}^{\varepsilon,\mathfrak{c}},F_{0}^{\mathfrak{c}} \right)\right\}\] \[=\varepsilon^{k-1}Q_{\mathfrak{c}}\left(F_{R}^{\varepsilon, \mathfrak{c}},F_{R}^{\varepsilon,\mathfrak{c}}\right)+\sum_{i=1}^{2k-1} \varepsilon^{i-1}\left\{Q_{\mathfrak{c}}\left(F_{i}^{\mathfrak{c}},F_{R}^{ \varepsilon,\mathfrak{c}}\right)+Q_{\mathfrak{c}}\left(F_{R}^{\varepsilon, \mathfrak{c}},F_{i}^{\mathfrak{c}}\right)\right\}+\varepsilon^{k}A, \tag{1.11}\]
+
+where
+
+\[A:=\sum_{\begin{subarray}{c}i+j\geq 2k+1\\ 2\leq i,j\leq 2k-1\end{subarray}}\varepsilon^{i+j-1-2k}Q_{\mathfrak{c}} \left(F_{i}^{\mathfrak{c}},F_{j}^{\mathfrak{c}}\right).\]
+
+From [22, Chap.2], the first equation of (1.10) implies that \(F_{0}^{\mathfrak{c}}\) is a local Maxwellian of the form \(\mathbf{M}_{\mathfrak{c}}(n_{0},u,T_{0};p)\), i.e.,
+
+\[F_{0}^{\mathfrak{c}}(t,x,p)=\mathbf{M}_{\mathfrak{c}}(n_{0},u,T_{0};p)=\frac{ n_{0}\gamma}{4\pi\mathfrak{c}^{3}K_{2}(\gamma)}\exp\Big{\{}\frac{u^{\mu}p_{\mu}}{T_ {0}}\Big{\}}, \tag{1.12}\]
+
+where \(\gamma\) a dimensionless variable defined as
+
+\[\gamma=\frac{m_{0}\mathfrak{c}^{2}}{k_{B}T_{0}}\]
+
+and \(T_{0}(t,x)>0\) represents the temperature, \(n_{0}(t,x)>0\) is the proper number density, \((u^{0},u)\) is the four-velocity. \(K_{j}(\gamma)\)\((j=0,1,2,\cdots)\) are the modified second order Bessel functions defined in (2.1).
+
+### The relativistic Euler equations and classical Euler equations
+
+Similar to [10, 23], for \(\alpha\), \(\beta\in\{0,1,2,3\}\), we define the first momentum as
+
+\[I^{\alpha}[\mathbf{M}_{\mathfrak{c}}]:=\int_{\mathbb{R}^{3}}\frac{p^{\alpha}}{ p^{0}}\mathbf{M}_{\mathfrak{c}}dp\]
+
+and the second momentum as
+
+\[T^{\alpha\beta}[\mathbf{M}_{\mathfrak{c}}]:=\int_{\mathbb{R}^{3}}\frac{p^{ \alpha}p^{\beta}}{p^{0}}\mathbf{M}_{\mathfrak{c}}dp.\]
+
+It has been shown in [46, Proposition 3.3] that
+
+\[I^{\alpha}[\mathbf{M}_{\mathfrak{c}}] =\frac{n_{0}u^{\alpha}}{\mathfrak{c}}, \tag{1.13}\] \[T^{\alpha\beta}[\mathbf{M}_{\mathfrak{c}}] =\frac{e_{0}+P_{0}}{\mathfrak{c}^{3}}u^{\alpha}u^{\beta}+\frac{P_{ 0}g^{\alpha\beta}}{\mathfrak{c}}, \tag{1.14}\]
+
+where \(e_{0}(t,x)>0\) is the proper energy density and \(P_{0}(t,x)>0\) is the pressure.
+Projecting the second equation in (1.10) onto \(1\), \(p\), \(p^{0}\), which are five collision invariants for the relativistic Boltzmann collision operator \(Q_{\mathfrak{c}}(\cdot,\cdot)\), and using (1.13)-(1.14), one obtains that \((n_{0},u,T_{0})\) satisfies the relativistic Euler equations.
+
+\[\begin{cases}\frac{1}{\mathfrak{c}}\partial_{t}\left(n_{0}u^{0} \right)+\nabla_{x}\cdot(n_{0}u)=0,\\ \frac{1}{\mathfrak{c}}\partial_{t}\left[\left(e_{0}+P_{0}\right)u^{0}u\right] +\nabla_{x}\cdot\left[\left(e_{0}+P_{0}\right)u\otimes u\right]+\mathfrak{c} ^{2}\nabla_{x}P_{0}=0,\\ \frac{1}{\mathfrak{c}}\partial_{t}\left[\left(e_{0}+P_{0}\right)\left(u^{0} \right)^{2}-\mathfrak{c}^{2}P_{0}\right]+\nabla_{x}\cdot\left[\left(e_{0}+P_{ 0}\right)u^{0}u\right]=0.\end{cases} \tag{1.15}\]
+
+The fluid variables \(n_{0}\), \(T_{0}\), \(S\), \(P_{0}\), \(e_{0}\) in (1.15) satisfy the following relations
+
+\[P_{0} =k_{B}n_{0}T_{0}=m_{0}\mathfrak{c}^{2}\frac{n_{0}}{\gamma}, \tag{1.16}\] \[e_{0} =m_{0}\mathfrak{c}^{2}n_{0}\frac{K_{1}(\gamma)}{K_{2}(\gamma)}+ 3P_{0}=m_{0}\mathfrak{c}^{2}n_{0}\frac{K_{3}(\gamma)}{K_{2}(\gamma)}-P_{0},\] (1.17) \[n_{0} =4\pi e^{4}m_{0}^{3}\mathfrak{c}^{3}\exp\left(\frac{-S}{k_{B}} \right)\frac{K_{2}(\gamma)}{\gamma}\exp\left(\gamma\frac{K_{1}(\gamma)}{K_{2} (\gamma)}\right), \tag{1.18}\]
+
+where \(k_{B}>0\) is Boltzmann's constant, \(S(t,x)>0\) is the entropy per particle which is defined by (1.18) and \(K_{i}(\gamma)\) is the modified Bessel function of the second kind defined later.
+
+Denote
+
+\[V:=\begin{pmatrix}P_{0}\\ u\\ S\end{pmatrix}.\]
+
+We assume that (1.15) is supplemented with initial data
+
+\[V|_{t=0}=V_{0}. \tag{1.19}\]
+
+The existence of local smooth solutions of the relativistic Euler equations (1.15) with initial condition (1.19) can be established by standard hyperbolic symmetrized method and it holds that
+
+\[\|V-\overline{V}\|_{H^{N_{0}}}\lesssim 1, \tag{1.20}\]
+
+where \(\overline{V}:=(\overline{P},0,\overline{S})\) is a constant background with \(\overline{P}>0\) and \(\overline{S}>0\). We point out that the estimate in (1.20) is uniform-in-\(\mathfrak{c}\), which is important for us, see Lemma 3.1 for details.
+
+From [8, 46], we have the following two properties :
+
+_Property 1_: The map \(\mathbf{\Phi}:(n_{0},T_{0})\mapsto(P_{0},S)\) is an auto-diffeomorphism of the region \((0,\infty)\times(0,\infty)\), where the map is defined by (1.16)-(1.18).
+
+_Property 2_: Under the equations of state (1.16)-(1.18), there hold
+
+1. There exists a smooth function \(\mathcal{H}\) such that \(P_{0}\) can be expressed in terms of \(e_{0}\) and \(S\) as \(P_{0}=\mathcal{H}(e_{0},S)\).
+2. The relativistic Euler equations is hyperbolic.
+3. The relativistic Euler equations is causal (the speed of sound \(a:=\mathfrak{c}\sqrt{\frac{\partial P_{0}}{\partial e_{0}}}\Big{|}_{S}\) is real and less than the speed of light). Actually, it holds that \(0<a<\frac{\mathfrak{c}}{\sqrt{3}}\).
+
+From [46, Proposition 3.4], the following Gibbs relation (see [11]) holds
+
+\[T_{0}dS=d\Big{(}\frac{e_{0}}{n_{0}}\Big{)}+P_{0}d\Big{(}\frac{1}{n_{0}}\Big{)},\]
+
+which is equivalent to
+
+\[\frac{\partial e_{0}}{\partial n_{0}}\Big{|}_{S}=\frac{e_{0}+P_{0}}{n_{0}}, \quad\frac{\partial e_{0}}{\partial S}\Big{|}_{n_{0}}=n_{0}T_{0}.\]
+For simplicity of presentation, in the rest of this paper, we always assume that
+
+\[k_{B}=1,\quad m_{0}=1.\]
+
+Formally, when \(\mathfrak{c}\) tends to infinity, the relativistic Euler equations (1.15) reduces to
+
+\[\begin{cases}\partial_{t}\rho+\nabla_{x}\cdot(\rho\mathfrak{u})=0,\\ \partial_{t}(\rho\mathfrak{u})+\nabla_{x}\cdot(\rho\mathfrak{u}\otimes \mathfrak{u})+\nabla_{x}\mathcal{P}=0,\\ \partial_{t}\Big{(}\rho\Big{(}\frac{1}{2}|\mathfrak{u}|^{2}+\mathcal{E}\Big{)} \Big{)}+\nabla_{x}\cdot\Big{(}\Big{(}\rho\Big{(}\frac{1}{2}|\mathfrak{u}|^{2}+ \mathcal{E}\Big{)}+\mathcal{P}\Big{)}\mathfrak{u}\Big{)}=0,\end{cases} \tag{1.21}\]
+
+which is the classical compressible Euler equations. Here \(\rho(t,x)>0\) denotes the density of the fluid, \(\mathfrak{u}(t,x)\) is velocity, \(\mathcal{P}(t,x)\) is pressure, \(\mathcal{E}(t,x)>0\) is internal energy per unit mass. The fluid variables \(\rho\), \(\theta\), \(\eta\), \(\mathcal{P}\) and \(\mathcal{E}\) satisfy the following relations
+
+\[\mathcal{P}=\rho\theta,\quad\eta=-\ln(A_{0}\rho\theta^{-\frac{3}{2}}),\quad \mathcal{E}=\frac{3}{2}\theta, \tag{1.22}\]
+
+where \(A_{0}=(2\pi)^{-\frac{3}{2}}e^{-\frac{5}{2}}\) and \(\theta(t,x)\) is the temperature of the fluid, \(\eta(t,x)\) is the physical entropy. It is clear that
+
+\[\theta d\eta=d\mathcal{E}-\frac{\mathcal{P}}{\rho^{2}}d\rho.\]
+
+Denote
+
+\[W:=\begin{pmatrix}\mathcal{P}\\ \mathfrak{u}\\ \eta\end{pmatrix},\]
+
+then the classical Euler equations (1.21) can be written as a symmetric hyperbolic system
+
+\[\mathbf{D}_{0}\partial_{t}W+\sum_{j=1}^{3}\mathbf{D}_{j}\partial_{j}W=0, \tag{1.23}\]
+
+where
+
+\[\mathbf{D}_{0}=\begin{pmatrix}1&0&0\\ 0&\sigma^{2}\rho^{2}\mathbf{I}&0\\ 0&0&1\end{pmatrix},\quad\mathbf{D}_{j}=\begin{pmatrix}\mathfrak{u}_{j}&\sigma ^{2}\rho\mathbf{e}_{j}^{t}&0\\ \sigma^{2}\rho\mathbf{e}_{j}&\sigma^{2}\rho^{2}\mathfrak{u}_{j}\mathbf{I}&0 \\ 0&0&\mathfrak{u}_{j}\end{pmatrix}.\]
+
+The quantity \(\sigma=\sqrt{\frac{\partial\mathcal{P}}{\partial\rho}}\Big{|}_{\eta}>0\) is the sound speed of the classical Euler equations.
+
+For simplicity, we supplement (1.23) with the same initial data and constant background as in the relativistic Euler case, that is,
+
+\[W|_{t=0}=V_{0},\quad\overline{W}=\overline{V},\]
+
+where \(\overline{W}:=(\overline{\mathcal{P}},0,\overline{\eta})\). It is a classical result from the theory of symmetric hyperbolic systems that (1.23) admits a local smooth solution with smooth initial data, see Lemma 3.2 for details.
+
+### A brief history of the hydrodynamic and Newtonian limits for (relativistic) Boltzmann equation
+
+For the hydrodynamic limit of the non-relativistic Boltzmann equation, there have been extensive studies on this subject and we only mention a few works. In the founding work of Maxwell [41] and Boltzmann [5], it is shown that the Boltzmann equation is closely related to the fluid dynamical systems for both compressible and incompressible flows. Hilbert and Enskog-Chapman independently developed a set of formal small-parameter expansion methods, called Hilbert expansion and Enskog-Chapman expansion respectively, and established the connection between Boltzmann equation and compressible (incompressible) Euler equations, compressible (incompressible) Navier-Stokes (Fourier) systems and the acoustic system, etc. It is a important and challenging problem to rigorously justify the
+
+# Robust Detection for Mills Cross Sonar
+
+###### Abstract
+
+Multi-array systems are widely used in sonar and radar applications. They can improve communication speeds, target discrimination, and imaging. In the case of a multibeam sonar system that can operate two receiving arrays, we derive new adaptive to improve detection capabilities compared to traditional sonar detection approaches. To do so, we more specifically consider correlated arrays, whose covariance matrices are estimated up to scale factors, and an impulsive clutter. In a partially homogeneous environment, the 2-step Generalized Likelihood ratio Test (GLRT) and Rao approach lead to a generalization of the Adaptive Normalized Matched Filter (ANMF) test and an equivalent numerically simpler detector with a well-established texture Constant False Alarm Rate (CFAR) behavior. Performances are discussed and illustrated with theoretical examples, numerous simulations, and insights into experimental data. Results show that these detectors outperform their competitors and have stronger robustness to environmental unknowns.
+
+ Sonar target detection, Adaptive Normalized Matched Filter, Multiple-Input Multiple-Output, Complex Elliptically Symmetric distributions, Tyler's M-estimator, robustness.
+
+## I Introduction
+
+### _Background and motivations_
+
+Forward-Looking sonars are solutions for perceiving the underwater environment. In the context of a growing need for decision-making autonomy and navigation safety, they have become fundamental tools for understanding, anticipating obstacles and potential dangers, analyzing and identifying threats. They offer efficient results, allowing detection, tracking, and classification of surface [1], water column [2], or bottom targets [3], in civil [4] or military applications such as mine warfare [5].
+
+At the detection level, monovariate statistical tests under the Gaussian or non Gaussian interference assumption, defined a priori, remain the prevalent approaches [6]-[8].
+
+Nevertheless, many works on multivariate statistics have shown their great interest compared to algorithms developed from monovariate statistics in a large number of application fields. Indeed, multivariate statistics allow advanced modeling of propagation environments. By following these precepts, [9] gets a central detector with the total unknown of the noise parameters, [10] first derives a detector under the assumption of a known covariance then substitutes it, through a two-step procedure, by an appropriate estimator, finally, [11] and [12] have shown the relevance of subspace data models in consideration of mismatched signals for which, as an example, the target echo would not come precisely from the center of the main beam. These seminal works are now references in remote sensing, and ground or air surveillance but mainly for radar systems.
+
+Moreover, in the radar field, phenomenal progress has also been made in recent decades, guided by increasingly complex systems which required profound changes in concepts and processing. This is especially the case of Space-Time Adaptive Processing (STAP) for airborne radars [13], which bring considerable improvements in the ability to discriminate moving targets at very low speeds, or Multiple-Input Multiple-Output (MIMO) systems that advance detection performance [14], [15] and resolution [16], [17] by exploiting spatial, frequency or waveform diversities.
+
+Although some preliminary work has emerged in recent years [18]-[24], these methods still seem to be underused in sonar systems.
+
+This paper focuses on the adaptive detection of a point target by a correlated orthogonal arrays sonar system. Inspired by these previous works, we will first show that multibeam systems are perfectly adapted to multivariate formalism. We will then propose two new detectors following the GLRT, and Rao two-step approaches [25]-[27], assuming heterogeneous or partially homogeneous clutter [28], [29].
+
+The performance in a Gaussian environment will first be evaluated. We will show that considering a sonar system with Mills [30] cross arrays leads to a better detectability of targets by reducing the clutter ridge.
+
+Nevertheless, complex multi-normality can sometimes be a poor approximation of physics. This is the case for fitting high-resolution clutter, impulsive noise, outliers, and interference. The Complex Elliptic Symmetric (CES) distributions [31] including the well-known compound Gaussian subclass are then natural extensions allowing the modeling of distributions with heavy or light tails in radar [32]-[35] as in sonar [36]. Mixtures of Scaled Gaussian (MSG) distributions [37] are derived and easily tractable approaches.
+
+In this context, particular covariance matrix estimators are recommended for adaptive processing such as the Tyler estimator [38] or Huber's M-estimator [39]. Their uses lead to very substantial performance gains in [40], [41], and [35]. In our application, these considerations will allow us to design a new covariance matrix estimator. The
+performance of the detectors in a non-Gaussian impulsive environment can then be studied. On this occasion, we will show on experimental data, this estimator's interest in the robustness to corruption of training data.
+
+### _Paper organization_
+
+This paper is organized as follows: Section II presents a dual array sonar system and the experimental acquisition conditions on which this work is based. In Section III, the signal model and detection problem are formalized. According to the two-step GLRT and Rao test design, coherent adaptive detectors are derived in Section IV. The performances are evaluated, compared, and analyzed in Sections V and VI. Conclusions are given in Section VII. Proofs and complementary results are provided in the Appendices.
+
+_Notations_: Matrices are in bold and capital, vectors in bold. Re(.) and Im(.) stand respectively for real and imaginary part operators. For any matrix \(\mathbf{A}\) or vector, \(\mathbf{A}^{T}\) is the transpose of \(\mathbf{A}\) and \(\mathbf{A}^{H}\) is the Hermitian transpose of \(\mathbf{A}\). \(\mathbf{I}\) is the identity matrix and \(\mathcal{CN}(\boldsymbol{\mu},\boldsymbol{\Gamma})\) is the circular complex Normal distribution of mean \(\boldsymbol{\mu}\) and covariance matrix \(\boldsymbol{\Gamma}\). \(\otimes\) denotes the Kronecker product.
+
+## II Seapix system
+
+### _Generalities_
+
+The SEAPIX system is a three-dimensional multibeam echosounder developed by the sonar systems division of Exail (formerly iXblue) [42]. It is traditionally used by fishing professionals as a tool to assist in the selection of catches and the respect of quotas [43], by hydro-acousticians for the monitoring of stocks and morphological studies of fish shoals [44], by hydrographers for the establishment of bathymetric and sedimentary marine charts [45, 46].
+
+Two uniform linear arrays of 64 elements, arranged in Mills cross, are entirely symmetric, reversible in transmission/reception, and electronically steerable. They generate transverse (i.e. across-track) or longitudinal (along-track) acoustic swaths of 120\({}^{\circ}\) by 1.8\({}^{\circ}\), tilttable on +/-60\({}^{\circ}\), providing a volumic coverage of the water column.
+
+### _FLS experiment_
+
+The SEAPIX system is being experimented with a Forward-Looking Sonar configuration for predictive target detection and identification. In this context of use, the active face is oriented in the "forward" direction rather than toward the seabed.
+
+In our study, the sensor is installed on the DriX Uncrewed Surface Vehicle (USV), and inclined by 20\({}^{\circ}\) according to the pitch angle to the sea surface (Figure 2 left). In transmission, the vertical antenna (formerly longitudinal) generates an enlarged beam of 9\({}^{\circ}\) in elevation by 120\({}^{\circ}\) in azimuth. A motion stabilized, and electronically tilted firing angle allows the upper limit of the -3 dB transmit beamwidth to graze the sea surface and the lower limit to reach a 50 m depth bottom at about 300 m range. In receive, the horizontal antenna (formerly transverse) generates beams of 2\({}^{\circ}\) in azimuth by 120\({}^{\circ}\) in elevation and the vertical antenna (which is used again) of 2\({}^{\circ}\) in elevation by 120\({}^{\circ}\) in azimuth. A rigid sphere of 71 cm diameter (Figure 2 right) is also immersed at 25 m depth in the middle of the water column.
+
+So after each transmission of 20 ms Linear Frequency Modulation pulses centered at 150 KHz with a 10 KHz bandwidth and a Pulse Repetition Interval of 0.5 s, the sensor signals from the two antennas are simultaneously recorded, allowing an azimuth and elevation representation of the acoustic environment (Figure 3).
+
+### _Pre-processing and data format_
+
+The signals from the 128 sensors provided by the sonar's embedded software are demodulated in baseband (InPhase and Quadrature components) and decimated at 43 KHz. During reception pre-processing, the digitized samples are compensated for the time-varying gain, filtered to the bandwidth of the waveform, pulse compressed, then decimated again to bandwidth.
+
+Finally, a ping dataset is a matrix of about 6000 range bins from 15 m to 400 m, by 64 sensors, by two arrays.
+
+Fig. 1: Multiswath capabilities seen from a schematic representation (left): transverse swath footprint is blue, a 60\({}^{\circ}\) steered transverse swath is displayed in red, the longitudinal swath is green, and a 45\({}^{\circ}\) steered longitudinal swath is orange. Illustration from the operator software (right): An across-track, an along-track, and a tilted along-track swath are observed, as well as an aggregation of fishes and an already constructed bathymetric map.
+
+Fig. 2: Exail’s DriX USV (left): The cross-shaped linear arrays are visible in the gondola. The real target in open water (right): a metallic sphere of target strength \(TS=-15\) dB.
+## III Detection Schemes
+
+### _Data model for a single array_
+
+At each time, we, have acquired two digitalized synchronized complex data vectors of \(m=64\) elements, called "snapshots", which can be written as (by omitting the temporal parameterization):
+
+\[\mathbf{x}_{i}=\begin{bmatrix}x_{i,1}&x_{i,2}&\cdots&x_{i,m}\end{bmatrix}^{T} \tag{1}\]
+
+where \(i=1,2\) is the array identifier (respectively horizontal and vertical).
+
+After the pre-processing steps, a point-like target observed on the antenna \(i\) is simply:
+
+\[\mathbf{x}_{i}=\alpha_{i}\,\mathbf{p}_{i}+\mathbf{z}_{i} \tag{2}\]
+
+where \(\mathbf{x}_{i}\in\mathbb{C}^{m}\) is the received signal, \(\alpha_{i}\) is an unknown complex target amplitude, \(\mathbf{p}_{i}\in\mathbb{C}^{m}\) stands for the known deterministic angular steering vector, \(\mathbf{z}_{i}\in\mathbb{C}^{m}\) is a mixture of scaled Gaussian (MSG) random vector admitting the stochastic representation:
+
+\[\mathbf{z}_{i}\stackrel{{ d}}{{=}}\sqrt{\tau_{i}}\,\mathbf{c}_{i}. \tag{3}\]
+
+The _texture_\(\tau_{i}\) is an unknown positive deterministic scalar parameter, presumably different for each range bin (i.e. for all time samples). The _speckle_\(\mathbf{c}_{i}\sim\mathcal{CN}(\mathbf{0},\sigma_{i}^{2}\mathbf{M}_{ii})\in \mathbb{C}^{m}\) is a complex circular Gaussian random vector whose covariance matrix \(\mathbf{M}_{ii}\) is known up to a scaling factor \(\sigma_{i}^{2}\). The term _speckle_ should be understood in the sense of CES statistics rather than as the result of a sum of contributions from reflections in a resolution cell. This model is strongly related to the class of compound Gaussian distributions [31], which assumes a speckle-independent random texture with a given density \(p_{\tau}\). The MSG distribution is more robust than the Gaussian one because the relative scaling between samples allows flexibility in the presence of heterogeneities, such as impulsive noise, outliers, and inconsistent data. This model explicitly allows considering the power fluctuation across range bins, especially for heavy-tailed clutter distributions.
+
+The detection problem is written as a binary hypothesis test:
+
+\[\left\{\begin{array}{lclcl}H_{0}:\mathbf{x}_{i}=\mathbf{z}_{i}&;&\mathbf{x }_{i,k}=\mathbf{z}_{i,k}&k=1\ldots K\\ H_{1}:\mathbf{x}_{i}=\alpha_{i}\,\mathbf{p}_{i}+\mathbf{z}_{i}&;&\mathbf{x}_{i, k}=\mathbf{z}_{i,k}&k=1\ldots K.\end{array}\right. \tag{4}\]
+
+In (4) it is assumed that \(K\geq m\) independent and identically distributed (i.i.d.) signal-free secondary data \(\mathbf{x}_{i,k}\in\mathbb{C}^{m}\) are available under both hypotheses for background parameters estimation. We recall that \(\mathbf{z}_{i,k}\stackrel{{ d}}{{=}}\sqrt{\tau_{i,k}}\,\mathbf{c}_ {i,k}\), \(\mathbf{c}_{i,k}\sim\mathcal{CN}(\mathbf{0},\mathbf{M}_{ii})\).
+
+Conditionally to the unknown deterministic texture, the densities of \(\mathbf{x}_{i}\) under \(H_{0}\) and \(H_{1}\) are Gaussian:
+
+\[p_{\mathbf{x}_{i}}(\mathbf{x}_{i};H_{0})=\frac{1}{\pi^{m}\hat{ \sigma}_{i}^{2m}|\mathbf{M}_{ii}|}\mathrm{exp}\left(-\frac{\mathbf{x}_{i}^{H} \mathbf{M}_{ii}^{-1}\,\mathbf{x}_{i}}{\hat{\sigma}_{i}^{2}}\right)\,, \tag{5}\] \[p_{\mathbf{x}_{i}}(\mathbf{x}_{i};H_{1})=\] \[\frac{1}{\pi^{m}\hat{\sigma}_{i}^{2m}|\mathbf{M}_{ii}|}\mathrm{ exp}\left(-\frac{(\mathbf{x}_{i}-\alpha_{i}\mathbf{p}_{i})^{H}\mathbf{M}_{ii}^{-1} \,(\mathbf{x}_{i}-\alpha_{i}\mathbf{p}_{i})}{\hat{\sigma}_{i}^{2}}\right)\,,\]
+
+where \(\hat{\sigma}_{i}=\sigma_{i}\,\sqrt{\tau_{i}}\).
+
+### _Data model for the two arrays_
+
+If we consider the two antennas, this model can be written more appropriately:
+
+\[\left\{\begin{array}{lcl}H_{0}:\mathbf{x}=\mathbf{z}&;&\mathbf{x}_{k}= \mathbf{z}_{k}&k=1\ldots K\\ H_{1}:\mathbf{x}=\mathbf{P}\,\boldsymbol{\alpha}+\mathbf{z}&;&\mathbf{x}_{k}= \mathbf{z}_{k}&k=1\ldots K\end{array}\right. \tag{6}\]
+
+where \(\mathbf{x}=\begin{bmatrix}\mathbf{x}_{1}\\ \mathbf{x}_{2}\end{bmatrix}\in\mathbb{C}^{2m}\) is the concatenation of the two received signals, \(\boldsymbol{\alpha}=\begin{bmatrix}\alpha_{1}\\ \alpha_{2}\end{bmatrix}\in\mathbb{C}^{2}\) is the vector of the target amplitudes and \(\mathbf{z}=\begin{bmatrix}\mathbf{z}_{1}\\ \mathbf{z}_{2}\end{bmatrix}\in\mathbb{C}^{2m}\) is the additive clutter. The matrix \(\mathbf{P}=\begin{bmatrix}\mathbf{p}_{1}&\mathbf{0}\\ \mathbf{0}&\mathbf{p}_{2}\end{bmatrix}\in\mathbb{C}^{2m\times 2}\) contains the steering vectors. \(\left\{\mathbf{x}_{k}=\begin{bmatrix}\mathbf{x}_{1,k}\\ \mathbf{x}_{2,k}\end{bmatrix}\right\}_{k\in\mathbb{I},K}\in\mathbb{C}^{2m}\) for \(K\geq 2\,m\) are i.i.d. signal-free secondary data.
+
+This formulation allows considering the correlation between sensors of arrays. The covariance is \(\mathbf{M}=\begin{bmatrix}\mathbf{M}_{11}&\mathbf{M}_{12}\\ \mathbf{M}_{21}&\mathbf{M}_{22}\end{bmatrix}\), with \(\mathbf{M}_{ii}\) the block-covariance matrix of array \(i\), and \(\mathbf{M}_{ij}=\mathbf{M}_{ji}^{H}\) the cross-correlation block of array \(i\) and \(j\).
+
+We further assume that the covariance is known, or estimated, up to two scalars, possibly different on each array. These scalars are conditioning the \(\mathbf{M}_{ii}\) block-covariance, but also all the cross-correlations blocks associated with the array \(i\).
+
+We can therefore write:
+
+\[\widetilde{\mathbf{C}}=\widetilde{\mathbf{\Sigma}}\,\mathbf{M}\,\widetilde{ \mathbf{\Sigma}}\,, \tag{7}\]
+
+with \(\widetilde{\mathbf{\Sigma}}=\begin{bmatrix}\tilde{\sigma}_{1}\,\mathbf{I}_{m}& \mathbf{0}\\ \mathbf{0}&\tilde{\sigma}_{2}\,\mathbf{I}_{m}\end{bmatrix}=\begin{bmatrix} \tilde{\sigma}_{1}&0\\ 0&\tilde{\sigma}_{2}\end{bmatrix}\otimes\mathbf{I}_{m}\) the unknown diagonal matrix of scalars \(\sigma_{i}\) and \(\tau_{i}\). We remind that the
+
+Fig. 3: Azimuth (top) and elevation (bottom) view from a single ping, in 50 m depth in La Ciotat bay.
+\(\sigma_{i}\) parameter drives the partial homogeneity of the data (i.e. the difference in scale factor between the covariance matrices of the primary and secondary data) and \(\tau_{i}\) drives the non-Gaussianity of the data (i.e. the power variation of the observations over time).
+
+In this model, each array, although correlated, has a possibly distinct texture and an unknown scaling factor on the covariance matrix which may also be dissimilar. It would therefore become entirely possible to model, as an example, a first array whose observations would be Gaussian (\(\tau_{1}=1\)) and homogeneous (\(\sigma_{1}=1\)), and a second array whose observations would be \(K\)-distributed (for which \(\tau_{2}\) is a realization of a Gamma distribution) and non-homogeneous (\(\sigma_{2}\neq 1\)).
+
+The PDFs under each hypothesis can be rewritten as:
+
+\[p_{\mathbf{x}}(\mathbf{x};H_{0}) =\frac{1}{\pi^{2m}|\widehat{\mathbf{C}}|}\exp\left(-\mathbf{x}^{ H}\widetilde{\mathbf{C}}^{-1}\mathbf{x}\right)\,,\] \[p_{\mathbf{x}}(\mathbf{x};H_{1}) =\frac{1}{\pi^{2m}|\widetilde{\mathbf{C}}|}\exp\left(-(\mathbf{x }-\mathbf{P}\boldsymbol{\alpha})^{H}\widetilde{\mathbf{C}}^{-1}\left( \mathbf{x}-\mathbf{P}\boldsymbol{\alpha}\right)\right). \tag{8}\]
+
+## IV Robust Detectors
+
+We discuss the derivation of detectors using the GLRT and Rao procedures. Following a two-step approach, the covariance matrix \(\mathbf{M}\) will first be assumed known, and then replaced by an appropriate estimator.
+
+### _Detectors' derivation with \(\mathbf{M}\) known (step-1)_
+
+#### Iv-A1 Generalized Likelihood Ratio Test
+
+The Generalized Likelihood Ratio Test (GLRT) design methodology proposes to solve the detection problem from the ratio of the probability densities function under \(H_{1}\) and \(H_{0}\), substituting the unknown parameters with their maximum likelihood estimates:
+
+\[L_{G}(\mathbf{x})=\frac{\max\limits_{\boldsymbol{\alpha}}\max\limits_{ \widetilde{\mathbf{\Sigma}}}p_{\mathbf{x}}\left(\mathbf{x};\boldsymbol{\alpha },\widetilde{\mathbf{\Sigma}},H_{1}\right)}{\max\limits_{\widetilde{\mathbf{ \Sigma}}}p_{\mathbf{x}}\left(\mathbf{x};\widetilde{\mathbf{\Sigma}},H_{0} \right)}. \tag{9}\]
+
+**Proposition IV.1**.: _The GLRT for the hypothesis test (6) is given by:_
+
+\[L_{G}(\mathbf{x})=\frac{\hat{\sigma}_{1_{0}}\,\hat{\sigma}_{2_{0}}}{\hat{ \sigma}_{1_{1}}\,\hat{\sigma}_{2_{1}}} \tag{10}\]
+
+_where_
+
+\[\left(\hat{\sigma}_{1_{0}}\,\hat{\sigma}_{2_{0}}\right)^{2}=\frac{ \operatorname{Re}\left(\mathbf{x}_{1}^{H}\mathbf{M}_{12}^{-1}\mathbf{x}_{2} \right)}{m}\\ +\sqrt{\frac{\mathbf{x}_{1}^{H}\mathbf{M}_{11}^{-1}\mathbf{x}_{1 }}{m}}\,\frac{\mathbf{x}_{2}^{H}\mathbf{M}_{22}^{-1}\mathbf{x}_{2}}{m},\]
+
+_and_
+
+\[\left(\hat{\sigma}_{1_{1}}\,\hat{\sigma}_{2_{1}}\right)^{2}=\frac {\operatorname{Re}\left[\mathbf{x}_{1}^{H}\left(\mathbf{M}_{12}^{-1}-\mathbf{ D}_{12}^{-1}\right)\mathbf{x}_{2}\right]}{m}\\ +\sqrt{\frac{\mathbf{x}_{1}^{H}\left(\mathbf{M}_{11}^{-1}-\mathbf{ D}_{11}^{-1}\right)\mathbf{x}_{1}}{m}}\,\frac{\mathbf{x}_{2}^{H}\left( \mathbf{M}_{22}^{-1}-\mathbf{D}_{22}^{-1}\right)\mathbf{x}_{2}}{m}}\]
+
+_with \(\mathbf{D}^{-1}=\mathbf{M}^{-1}\mathbf{P}\left(\mathbf{P}^{H}\mathbf{M}^{-1} \mathbf{P}\right)^{-1}\mathbf{P}^{H}\mathbf{M}^{-1}\)._
+
+Proof.: See Appendix A for a step-by-step derivation and Appendix B for some interesting equivalences. 
+
+As \(\mathbf{x}_{i}=\sqrt{\tau_{i}}\,\mathbf{c}_{i}\) under \(H_{0}\), it is easily shown that this detector is texture independent (i.e. it has the _texture-CFAR_ property).
+
+This detection test will be called _M-NMF-G_ in the following.
+
+#### Iv-A2 Rao test
+
+The Rao test is obtained by exploiting the asymptotic efficiency of the ML estimate and expanding the likelihood ratio in the neighborhood of the estimated parameters [47]. A traditional approach for complex unknown parameters is to form a corresponding real-valued parameter vector and then use the real Rao test [48], [49]. Specifically, rewriting the detection problem (6) as:
+
+\[\left\{\begin{array}{l}H_{0}:\boldsymbol{\xi}_{R}=\mathbf{0},\boldsymbol{\xi }_{S}\\ H_{1}:\boldsymbol{\xi}_{R}\neq\mathbf{0},\boldsymbol{\xi}_{S}\,,\end{array}\right. \tag{11}\]
+
+where \(\boldsymbol{\xi}_{R}=\left[\operatorname{Re}\left(\boldsymbol{\alpha}\righ
+
+# Constraining dark energy cosmologies with spatial curvature using Supernovae JWST forecasting
+
+###### Abstract
+
+Recent cosmological tensions, in particular, to infer the local value of the Hubble constant \(H_{0}\), have developed new independent techniques to constrain cosmological parameters in several cosmologies. Moreover, even when the concordance Cosmological Constant Cold Dark Matter (\(\Lambda\)CDM) model has been well constrained with local observables, its physics has shown deviations from a flat background. Therefore, to explore a possible deviation from a flat \(\Lambda\)CDM model that could explain the \(H_{0}\) value in tension with other techniques, in this paper we study new cosmological constraints in spatial curvature dark energy models. Additionally, to standard current Supernovae Type Ia (SNIa) catalogs, we extend the empirical distance ladder method through an SNIa sample using the capabilities of the James Webb Space Telescope (JWST) to forecast SNIa up to \(z\sim 6\), with information on the star formation rates at high redshift. Furthermore, we found that our constraints provide an improvement in the statistics associated with \(\Omega_{m}\) when combining SNIa Pantheon and SNIa Pantheon+ catalogs with JW forecasting data.
+## 1 Introduction
+
+The first direct evidence of the late time cosmic acceleration was obtained through measurements of Type Ia Supernovae (SNIa) [1; 2]. Over the years, subsequent observations confirmed this result, such as the cosmic microwave background (CMB) [3], baryon acoustic oscillations (BAO) [4; 5], and weak gravitational lensing [6]. However, the capability of supernovae to prove the accelerating expansion remains invaluable since these objects are bright enough to be seen at large distances. Furthermore, SNIa are common enough to be found in large quantities, and their properties make them standardized with a precision of \(\sim 0.1\) mag in brightness or \(\sim 5\%\) in distance per object [7]. Also, the increasing number of SNIa observations has considerably reduced the associated statistical errors and the uncertainties in estimating cosmological parameters dominated by them [8; 9].
+
+Nevertheless, the nature of this cosmic acceleration is one of the current inquiries in precision cosmology since still we do not fully understand the component with which it is associated, the _dark energy_. However, due to the well-constrained \(\Lambda\)-Cold Dark Matter (\(\Lambda\)CDM) model, this dark energy could be evidence for a component with a negative Equation-of-State (EoS) constant value [10; 11; 12] or a dynamical EoS [13; 14; 15]. Furthermore, dark energy can be associated with components that can be derived from first principles in alternative theories of gravity [16; 17; 18] and extended theories of gravity [19; 20], showing a late cosmic acceleration.
+
+On the nature of dark energy, several missions have been working to find better cosmological constraints adjoint with better systematics and increasing data baselines. Some of them as large-scale structure (LSS) observations with measurements from the Dark Energy Survey (DES) [21], the Dark Energy Spectroscopic Instrument (DESI) [22], the Legacy Survey of Space and Time (LSST) on the Vera Rubin Observatory [23], and Euclid [24], among
+others, have extended the concordance cosmological model to include EoS parameters of dark energy with some shifts within \(1\sigma\).
+
+In particular, the recently launched James Webb Space Telescope (JWST) is a very interesting experiment that can help to elucidate the nature of dark energy. JWST is a 6.5-meter primary mirror, space-based observatory operating in the visible and infrared light equipped with four main science instruments including a near-infrared camera, spectrograph, and imager slitless spectrograph; and a mid-infrared camera and spectrograph [25]. It is expected that it will have an estimated lifespan of 20 years in which the research will be focused on several astrophysical and cosmology areas such as galaxy formation in the early universe as [26; 27; 28; 29], exoplanet detection [30; 31; 32], metallicity and chemical exploration [33; 34; 35], and life detection [36; 37]. All these potential and current observations could allow us to explore physics further than before as testing dark energy models with structure formation [38; 39], corroborate the Cepheid calibrations in the distance ladder [40] and adding more SNIa observations [9], cosmic chronometers [41], and XA/UV quasars [42; 43] to the constraint analysis of them.
+
+Recently, numerous studies related to the implications of JWST to cosmology have been developed. In [9] a JWST simulated sample of SNIa within a redshift range \(2\lesssim z\lesssim 6\), was employed to constrain standard cosmological parameters. Using combinations of the mock sample and SN Pantheon dataset [44] it was possible to constrain dark energy models with constant EoS. This analysis was performed using two different forms of the intrinsic evolution of the standardized SNIa luminosity distance. On one hand, it is assumed a linear redshift dependence of magnitude evolution. On the other hand, we can consider other logarithmic evolutions. Analysing the cases with and without systematic evolution, it was found that the addition of the simulated SNIa sample would successfully remove the evolutionary effects. However, even though the SN Pantheon dataset size was increased by a factor of \(\approx 16\) data points, it is still not able to constrain the systematic evolution and the cosmological parameters as effectively as the very high redshift SN data.
+
+A further study about the first galaxies discovered by JWST was carried out in [45]. According to several works [46; 47; 48; 49; 50; 51; 52], there are some common aspects within the structure morphology, which indicate that galaxies discovered by JWST do not have enough time to evolve into what it is observed today. It is important to notice that this study is within the framework of the standard cosmological \(\Lambda\)CDM model. Therefore, the new JWST dataset includes near and mid-infrared images and near-infrared spectra to perform analyses based on cosmographic theories of the angular size-redshift relationship [45]. The \(\Lambda\)CDM interpretation of JWST observations is compared with the interpretation based on Zwicky's static universe model [53], where the origin of the cosmological redshift can be explained through the photon-energy loss mechanism. However, the redshifted objects detected by the JWST are not aligned with such interpretation, but before any final conclusion, data from this mission should be increased.
+
+As a step forward, using the capabilities of the JWST described, in this work, we develop the forecasting of SNIa up to \(z\sim 6\), with information on the Star Formation Rates (SFR) at high redshift. Once this data is at hand, we perform a statistical analysis combined with SN Pantheon [44] and SN Pantheon+1 to constrain spatial curvature dark energy cosmologies. We based our cosmological models inspired by bidimensional EoS parameterisation, which preserves the expanding and accelerating behaviour at late times. Our goal is to show that
+a simple deviation in the spatial curvature of a dark energy EoS model can verify a well-constrained analysis with SNIa JWST forecasting.
+
+This paper is divided as follows: In Sec. 2 we summarise the theory behind dark energy bidimensional parameterisations inspired in Taylor series around the cosmological scale factor \(a\). All of these parameterisations are described through their normalised \(E(z)\) Friedmann evolution equation, including the curvature term. Furthermore, we are going to consider standard \(\Lambda\)CDM and \(w\)CDM models in addition to the dark energy cosmologies to proceed with comparisons between them. Also, we include the latest constraints reported in the literature so far. In Sec. 3 we present the methodology employed for observables. We include the description of current SNIa data baselines and how we can proceed with their forecasting using JWST characteristics. In Appendix A we describe the technicalities behind this forecasting. The results on new constraints for the models described are developed in Sec. 4. Finally, the conclusions are presented in Sec. 5.
+
+## 2 Standard dark energy parameterisations
+
+The standard cosmological scenario \(\Lambda\)CDM is a remarkable fit for most cosmological data. Nonetheless, we are still searching for the nature of inflation, dark matter, and dark energy. Physical evidence for these components comes only from astrophysical and cosmological observations [54]. Therefore, an increase in experimental sensitivity can produce deviations from the standard \(\Lambda\)CDM scenario that could lead to a deeper understanding of the gravity theory. If it is not a consequence associated with systematic errors, the cosmological tensions [55] existing between the different experimental probes could indicate a failure of the \(\Lambda\)CDM model, and a better cosmological model should be able to be found.
+
+In this section, we are going to describe, in addition to the \(\Lambda\)CDM model with EoS \(w=-1\), five dark energy bidimensional in \(z\) parameterisations of \(w(z)\), which can be constant or redshift-dependent. Notice that to describe dark energy, we need to achieve cosmic acceleration with a negative pressure at late times [11].
+
+* \(\Lambda\)**CDM model.** In this model, the universe is composed of cosmological fluids with different EoS's \(w\) that contribute to the energy constraint. At present cosmic times, the non-relativistic matter contribution, \(\Omega_{m}\simeq 0.27\), is the sum of the ordinary baryonic matter term, \(\Omega_{b}\simeq 0.044\), and the (cold) dark matter term, \(\Omega_{c}\simeq 0.22\). Dark energy (\(\Omega_{\Lambda}\simeq 0.73\)) is described by \(w=-1\), associated with a cosmological constant \(\Lambda\) or a vacuum energy density [56]. Radiation represents a negligible contribution, \(\Omega_{r}\simeq 9\times 10^{-5}\), but it dominated the early cosmic stages, after the end of the inflationary stage and before matter-radiation decoupling [57]. Additionally, \(\Lambda\)CDM can be characterized with a flat geometry, which corresponds to an energy density parameter, \(\Omega_{\Lambda}=1-\Omega_{m}-\Omega_{r}\), where the only parameter to be constrained is \(\Omega_{m}\). The cosmological evolution for this model can be expressed as \[E(z)\equiv\frac{H(z)}{H_{0}}=\sqrt{\Omega_{m}(1+z)^{3}+\Omega_{r}(1+z)^{4}+ \Omega_{\Lambda}},\] (1) where \(H_{0}\) is the Hubble constant today. We also consider the non-flat \(\Lambda\)CDM cosmological model, as an extension of the \(\Lambda\)CDM model but with curvature \(k\neq 0\), with its constraint equation as \(\Omega_{k}=1-\Omega_{m}-\Omega_{r}-\Omega_{\Lambda}\)
+where \(\Theta=(\Omega_{m},\Omega_{\Lambda})\) is the vector with free parameters. The evolution for this case can be written as \[E(z)=\sqrt{\Omega_{m}(1+z)^{3}+\Omega_{r}(1+z)^{4}+\Omega_{k}(1+z)^{2}+\Omega_{ \Lambda}}.\] (2) Then, the model-dependent luminous distance can be calculated according to the \(\Omega_{k}\) value [58]: \[D_{L}(z)=\left\{\begin{aligned} &\frac{c}{H_{0}}(1+z)\frac{ \sinh\left(\sqrt{\Omega_{k}}\int_{0}^{z}\frac{dz^{\prime}}{E(z^{\prime})} \right)}{\sqrt{\Omega_{k}}},&\Omega_{k}>0\\ &\frac{c}{H_{0}}(1+z)\int_{0}^{z}\frac{dz^{\prime}}{E(z^{\prime}) },&\Omega_{k}=0\\ &\frac{c}{H_{0}}(1+z)\frac{\sin\left(\sqrt{-\Omega_{k}}\int_{0}^ {z}\frac{dz^{\prime}}{E(z^{\prime})}\right)}{\sqrt{-\Omega_{k}}},& \Omega_{k}<0,\end{aligned}\right.\] (3) where \(c\) the speed of light and \(E(z)\) the background evolution equation of the cosmological models. The base test for \(\Lambda\)CDM is the analysis provided by the Planck collaboration measuring CMB anisotropies finding the base parameters values \(\Omega_{m}=0.316\pm 0.008\) and \(H_{0}=67.27\pm 0.6\) km s\({}^{-1}\) Mpc\({}^{-1}\)[59] in the context of a flat \(\Lambda\)CDM. Using late-time data in [58] was found that using SNIa, BAO, and a quasar sample the values are \(\Omega_{m}=0.300\pm 0.012\), with a fixed \(H_{0}=70\) km s\({}^{-1}\) Mpc\({}^{-1}\), while using a non-flat \(\Lambda\)CDM model the results were \(\Omega_{m}=0.364\pm 0.021\) and \(\Omega_{\Lambda}=0.829\pm 0.035\), finding a slight deviation from the flat background. Furthermore, with a Cosmic Chronometers (CC - \(H(z)\)) sample it was found that \(H_{0}=66.7\pm 5.3\) km s\({}^{-1}\) Mpc\({}^{-1}\) and \(\Omega_{m}=0.33^{+0.08}_{-0.06}\) for the same flat model [60]. Using only SNIa Pantheon+ compilation [7] the values for the flat \(\Lambda\)CDM model are \(H_{0}=73.6\pm 1.1\) km s\({}^{-1}\) Mpc\({}^{-1}\). The latter assumes a Gaussian prior with \(\Omega_{m}=0.334\pm 0.018\). While for the non-flat \(\Lambda\)CDM the results are \(\Omega_{m}=0.306\pm 0.057\) and \(\Omega_{\Lambda}=0.625\pm 0.084\) in concordance with the flat counterpart at \(2\sigma\).
+* \(w\)**CDM model.** The simplest extension of the \(\Lambda\)CDM model is the one in which \(w\neq-1\), yet still constant in time meaning that \(w(z)=w_{0}\). From [9, 58] we express \(E(z)\) for this model as, \[E(z)=\sqrt{\Omega_{m}(1+z)^{3}+\Omega_{k}(1+z)^{2}+\Omega_{\Lambda}(1+z)^{3(1+ w_{0})}}.\] (4) Non-flat \(w\)CDM has \(\Theta=(\Omega_{m},\Omega_{\Lambda},w_{0})\) as free parameters. However, under flatness assumption, \(\Omega_{k}=0\), so the only free parameters are \(\Theta=(\Omega_{m},w_{0})\). This model reduces to \(\Lambda\)CDM when \(w_{0}=-1\). Using SNIa, BAO, and quasars the values obtained in [58] were: \(\Omega_{m}=0.369^{+0.022}_{-0.023}\) and \(w_{0}=-1.283^{+0.094}_{-0.027}\), corresponding to a deviation from the \(\Lambda\)CDM model in more than \(1\sigma\) range with the same fixed \(H_{0}\) value. While using a non-flat \(w\)CDM results in \(\Omega_{m}=0.280^{+0.041}_{-0.037}\), \(\Omega_{\Lambda}=1.662^{+0.041}_{-0.048}\) and \(w_{0}=-0.667^{+0.024}_{-0.027}\), where a difference from a flat model is reported of more than \(3\sigma\) using only SNIa and quasars. Furthermore, adding BAO to the quasar sample [61] results in \(\Omega_{m}=0.31\pm 0.03\) and \(w_{0}=-1.00^{+0.14}_{-0.13}\)
+that is consistent with \(\Lambda\)CDM assuming a Gaussian prior of \(H_{0}=67.32\pm 4.7\) km s\({}^{-1}\) Mpc\({}^{-1}\). When using only SNIa [7] the flat \(w\)CDM model gives \(\Omega_{m}=0.309^{+0.063}_{-0.069}\), \(H_{0}=73.5\pm 1.1\) km s\({}^{-1}\) Mpc\({}^{-1}\) and \(w_{0}=-0.90\pm 0.14\), returning the confirmation for a \(\Lambda\)CDM model.
+* **Chevallier-Polarski-Linder (CPL) model.** One of the most used redshift-dependent parameterisations corresponds to the Chevallier-Polarski-Linder [62; 63] proposal: \(w(z)=w_{0}+w_{a}z/(1+z)\). In which, \(w(z)=w_{0}+w_{a}\) at \(z=\infty\) and \(w(z)=w_{0}\) at \(z=0\), but it diverges in the future for \(z\rightarrow(-1)^{+}\). In this bidimensional model, \(w_{0}\) denotes the dark energy EoS today, and \(w_{a}\) describes its evolution. This parameterisation has several advantages including the well behaviour at high redshift, the linear feature at low redshift, a simple physical interpretation, and the accuracy in reconstructing a scalar field EoS [63]. The normalised Hubble parameter for this model can be written as \[E(z)=\sqrt{\Omega_{m}(1+z)^{3}+\Omega_{k}(1+z)^{2}+\Omega_{\Lambda}(1+z)^{3( 1+w_{0}+w_{a})}\exp\!\left(\frac{-3w_{a}z}{1+z}\right)}.\] (5) For the non-flat and flat cases, we consider as free parameters (\(\Omega_{m}\), \(\Omega_{\Lambda}\), \(w_{0}\), \(w_{a}\)) and (\(\Omega_{m}\), \(w_{0}\), \(w_{a}\)), respectively. This model can be reduced to \(\Lambda\)CDM with \(w_{0}=-1\) and \(w_{a}=0\). Using SNIa, BAO, and quasars in [58] was discussed a deviation from the \(\Lambda\)CDM with \(\Omega_{m}=0.354^{+0.032}_{-0.030}\), along with \(w_{0}=-1.323^{+0.103}_{0.112}\) and \(w_{a}=0.745^{+0.483}_{-0.974}\) for a flat CPL model, values that correspond to a confirmation of the \(\Lambda\)CDM model. Using quasars and \(H(z)\) measurements for a non-flat CPL parametrization it was found that \(\Omega_{m}=0.44\pm 0.10\), \(\Omega_{k}=-0.36\pm 0.24\), \(H_{0}=71.8^{+4.6}_{-7.7}\), with \(w_{0}=-1.2\pm 1.0\), and \(w_{a}=-5.0^{+9-0}_{-2.0}\)[64] showing a clear deviation of more than \(2\sigma\) from the flat \(\Lambda\)CDM model. Using SNIa [7] for the flat CPL with a Gaussian prior in \(H_{0}\) results in \(H_{0}=73.3\pm 1.1\) km s\({}^{-1}\) Mpc\({}^{-1}\), with \(\Omega_{m}=0.403^{+0.054}_{-0.098}\), \(w_{0}=-0.93\pm 0.15\) and \(w_{a}=-0.1^{+0.9}_{-2.0}\). This latter corresponds to a flat \(\Lambda\)CDM confirmation. Furthermore, adding BAO, CMB to the previous SNIa sample results in \(H_{0}=67.41^{+0.52}_{-0.82}\) km s\({}^{-1}\) Mpc\({}^{-1}\), \(\Omega_{m}=0.316^{+0.009}_{-0.005}\) and \(w_{0}=1.267^{+0.196}_{-0.191}\) and \(w_{a}=-3.771^{+2.113}_{-2.496}\)[58].
+* **Jassal-Bagla-Padmanabhan (JBP) model.** In [65] the parameterisation \(w(z)=w_{0}+w_{a}z/(1+z)^{2}\), in which \(w(0)=w_{0}\), \(w^{\prime}(0)=w_{1}\), and \(w(\infty)=w_{0}\) is presented based on trying to explain the accelerated universe covering both CMB and the SNIa measurements. This model was proposed to solve the high \(z\) issues within the CPL parameterisation [11]. Using the behaviour of this function allows us to have the same EoS at the present epoch and high-\(z\) with a rapid variation at small redshifts. Considering the corresponding term related to curvature, the derivative expression for \(E(z)\) for this model can be written as \[E(z)=\sqrt{\Omega_{m}(1+z)^{3}+\Omega_{k}(1+z)^{2}+\Omega_{\Lambda}(1+z)^{3(1+ w_{0})}\exp\!\left[\frac{3w_{a}z^{2}}{2(1+z)^{2}}\right]},\] (6) where \(\Theta=(\Omega_{m},\Omega_{\Lambda},w_{0},w_{a})\) for the non-flat JBP model, and \(\Theta=(\Omega_{m},w_{0},w_{a})\) for a flat JBP model. Using SNIa, BAO, and quasars the JBP model is tested obtaining \(\Omega_{m}=0.354^{+0.032}_{-0.030}\), \(w_{0}=-1.371\pm 0.141\) and \(w_{a}=1.127^{+1.293}_{-1.547}\)[58] which is considered a deviation from
+the confirmation for \(\Lambda\)CDM for the \(w_{0}\) value. In [66] using SNIa, BAO, CMB and Gamma-Ray Bursts (GRB) it is obtained \(\Omega_{m}=0.27\pm 0.03\) with \(w_{0}=-1.02\pm 0.04\) and \(w_{a}=0.22\pm 0.23\) using a flat JBP model in concordance with a flat \(\Lambda\)CDM at \(1\sigma\).
+* **Exponential model.** In [67] was examined five one-parameter dark energy parameterisations with several datasets. In particular, data from CMB observations, Joint light-curve analysis from SNIa observations (JLA), BAO distance measurements, and \(H(z)\). It was concluded that the one-parameter dark energy model can provide a solution to the \(H_{0}\) tension between local measurements and Planck indirect ones. Besides, it was found which of the five models is better fitted to the data used. This model, relatively close to \(\Lambda\)CDM, is the one with an EoS of the form: \(w(z)=w_{0}\exp[z/(1+z)]/(1+z)\), where \(w(0)=w_{0}\) and \(w(z)=0\), for both \(z=\infty\) and \(z\rightarrow{(-1)}^{+}\). As a result, the normalised Hubble parameter can be written as \[E(z)=\sqrt{\Omega_{m}(1+z)^{3}+\Omega_{k}(1+z)^{2}+\Omega_{\Lambda}(1+z)^{3} \exp\!\left[3w_{0}\left(\exp\!\left(\frac{z}{1+z}\right)-1\right)\right]}.\] (7) For non-flat exponential model we have \(\Theta=(\Omega_{m},\Omega_{\Lambda},w_{0})\), while for flat exponential model, \(\Theta=(\Omega_{m},w_{0})\). Using SNIa, quasars, and BAO was obtained for the Exponential model \(\Omega_{m}=0.359^{+0.023}_{-0.024}\) and \(w_{0}=-1.271^{+0.092}_{-0.107}\)[58] showing again a deviation from a flat \(\Lambda\)CDM. In [68] the exponential model is constrained using CMB, SNIa, BAO, and measurements of the distance using Hydrogen II galaxies resulting in \(H_{0}=70.9\pm 7.0\) km s\({}^{-1}\) Mpc\({}^{-1}\), \(\Omega_{m}=0.284\pm 0.006\) and \(w_{0}=-1.202^{+0.027}_{-0.026}\), imposing a Gaussian local prior in \(H_{0}\).
+*
+
+# P4R-Type: a Verified API for P4 Control Plane Programs
+
+###### Abstract.
+
+Software-Defined Networking (SDN) significantly simplifies programming, reconfiguring, and optimizing network devices, such as switches and routers. The _de facto_ standard for programming SDN devices is the P4 language. However, the flexibility and power of P4, and SDN more generally, gives rise to important risks. As a number of incidents at major cloud providers have shown, errors in SDN programs can compromise the availability of networks, leaving them in a non-functional state. The focus of this paper are errors in control-plane programs that interact with P4-enabled network devices via the standardized P4Runtime API. For clients of the P4Runtime API it is easy to make mistakes that lead to catastrophic failures, despite the use of Google's Protocol Buffers as an interface definition language.
+
+This paper proposes P4R-Type, a novel verified P4Runtime API for Scala that performs static checks for P4 control plane operations, ruling out mismatches between P4 tables, allowed actions, and action parameters. As a formal foundation of P4R-Type, we present the \(F_{\text{P4R}}\) calculus and its typing system, which ensure that well-typed programs never get stuck by issuing invalid P4Runtime operations. We evaluate the safety and flexibility of P4R-Type with 3 case studies. To the best of our knowledge, this is the first work that formalises P4Runtime control plane applications, and a typing discipline ensuring the correctness of P4Runtime operations.
+
+Keywords:**Software and its engineering \(\rightarrow\) Formal language definitions; _Domain specific languages; \(\rightarrow\) Networks \(\rightarrow\) Programming interfaces. +
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+
++
+Footnote †: journal: Computer Science
+This separation simplifies network management and enables network administrators to quickly and easily reconfigure and optimize network traffic flows.
+
+The de facto Open Source standard for SDN is P4 [P4.org Working Group 2020a]. In P4, the the data plane is programmed by specifying packet processing _tables_ which select the _actions_ to perform when a network packet matches certain patterns. The P4 standard also defines a control plane API (called P4Runtime [P4.org Working Group 2020b]) for writing programs that query or alter the configuration of P4-enabled network devices.
+
+Unfortunately, the power and ease of automation of SDN come with risks: a mistake in an SDN program can leave a network in a non-functional state. Indeed, erroneous configuration changes have compromised the availability of entire regions of large cloud providers [Sharwood 2016]. A recent study by Bhardwaj et al. [2021] shows that 38.8% of SDN bugs are triggered when the controller _"attempts to process system configurations"_ -- i.e. read, add, update, delete table entries; the authors add that _"this fact is astounding because a critical motivation for SDN is to move towards automation and eliminate configuration-based errors."_ In this paper, we focus on statically preventing a specific form of P4Runtime controller bug: attempting to read/insert/modify/delete P4 table entries that do not conform to the actual table layout of the P4 data plane. Such erroneous attempts are not statically checked by the official, weakly-typed P4Runtime API, as we explain below. Preventing this form of bug does not avert all possible P4 configuration processing bugs (e.g. a P4Runtime controller may insert a well-formed but incorrect routing table entry, or omit or delete a necessary entry) -- but it provides a baseline correctness guarantee towards more thorough static verification of P4Runtime applications (that we discuss as future work in Section 10).
+
+### The Problem with Weakly-Typed P4Runtime APIs
+
+For a concrete example of how mistakes could happen, consider Figure 1 (left): it is based on the P4 documentation [P4.org Working Group 2023], and shows a control plane program written in Python using the official P4Runtime API. The program is connected to a P4-enabled switch, and inserts a new entry (i.e. a packet processing rule) into a table called IPv4_table, meaning: _"if a packet has destination address_10.0.1.1, _then perform the action_ IPv6_forward _with the given parameters._" (We provide more details about P4 in Section 2.)
+
+The Python program in Figure 1 contains an error: the table IPv4_table in the switch does _not_ allow for an action called IPv6_forward (although that action may be allowed by other tables in the same switch). The P4Runtime Python API detects this discrepancy at run-time, and throws an exception -- which may cause the program to fail half-way during a series of related P4 rule updates, leaving the network configuration in an inconsistent state. The same program may have other problems: e.g. does the intended action for IPv4_table actually take two parameters? Is one
+
+Figure 1: Example of control plane P4 programs. Left: a Python program using the official P4Runtime API. Right: the equivalent Scala 3 program using verified API P4R-Type.
+of such parameters actually called mac_dst? Again, the official P4Runtime Python API would only spot these issues at run-time, by throwing exceptions.
+
+As this example shows, it is all too easy to make mistakes when writing control plane programs in scripting languages (like Python) that don't perform static checks to ensure the validity of P4Runtime operations. However, statically detecting such errors is not trivial: to prevent errors without being overly-restrictive, the static checks must take into account the actual _dependencies_ between the packet processing tables available in a P4-enabled device, the actions allowed by each specific table, and the parameters expected by each specific action.
+
+Our objective is to design and develop a strongly-typed P4Runtime API that addresses the issues above, while satisfying **three key requirements**:
+
+1. the API must have a formal foundation for proving that well-typed programs never get stuck by issuing invalid P4Runtime operations or receiving unexpected responses;
+2. the API must be written and usable in an _existing_ programming language -- i.e. the implementation of the formal results (from requirement **(R1)**) must not depend on a bespoke programming language nor type checker;
+3. if the API depends on code generation, the amount of generated code must be minimal.
+
+#### Our Proposal: P4R-Type and its Formal Foundation \(F_{\text{P4R}}\)
+
+This paper proposes P4R-Type, a novel verified P4Runtime API for Scala 3 that performs _static_ checks for P4 control plane operations, ruling out mismatches between P4 tables, allowed actions, and action parameters. Programs written with P4R-Type look like the one shown in Figure 1 (right): albeit similar to its Python equivalent, the P4R-Type program does _not_ compile, because (thanks to its type constraints) the off-the-shelf Scala 3 compiler can spot that the action on line 5 is not valid for the table IPv4_Table. The Scala 3 compiler can also similarly spot any discrepancy between a selected action and the supplied parameters.
+
+P4R-Type has a formal foundation: \(F_{\text{P4R}}\), a calculus and typing system allowing us to state and prove that _"well-typed \(F_{\text{P4R}}\) programs never perform invalid P4Runtime operations"_ (like the mistake in Figure 1). \(F_{\text{P4R}}\) is specifically designed for implementation as a Scala 3 API, and for enabling the "Python-like" P4Runtime programs shown in Figure 1.
+
+To the best of our knowledge, this is the first work that formalises control plane applications based on P4Runtime, and a typing discipline to ensure the correctness of P4Runtime operations.
+
+#### Contributions and Outline of the Paper
+
+After a background and overview (Section 2), we introduce our main contributions:
+
+1. The first formal model of P4Runtime networks (Section 3) consisting of clients written in our novel formal language \(F_{\text{P4R}}\) (Section 3.1) and servers with different configurations (Section 3.2) interacting with each other (Section 3.3).
+2. A typing discipline for \(F_{\text{P4R}}\) (Section 4) ensuring that if a client is well-typed w.r.t. the configuration of the surrounding P4Runtime network servers (under the server-configuration-to-type encoding we introduce in Definition 5.2), then the client will never perform invalid P4Runtime operations nor get stuck (Theorems 6.1 and 6.4). To ensure that these results translate into a verified P4Runtime client API in an _existing_ programming language (as per requrement (**R2**) above), we equip the \(F_{\text{P4R}}\) typing system with a limited form of type-level computation based on _match types_[1] and _singleton types_, both available in Scala 3. Our development of \(F_{\text{P4R}}\) also contributes a novel combination of _(i)_ match types
+without_ default cases, _(ii)_ structural subtyping, and _(iii)_ singleton types: the details and challenges are explained in Remark 4.6. (Besides, our theory and results are not Scala-specific and can be embedded e.g. in dependently-typed languages like Coq.)
+3. The first implementation of a verified P4Runtime API, called P4R-Type (Section 7) and published as companion artifact of this paper. P4R-Type is based on the formalisation and results of \(F_{\texttt{P4R}}\), is written and usable in Scala 3, and only depends on a small amount of autogenerated type definitions (based on our server-configuration-to-type encoding in Definition 5.2): therefore, P4R-Type satisfies the requirements (**R1**), (**R2**), and (**R3**) above. We demonstrate the features of P4R-Type with 3 case studies (Section 8), and discuss the drawbacks of alternative approaches (Section 8.4
+
+# Execution-based Code Generation using Deep Reinforcement Learning
+
+###### Abstract
+
+The utilization of programming language (PL) models, pretrained on large-scale code corpora, as a means of automating software engineering processes has demonstrated considerable potential in streamlining various code generation tasks such as code completion, code translation, and program synthesis. However, current approaches mainly rely on supervised fine-tuning objectives borrowed from text generation, neglecting specific sequence-level features of code, including but not limited to compilability as well as syntactic and functional correctness. To address this limitation, we propose PPOCoder, a new framework for code generation that combines pretrained PL models with Proximal Policy Optimization (PPO) deep reinforcement learning and employs execution feedback as the external source of knowledge into the model optimization. PPOCoder is transferable across different code generation tasks and PLs. Extensive experiments on three code generation tasks demonstrate the effectiveness of our proposed approach compared to SOTA methods, improving the success rate of compilation and functional correctness over different PLs. Our code can be found at [https://github.com/reddy-lab-code-research/PPOCoder](https://github.com/reddy-lab-code-research/PPOCoder).
+
+## 1 Introduction
+
+Recent years have seen a surge of attention towards the use of deep learning and neural language models to automate code generation and other software engineering processes, as a means to enhance developer productivity. The software development process encompasses a variety of code generation tasks, including code completion (Code2Code) [19], code translation (Code2Code) [46], and program synthesis (NL2Code) [20]. Inspired by the great performance of pre-trained neural language models (LMs) in different natural language processing (NLP) tasks, these pretraining techniques have been recently employed on large-scale code corpuses to automate code generation tasks. Examples of such pretrained models include CodeBERT [11], CodeGPT [23], PLABRT [1], and CodeT5 [40]. However, the code domain faces some unique challenges. For example, given that the generated code is intended for machine execution as opposed to human comprehension, it is imperative that the generated code maintains syntactic and functional correctness, i.e., being able to pass compilation and unit tests.
+
+Despite the advancements of pretrained code models, they are heavily influenced by NLP's self-supervised masked language modeling (MLM) and often struggle to ensure the syntactic and functional correctness of the generated codes. Authors of [9] have shown that up to 70% of codes generated by these models can be non-compilable. To improve code generation towards syntactic and functional correctness, several approaches are followed: \((i)\) filtering and repairing the non-compilable synthesized programs [17], \((ii)\) using energy-based generation models with compilability constraints [16], and \((iii)\) using reinforcement learning (RL) finetuning mechanisms [38, 44, 18]. However, existing approaches are often tailored to a specific programming language (PL) or task and are not easily transferable to other different code generation tasks and PLs. To tackle this challenge, we propose **PPOCoder**, illustrated in Fig.1, a PPO-based RL framework for code generation that employs compiler feedback (i.e., syntactic or functional correctness) as the external source of knowledge in model optimization. PPOCoder utilizes the PPO [34] algorithm for RL optimization which is based on
+
+Figure 1: An overview of the proposed PPOCoder framework. The actor and critic networks are first initialized from the pretrained PL model for the desired task. Following the sampling of a synthetic program from the stochastic policy, the reward is determined using the execution feedback and the ground truth target code. The values are estimated by the critic network. Finally, both actor and critic networks are updated based on the obtained values and returns.
+the proximal actor-critic advantage policy gradient objective and a trust region mechanism, making the model optimization more stable and less sensitive to new environments (tasks or datasets). Also, PPOCoder integrates discrete compiler feedback with the syntactic and semantic matching scores between the generated codes and executable targets. This integration reduces the sparsity of the reward function, leading to a better guidance of the policy to generate code that is more closely aligned with the correct targets. To control explorations and prevent large deviations from the distributions learned by the pretrained PL model, PPOCoder incorporates the KL-divergence penalty. This penalty helps to reduce the chance of memorization, which is often caused by the cross-entropy loss in previous approaches during pretraining and finetuning, resulting in a more controlled and efficient exploration that can generalize well to different code generation tasks and PLs. To summarize, the major contributions of this paper are as follows:
+
+* We present a PPO-based RL framework for code generation, PPOCoder, that utilizes compiler feedback (i.e., syntactic or functional correctness) as the external source of knowledge in model optimization. PPOCoder provides a more stable and generalizable model optimization that is less sensitive to new environments (tasks, PLs, or datasets).
+* We develop a new reward function based on the discrete compiler feedback (compilation or unit test signal when available) received at the end of the generation episode as well as the syntactic and semantic matching scores between the AST sub-trees and DFG edges of the sampled generations and the correct targets.
+* We reduce the chance of memorization by incorporating a KL-divergence penalty into reward instead of a cross-entropy loss used in earlier works to control explorations and prevent deviations from the pretrained model.
+* We demonstrate the effectiveness of PPOCoder through an extensive set of experiments across diverse code generation tasks (code completion, code translation, code synthesis) and PLs (C++, Java, Python, C#, PHP, C). PPOCoder outperforms the SOTA baselines, improving the compilation rate and functional correctness over different PLs. We also investigate the benefits of PPOCoder's reward elements and PPO optimization through ablation study.
+
+The organization of the remainder of this paper is as follows: In Section 2, existing code generation methods utilizing pretrained models, structure-based approaches, and RL methods for sequence generation are summarized. Section 3 delves into the specifics of our proposed PPOCoder method, including its various components. The experimental evaluation of our method on three code generation tasks: code completion, code translation, and program synthesis tasks, as well as the ablation study and case study, can be found in Section 4. Finally, the paper concludes in Section 5.
+
+## 2 Related Work
+
+### Pretrained Models for Code Generation
+
+Recent research has focused on using pretrained neural language models (LMs) in natural language processing (NLP) to automate code generation tasks using large-scale code corpus data from open-source repositories [23, 43, 25]. Notable examples of these pretrained models include CodeBERT [11] with encoder-only, CodeGPT [23] with decoder-only as well as PLABRT [1] and CodeT5 [40] with encoder-decoder transformer architectures. However, these pretrained PL models tend to rely heavily on self-supervised MLM for text generation and still struggle to ensure the syntactic and functional correctness of the generated codes.
+
+### Leveraging Structure in Code Generation
+
+Recently, there has been a growing interest in incorporating logical constructs such as abstract syntax trees (ASTs) [15, 29, 39], code sketches [26], and data-flow graphs (DFGs) [42, 12]. For example, GraphCodeBERT [12] uses DFGs to incorporate semantic information, but its decoder is completely unaware of the code structures. StructCoder [36] introduces a pretrained structure-aware encoder-decoder architecture. Despite these efforts, many code generation models still struggle to ensure the syntactic and functional correctness of the generated codes.
+
+### RL for Sequence Generation
+
+RL has been used to optimize non-differentiable metrics in sequence generation tasks [31, 3], such as using the REINFORCE [41] algorithm to improve BLEU [27] and ROUGE [21] scores in translation and summarization models. Unlike text generation, code generation requires not only syntactic but also functional correctness as the generated code must pass compilation and unit tests for machine execution. Recently, execution-guided approaches [7, 10, 8] and RL-based finetuning mechanisms [38, 44, 18] are used to enhance the quality of generated codes. For example, [18] has recently studied the integration of RL with unit test signals in the finetuning of the program synthesis models. However, existing RL-based methods still encounter several limitations. They are often designed for a particular task (e.g., only program synthesis) or a particular PL (e.g., only Python), receive a sparse and discrete compiler signal only at the end of the generation episode, and are susceptible to memorization and poor performance on unseen data due to the use of cross-entropy loss with the policy gradient objective in the RL optimization. Our model, PPOCoder, makes the RL framework transferable to diverse code generation tasks and PLs by incorporating a PPO-based framework that integrates compiler feedback with the syntactic and semantic matching scores in the reward and utilizes a KL-divergence penalty to prevent large deviations, while reducing the chance of memorization.
+
+## 3 PPOCoder
+
+PPOCoder provides a systematic mechanism for finetuning code generation models using deep reinforcement learning (RL) by effectively and efficiently incorporating compiler feedback as extra knowledge into the model optimization, thereby enhancing the quality of the generated codes in terms of code-specific sequence-level features such as syntactic and functional correctness. Fig. 2 shows the general structure of our proposed PPOCoder model with the policy network (actor) \(\pi_{\theta}\) responsible for code generation actions and the value
+function (critic) \(V_{\pi}\) responsible for the return estimations. They are both learned with the proximal policy optimization (PPO) approach taking reward \(\mathcal{R}\). As shown in Fig. 2, the total reward is composed of four elements: (\(i\)) compiler feedback; (\(ii\)) syntactic match score; (\(iii\)) semantic match score; and (\(iv\)) KL-divergence penalty. We provide further details about each of these components in the subsections below.
+
+### Problem Formulation
+
+The code generation procedure can be formulated as a sequential discrete finite-horizon Markov Decision Process (MDP) with the use of RL in which an agent interacts with the compiler over discrete horizon \(T\) which is equivalent to the maximum number of generated code tokens. The proposed PPOCoder is formulated as follows:
+
+**State \(\mathcal{S}\):** The state of environment at each time-step, denoted as \(s_{t}=(\hat{y}_{<t},x),s_{t}\in\mathcal{S}\), is determined by the source PL/NL data \(x\), as well as the set of generated tokens before \(t\), \(\hat{y}_{<t}\).
+
+**Action \(\mathcal{A}\):** The PL model chooses the action at each time-step, denoted as \(a_{t}=\hat{y}_{t},a_{t}\in\mathcal{A}\), which is equivalent to the generated token at time-step \(t\).
+
+**Policy \(\pi_{\theta}(a_{t}|s_{t})\):** The stochastic policy network parameterized by \(\theta\) is the downstream code generation model that predicts the next token conditioned on the previously generated tokens and the source data, so, \(\pi_{\theta}(\hat{y}_{t}|\hat{y}_{<t},x):\mathcal{S}\rightarrow\Delta( \mathcal{A})\) where \(\Delta(\mathcal{A})\) denotes the probability distribution over all actions (e.g., target vocabulary). The next action \(\hat{y}_{t}\) will be decided based on the _top-k_ sampling from this probability distribution. Policy is initialized with the pretrained reference PL model \(\rho\), i.e., \(\pi_{\theta}^{0}(.)=\rho\).
+
+**Reward \(\mathcal{R}\):** The reward \(\mathcal{R}(\hat{y},x,y)\) will be obtained at the end of the generation episode (i.e., after generating the \(<endoftkens>\) token) based on the generated code's syntactic and functional correctness as well as its alignment with executable codes. The reward function \(\mathcal{R}(.)\) is composed of different components which are explained in Section 3.2.
+
+**Advantage \(\hat{A}_{\pi}^{t}\):** Inspired by the Generalized Advantage Estimator (GAE) [33], the advantage at time-step \(t\) is defined as follows.
+
+\[\hat{A}_{\pi}^{t}= \delta_{t}+\gamma\delta_{t+1}+\ldots+\gamma^{T-t+1}\delta_{T-1}, \tag{1}\] \[\delta_{t}= r_{t}-V_{\pi}(\hat{y}_{<t},x)+\gamma V_{\pi}(\hat{y}_{<t+1},x),\]
+
+where \(\gamma\) is the discount rate; \(r_{t}\) is the reward at time-step \(t\); and \(V_{\pi}(s_{t})\) is the state value function at \(t\) which can be approximated by a dense token-level value head on top of the hidden states of PL model.
+
+**Objective:** The objective of PPOCoder is to find a policy that
+
+Figure 2: Overview of the PPOCoder with actor and critic models. The action is sampled from the policy based on the given source data \(x\) (NL or PL). Then, a reward is obtained for each action to guide and control policy updates. The reward function is composed of four elements: (\(a\)) compiler feedback; (\(b\)) syntactic matching score based on ASTs; (\(c\)) semantic matching score based on DFGs; and (\(d\)) KL-divergence penalty between active policy and the reference pretrained model. The critic model estimates value based on the obtained reward and PPOCoder will be optimized withPPO, which takes into account both value and policy optimization.
+maximizes the expected reward of generated codes sampled from the policy.
+
+\[\max_{\theta}\mathbb{E}_{x\sim\mathcal{X},\hat{y}\sim\pi_{\theta}(.|x)}\big{[} \mathcal{R}(\hat{y},x,y)\big{]}, \tag{2}\]
+
+where \(\mathcal{X}\) is the training set of source data; \(\pi_{\theta}(.)\) is the policy network; and \(\mathcal{R}(.)\) is the reward function. We formulate the objective function as a maximization of the advantage instead of reward, as shown in Eq. (3), in order to reduce the variability of predictions.
+
+\[\max_{\theta}\mathbb{E}_{x\sim\mathcal{X},\hat{y}\sim\pi_{\theta}(.|x)}\left[ \sum_{t=0}^{T}\hat{A}_{\pi}^{t}\big{(}(\hat{y}_{<t},x),\hat{y}_{t}\big{)}\right], \tag{3}\]
+
+We adopt the policy gradient to estimate the gradient of non-differentiable reward-based objectives in Eqs. (2) and (3). Therefore, updating policy parameters for a given source data \(x\) can be derived as:
+
+\[\max_{\theta}\mathcal{L}_{\theta}^{PG}=\max_{\theta}\mathbb{E}_{ \hat{y}\sim\pi_{\theta}}\left[\sum_{t=0}^{T}\left(log\pi_{\theta}(\hat{y}_{t} |\hat{y}_{<t},x)\;\hat{A}_{\pi}^{t}\right)\right], \tag{4}\] \[\text{where}\;\;\nabla_{\theta}\mathcal{L}_{\theta}^{PG}=\mathbb{ E}_{\hat{y}\sim\pi_{\theta}}\left[\sum_{t=1}^{T}\left(\nabla_{\theta}log\pi_{ \theta}(\hat{y}_{t}|\hat{y}_{<t},x)\;\hat{A}_{\pi}^{t}\right)\right], \tag{5}\]
+
+where \(\nabla_{\theta}\mathcal{L}_{\theta}^{PG}\) refers to the estimated gradient of objective function based on the policy parameterized by \(\theta\). In order to further reduce the variations and avoid significantly changing the policy at each iteration, the objective function in Eq. (4) will be reformulated as shown in Eq. (6), called the conservative policy iteration.
+
+\[\mathcal{L}_{\theta}^{CPI}= \mathbb{E}_{\hat{y}\sim\pi_{\theta}}\left[\sum_{t=0}^{T}\left( \frac{log\pi_{\theta}(\hat{y}_{t}|\hat{y}_{<t},x)}{log\pi_{\theta_{old}}(\hat{ y}_{t}|\hat{y}_{<t},x)}\;\hat{A}_{\pi}^{t}\right)\right] \tag{6}\] \[= \mathbb{E}_{\hat{y}\sim\pi_{\theta}}\left[\sum_{t=0}^{T}\left(c_{ \pi}^{t}(\theta)\;\hat{A}_{\pi}^{t}\right)\right],\]
+
+where \(\theta_{old}\) is the policy parameters before the update; and \(c_{\pi}^{t}(\theta)\) is the ratio of log-probabilities from new and old policies.
+
+### Reward Function
+
+Figure 2 illustrates that the reward of PPOCoder is composed of four different components which are designed to guide and control actions simultaneously towards generating more executable codes. These components are designed due to (1) the sparsity of compiler feedback which is only received at the end of code generation episode; and (2) the high chance of policy divergence from the pretrained PL models. (check Section 4.4 for the reward ablation results). Eq. (7) shows the combination of these different reward terms in the final reward vector \(\mathcal{R}(\hat{y},x,y)\in\;\mathbb{R}^{T}\) with \(T\) as the generation episode length.
+
+\[\mathcal{R}(\hat{y},x,y) =\{r_{t}:t=1,\ldots,T\}, \tag{7}\] \[r_{t} =\mathbb{1}(cond)\Big{[}R_{cs}(\hat{y})+\;R_{ast}(\hat{y},y)+\;R_ {dfg}(\hat{y},y)\] \[-\beta R_{kl}(x,\hat{y}_{<t})\Big{]}+\mathbb{1}\left(\neg cond \right)[-\beta R_{kl}(x,\hat{y}_{<t})]),\] \[cond=(\hat{y}_{t}==\langle endofttokens\rangle)\]
+
+where \(r_{t}\) is the combined reward at time-step \(t\); \(R_{cs}(.)\), \(R_{ast}(.)\), and \(R_{dfg}(.)\) are the compiler signal, syntactic match score, and the semantic match score reward terms, respectively. Note that, these terms will be received at the end of the generation episode where \(\hat{y}_{t}==\langle endofttokens\rangle\). The \(R_{kl}(x,\hat{y}_{<t})\) is a KL-divergence penalty between the reference pretrained model and the active policy which is imposed to reward at each time-step to control actions. \(\beta\) is also the coefficient of penalty to balance the combination of different reward terms.
+
+**Compiler Signal**
+
+For each source data \(x\), we sample multiple generated codes in the target language based on the current policy network, \(\hat{y}\sim\pi_{\theta}(.|x)\). Then, we pass these sampled codes \(\hat{y}\) to a compiler and determine the reward based on the parsing signal. In case unit tests are available for the source data, the reward is determined by the functional correctness of generated codes, i.e., passing all unit tests, as shown in Eq. (8). If unit tests are not provided, compiler returns the syntactic correctness of generated codes (i.e., compilable or non-compilable) as shown in Eq. (9). This reward term is designed to guide the model to take actions which can generate higher quality codes in terms of syntactic/functional correctness.
+
+_Functional Correctness:_
+
+\[R_{cs}(\hat{y})=\begin{cases}+1\;\;,\;\text{if}\;\hat{y}\text{ passed all unit tests}\\ -0.3,\;\text{if}\;\hat{y}\text{ failed any unit test}\\ -0.6,\;\text{if}\;\hat{y}\text{ received RunTime error}\\ -1\;\;,\;\text{if}\;\hat{y}\text{ received Compile error}\end{cases} \tag{8}\]
+
+_Syntactic Correctness:_
+
+\[R_{cs}(\hat{y})=\begin{cases}+1,\text{if}\;\hat{y}\text{ passed compilation test}\\ -1,\text{otherwise}\end{cases} \tag{9}\]
+
+**Syntactic Matching Score**
+
+Since the compiler signal alone is too sparse, we also add additional information to better control and guide the structure of policy samples. To do so, we define a syntactic matching score \(R_{ast}(\hat{y},y)\) between the generated hypothesis \(\hat{y}\sim\pi_{\theta}(.|x)\) and the parallel executable target \(y\). The goal is to maximize this matching score for better compilability or syntactic correctness. We use the abstract syntax tree (AST) to find a tree representation of the code's abstract syntax structure. Then, we compare the sub-trees extracted from the hypothesis and reference target ASTs, respectively, and calculate the syntactic match score as a percentage of matched AST sub-trees.
+
+\[R_{ast}(\hat{y},y)=Count(AST_{\hat{y}}\cap AST_{y})/Count(AST_{y}) \tag{10}\]
+where \(Count(AST_{\hat{y}}\cap AST_{y})\) is the number of matched AST 
+
+# Individual subject evaluated difficulty of adjustable mazes generated using quantum annealing
+
+###### Abstract
+
+In this paper, the maze generation using quantum annealing is proposed. We reformulate a standard algorithm to generate a maze into a specific form of a quadratic unconstrained binary optimization problem suitable for the input of the quantum annealer. To generate more difficult mazes, we introduce an additional cost function \(Q_{update}\) to increase the difficulty. The difficulty of the mazes was evaluated by the time to solve the maze of 12 human subjects. To check the efficiency of our scheme to create the maze, we investigated the time-to-solution of a quantum processing unit, classical computer, and hybrid solver.
+
+quantum annealing, combinatorial optimization, maze generation, bar-tipping algorithm, time-to-solution 2019
+
+## 1 Introduction
+
+A combinatorial optimization problem is minimizing or maximizing their cost or objective function among many variables that take discrete values. In general, it takes time to solve the combinatorial optimization problem. To deal with many combinatorial optimization problems, we utilize generic solvers to solve them efficiently. Quantum annealing (QA) is one of the generic solvers for solving combinatorial optimization problems Kadowaki and Nishimori (1998) using the quantum tunneling effect. Quantum annealing is a computational technique to search for good solutions to combinatorial optimization problems by expressing the objective function and constraint time requirements of the combinatorial optimization problem by quantum annealing in terms of the energy function of the Ising model or its equivalent QUBO (Quadratic Unconstrained Binary Optimization), and manipulating
+the Ising model and QUBO to search for low energy states Shu Tanaka and Seki (2022). Various applications of QA are proposed in traffic flow optimization Neukart et al. (2017); Hussain et al. (2020); Inoue et al. (2021), finance Rosenberg et al. (2016); Orus et al. (2019); Venturelli and Kondratyev (2019), logistics Feld et al. (2019); Ding et al. (2021), manufacturing Venturelli et al. (2016); Yonaga et al. (2022); Haba et al. (2022), preprocessing in material experiments Tanaka et al. (2023), marketing Nishimura et al. (2019), steel manufacturing Yonaga et al. (2022), and decoding problems Ide et al. (2020); Arai et al. (2021a). The model-based Bayesian optimization is also proposed in the literature Koshikawa et al. (2021) A comparative study of quantum annealer was performed for benchmark tests to solve optimization problems Oshiyama and Ohzeki (2022). The quantum effect on the case with multiple optimal solutions has also been discussed Yamamoto et al. (2020); Maruyama et al. (2021). As the environmental effect cannot be avoided, the quantum annealer is sometimes regarded as a simulator for quantum many-body dynamics Bando et al. (2020); Bando and Nishimori (2021); King et al. (2022). Furthermore, applications of quantum annealing as an optimization algorithm in machine learning have also been reported Neven et al. (2012); Khoshaman et al. (2018); O'Malley et al. (2018); Amin et al. (2018); Kumar et al. (2018); Arai et al. (2021b); Sato et al. (2021); Urushibata et al. (2022); Hasegawa et al. (2023); Goto and Ohzeki (2023). In this sense, developing the power of quantum annealing by considering hybrid use with various techniques is important, as in several previous studies Hirama and Ohzeki (2023); Takabayashi and Ohzeki (2023).
+
+In this study, we propose the generation of the maze by quantum annealing. In the application of quantum annealing to mazes, algorithms for finding the shortest path through a maze have been studied Pakin (2017). Automatic map generation is an indispensable technique for game production, including roguelike games. Maze generation has been used to construct random dungeons in roguelike games, by assembling mazes mok Bae et al. (2015). Therefore, considering maze generation as one of the rudiments of this technology, we studied maze generation using a quantum annealing machine. Several algorithms for the generation of the maze have been proposed. In this study, we focused on maze-generating algorithms. One can take the bar-tipping algorithm Alg (2023a), the wall-extending algorithm Alg (2023b), and the hunt-and-kill algorithm Alg (2023c).
+
+The bar-tipping algorithm is an algorithm that generates a maze by extending evenly spaced bars one by one. For the sake of explanation, we will explain the terminology here. A path represents an empty traversable part of the maze and a bar a filled non traversable part. Figure 1 shows where the outer wall, bars, and coordinate \((i,j)\) are in a \(3\times 3\) maze. The maze is surrounded by an outer wall as in Figure 1. It requires the following three constraints. First, each bar can be extended by one cell only in one direction. Second, the first column can be extended in four directions: up, down, left, and right, while the second and subsequent columns can be extended only in three directions: up, down, and right. Third, adjacent bars cannot overlap each other. We explain the detailed process of the bar-tipping algorithm using the \(3\times 3\) size maze. In this study, a maze generated by extending the \(N\times N\) bars is called \(N\times N\) size maze. First, standing bars are placed in every two cells in a field surrounded by an outer wall, as in Figure 1. Second, Figure 2 shows each step of bar-tipping algorithm. Figure 2 (a) shows the first column of bars extended. The bars in the first column are randomly extended in only one direction with no overlaps, as in Figure 2 (a). The bars can be extended in four directions (up, down, right, left) at this time. Figure 2 (b) shows the second column of bars being extended. Third, the bars in the second column are randomly extended in one direction without overlap as in Figure 2 (b). The bars can be extended in three directions (up, down, right) at this time. Figure 2 (c) shows the state in which the bars after the second column are extended. Fourth, the bars in subsequent columns are randomly extended in one direction, likewise the bars in the
+second column, as in Figure 2 (c). Figure 2 (d) shows the complete maze in its finished state. Following the process, we can generate a maze as in Figure 2 (d).
+
+If multiple maze solutions are possible, the maze solution is not unique, simplifying the time and difficulty of reaching the maze goal. These constraints must be followed for the reasons described below. The first constraint prevents a maze from generating a maze with multiples maze solutions and closed circuits. Figure 3 (a) shows a maze state that violates the first constraint. The step violating the first constraint because one bar in the upper right corner is extended in two directions as Figure 3 (a).
+
+The second constraint prevents generating a maze from a maze with closed circuits and multiple maze solutions. Figure 3 (b) shows a state that violates the second constraint. The second constraint is violated, it has a closed circuit and multiple maze solutions, as Figure 3 (b). The third constraint prevents maze generation from a maze with multiple maze solutions. Figure 3 (c) shows a state that violates the third constraint. The bars overlap in the upper right corner, making it the third constraint as Figure 3 (c).
+
+Next, we describe the wall-extending algorithm. It is an algorithm that generates a maze by extending walls. Figure 4 shows the extension starting coordinates of the wall-extending algorithm. Figure 5 (a) shows the initial state of the wall expansion algorithm. First, as an initial condition, the outer perimeter of the maze is assumed to be the outer wall, and the rest of the maze is assumed to be the path as Figure 5 (a). Coordinate system is different from the bar-tipping algorithm, all cells are labeled coordinates. As Figure 4 shows, the coordinates where both \(x\) and \(y\) are even and not walls are listed as starting coordinates for wall extending. The following process is repeated until all starting coordinates change to walls, as shown in Figure 5(c). Randomly choose the coordinates from the non-wall extension start coordinates.
+
+The next extending direction is randomly determined from which the adjacent cell is a path. Figure 5 (b) shows how the path is extended. The extension will be repeated while two cells ahead of the extending direction to be extended is a path as Figure 5 (b). Figure 5 (c) shows all starting coordinates changed to walls. These processes are repeated until all the starting coordinates change to walls as in Figure 5 (c). Figure 5 (d) shows a maze created by wall-extending. Following the process, we can generate a maze as in Figure 5 (d).
+
+Figure 1: Positions where outer wall, bars, and coordinate \((i,j)\) are in \(3\times 3\) maze.
+As a third, the hunt-and-kill algorithm is explained below. It is an algorithm that generates a maze by extending paths. Figure 6 shows the extension starting coordinates of the hunt-and-kill algorithm. Figure 7 (a) shows the initial state of the hunt-and-kill algorithm. The entire surface is initially walled off as Figure 7 (a). Coordinates, where both \(x\) and \(y\) are odd, are listed as starting coordinates for path extension as in Figure 6. As with the wall-extending algorithm, all cells are set to coordinates. Figure 7 (b) shows the state in which the path is extended. A coordinate is chosen randomly from the starting coordinates, and the path is extended from there as in Figure 7 (b). Figure 7 (c) shows the coordinate selection and re-extension after the path can no longer be extended. If the path can no longer be extended, a coordinate is randomly selected from the starting coordinates, which are already paths, and extension starts again from it as in Figure 7 (c). This process is repeated until all the starting coordinates turn into paths to generate the maze. Figure 7 (d) shows the complete maze with the hunt-and-kill algorithm. Following the process, we can generate a maze as in Figure 7 (d).
+
+Figure 2: Step of bar-tipping algorithm. **(a)** step1: bars in first column are extended. **(b)** step2: bars in second column are extended. **(c)** step3: bars in subsequent column are extended. **(d)** step4: A complete maze through these steps.
+Of the three maze generation algorithms mentioned above, the bar-tipping algorithm is relevant to the combinatorial optimization problem. In addition, unlike other maze generation algorithms, the bar-tipping algorithm is easy to apply because it only requires the consideration of adjacent elements. Thus, we have chosen to deal with this algorithm. Other maze generation algorithms could be generalized by reformulating them as combinatorial optimization problems. The wall-extending and hunt-and-kill algorithms will be implemented in future work, considering the following factors. The former algorithm introduces the rule that adjacent walls are extended and so are their walls. The number of connected components will be computed for the latter, and the result will be included in the optimization.
+
+Using the bar-tipping algorithm, we reformulated it to solve a combinatorial optimization problem that generates a maze with a longer solving time and optimized it using quantum annealing. Quantum annealing (DW_2000Q_6 from D-Wave), classical computing (simulated annealing, simulated quantum annealing, and algorithmic solution of the bar-tipping algorithm), and hybrid computing were compared with each other according to the generation time of mazes, and their performance was evaluated. The solver used in this experiment is as follows: DW_2000Q_6 from D-Wave, simulated annealer called SASampler and simulated quantum annealer called SQASampler from OpenJij ope (2023), D-Wave's quantum-classical hybrid solver called hybrid_binary_quadratic_model_version2 (BQM) and classical
+
+Figure 4: Red cells represent options of starting coordinates for the wall-extending algorithm.
+
+Figure 3: Mazes violated the constraints. **(a)** A maze violate the first constraint. **(b)** A maze violate the second constraint. **(c)** A maze violated the third constraint.
+computer (MacBook Pro(14-inch, 2021), OS: macOS Monterey Version 12.5, Chip: Apple M1 Pro, Memory: 16GB) This comparison showed that quantum annealing was faster. This may be because the direction of the bars is determined at once using quantum annealing, which is several times faster than the classical algorithm. We do not use an exact solver to solve the combinatorial optimization problem. We expect some diversity in the optimal solution and not only focus on the optimal solution in maze generation. Thus, we compare three solvers, which generate various optimal solutions.
+
+In addition, we generate mazes that reflect individual characteristics, whereas existing maze generation algorithms rely on randomness and fail to incorporate other factors. In this case, we incorporated the maze solution time as one of the other factors to solve the maze. The maze solving time was defined as the time (in seconds) from the start of solving the maze to the end of solving the maze.
+
+The paper is organized as follows. In the next Section, we explain the methods of our experiments. In Sec. 3, we describe the results of our experiments. In Sec. 4, we summarize this paper.
+
+Figure 5: **(a)** Initial state for wall-extending algorithm. **(b)** Step 1 for wall-extending algorithm. **(c)** Step 2 for wall-extending algorithm. **(d)** Maze generated using wall-extending algorithm.
+## 2 Methods
+
+### Cost function
+
+To generate the maze by quantum annealer, we need to set the cost function in the quantum annealer. One of the important features of the generation of the maze is diversity. In this sense, the optimal solution is not always unique. Since it is sufficient to obtain a structure consistent with a maze, the cost function is mainly derived from the necessary constraints of a maze, as explained below. Three constraints describe the basis of the algorithm of the bar-tipping algorithm. The cost function will be converted to a QUBO matrix to use the quantum annealer.To convert the cost function to a QUBO, the cost function must be written in a quadratic form. Using the penalty method, we can convert various constraints written in a linear form into a quadratic function. The penalty method is a method to rewrite the equality constant as a quadratic function. For example, the penalty method can rewrite an equation constant \(x=1\) to \((x-1)^{2}\). Thus, we construct the cost function for generating the maze using the bar-tipping algorithm below.
+
+The constraints of the bar-tipping algorithm correlate with each term in the cost function described below. The first constraint of the bar-tipping algorithm is that the bars can be extended in only one direction. It prevents making closed circuits. The second constraint of the bar-tipping algorithm is that the bars of the first column be extended randomly in four directions (up, right, down, and left), and the second and subsequent columns can be extended randomly in three directions (up, right, and down). It also prevents the creation of closed circuits. The third constraint of the bar-tipping algorithm is that adjacent bars must not overlap. Following the constraint in the bar-tipping algorithm, we can generate a maze with only one path from the start to the goal.
+
+The cost function consists of three terms to reproduce the bar-tipping algorithm according to the three constraints and to determine the start and goal.
+
+\[\begin{split} E(\{x_{i,j,d},X_{m,n}\})=\sum_{i,i^{\prime}}\sum_{ j,j^{\prime}}\sum_{d,d^{\prime}}Q_{(i,j,d),(i^{\prime},j^{\prime},d^{\prime})}x_{ i,j,d}x_{i^{\prime},j^{\prime},d^{\prime}}+\lambda_{1}\sum_{i}\sum_{j}\Biggl{(} \sum_{d}x_{i,j,d}-1\Biggr{)}^{2}\\ +\lambda_{2}\Biggl{(}\sum_{m}\sum_{n}X_{m,n}-2\Biggr{)}^{2}, \end{split} \tag{1}\]
+
+Figure 6: Red cells represent options of starting coordinates for the hunt-and-kill algorithm.
+where \(x_{i,j,d}\) denotes whether the bar in \(i\)-th row, \(j\)-th column extended in direction \(d\left(\mathrm{up}\colon 0,\mathrm{right}\colon 1,\mathrm{down}\colon 2, \mathrm{left}\colon 0\right)\) When the bar in coordinate \((i,j)\) is extended in direction, \(x_{i,j,d}\) takes \(1\), otherwise takes \(0\). Due to the second constraint of the bar-tipping algorithm, the bars after the second column cannot be extended on the left side; only the first column has \((d=3)\). Furthermore, \(Q_{(i,j,d)(i^{\prime},j^{\prime},d^{\prime})}\) in Equation 1 depends on \(i,j,d,i^{\prime},j^{\prime}\), and \(d^{\prime}\) and is expressed as follows
+
+\[Q_{(i,j,d),(i^{\prime},j^{\prime},d^{\prime})}=\left\{\begin{array}{ll}1&(i=i ^{\prime}-1,j=j^{\prime},d=2,d^{\prime}=0)\\ 1&(i=i^{\prime}+1,j=j^{\prime},d=0,d^{\prime}=2)\\ 0&\mathrm{otherwise}.\end{array}\right. \tag{2}\]
+
+The coefficients of \(\lambda_{1}\) and \(\lambda_{2}\) are constants to adjust the effects of each penalty term. The first term prevents the bars from overlapping and extending each other face-to-face. It represents the third constraint of the bar-tipping algorithm. Here, due to the second constraint, bars in the second and subsequent columns
+
+Figure 7: **(a)** Initial state for hunt-and-kill algorithm. **(b)** Step 1 for hunt-and-kill algorithm. **(c)** Step 2 for hunt-and-kill algorithm. **(d)** Maze generated using hunt-and-kill algorithm.
+cannot be extended to the left. Therefore, the adjacent bars in the same row cannot extend and overlap. This corresponds to the fact that \(d\) cannot take \(3\) when \(j\geq 1\). Thus, there is no need to reflect, considering the left and right. In particular, the first term restricts the extending and overlapping between the up and down adjacent bars. For example, the situation in which one bar in \((i,j)\) extended down \((d=2)\) and the lower bar in \((i+1,j)\) extended up \((d=0)\) is represented by \(x_{i,j,0}x_{i+1,j,2}=1\), and \(Q(i,j,0),(i+1,j,2)\) takes \(1\). In the same way, thinking of the relation between the bar in \((i,j)\) and the upper bar in \((i-1,j)\), \(Q_{(i-1,j,2),(i,j,0)}=1\). Thus, \(Q_{(i-1,j,2),(i,j,0)}x_{i,j,0}x_{i+1,j,2}\) takes 1, and the value of the cost function taken will increase. By doing this, the third constraint is represented as a first term. The second term is a penalty term that limits the direction of extending to one per bar. It represents the first constraint of the bar-tipping algorithm. This means that for a given coordinate \((i,j)\), the sum of \(x_{i,j,d}\left(d=0,1,2(,3)\right)\) must take the value \(1\). Here, the bars in the second and subsequent columns cannot extend to the left by the second constraint. Thus, \(d\) takes (0, 1, 2, 3) when \(j=0\), and \(d\) takes (0, 1, 2) when \(j\geq 1\). The third term is the penalty term for selecting two coordinates of the start and the goal from the coordinates \((m,n)\). This means that a given coordinate \((m,n)\), the sum of \(X_{m,n}\) takes \(2\). The start and the goal are commutative in the maze. They are randomly selected from the two coordinates determined by the third term. \(X_{m,n}\) denotes whether or not to set the start and goal at the \(m\)-th row and \(n\)-th column of options of start and goal coordinates. When the \((m,n)\) coordinate is chosen as the start and goal, \(X_{m,n}\) takes \(1\). Otherwise, it takes \(0\). There are no relations between \(X_{m,n}\) and \(x_{i,j,d}\) in Equation 1. This means that the maze structure and the start and goal determination coordinates have no relations.
+
+Figure 8 shows the coordinates \((m,n)\) that are the options of the start and the goal. As Figure 8 shows, \((m,n)\) is different from the coordinate setting bars; it is located at the four corners of the bars, where the bars do not extend. \(X_{m,n}\) and \(x_{i,j,d}\) are different. \(X_{m,n}\) are options of start and goal, and \(x_{i,j,d}\) are opt
+
+# Weighted topological pressure revisited
+
+###### Abstract.
+
+Feng-Huang (2016) introduced weighted topological entropy and pressure for factor maps between dynamical systems and established its variational principle. Tsukamoto (2022) redefined those invariants quite differently for the simplest case and showed via the variational principle that the two definitions coincide. We generalize Tsukamoto's approach, redefine the weighted topological entropy and pressure for higher dimensions, and prove the variational principle. Our result allows for an elementary calculation of the Hausdorff dimension of affine-invariant sets such as self-affine sponges and certain sofic sets that reside in Euclidean space of arbitrary dimension.
+
+Key words and phrases:Dynamical systems, weighted topological entropy, weighted topological pressure, variational principle, affine-invariant sets, self-affine sponges, sofic sets, Hausdorff dimension 2
+For a dynamical system \((X,T)\), denote its **topological entropy** by \(h_{\rm top}(T)\). Let \(P(f)\) be the **topological pressure** for a continuous function \(f:X\to\mathbb{R}\) (see section 2 for the definition of these quantities). Let \(\mathscr{M}^{T}(X)\) be the set of \(T\)-invariant probability measures on \(X\) and \(h_{\mu}(T)\) the **measure-theoretic entropy** for \(\mu\in\mathscr{M}^{T}(X)\) (see subsection 3.2). The variational principle then states that [10, 11, 12, 13]
+
+\[P(f)=\sup_{\mu\in\mathscr{M}^{T}(X)}\left(h_{\mu}(T)+\int_{X}fd\mu\right).\]
+
+### Background
+
+We first look at _self-affine sponges_ to understand the background of weighted topological entropy introduced by Feng-Huang. Let \(m_{1},m_{2},\ldots,m_{r}\) be natural numbers with \(m_{1}\leq m_{2}\leq\cdots\leq m_{r}\). Consider an endomorphism \(T\) on \(\mathbb{T}^{r}=\mathbb{R}^{r}/\mathbb{Z}^{r}\) represented by the diagonal matrix \(A={\rm diag}(m_{1},m_{2},\ldots,m_{r})\). For \(D\subset\prod_{i=1}^{r}\{0,1,\ldots,m_{i}-1\}\), define
+
+\[K(T,D)=\left\{\sum_{n=0}^{\infty}A^{-n}e_{n}\in\mathbb{T}^{r}\Bigg{|}e_{n}\in D \right\}.\]
+
+This set is compact and \(T\)-invariant, i.e., \(TK(T,D)=T\).
+
+These sets for \(r=2\) are known as _Bedford-McMullen carpets_ or _self-affine carpets_. The following figure exhibits a famous example, the case of \(D=\{(0,0),(1,1),(0,2)\}\subset\{0,1\}\times\{0,1,2\}\).
+
+The analysis of these sets is complicated compared to "self-similar" sets. Bedford [1] and McMullen [12] independently studied these sets and showed that, in general, their Hausdorff dimension is strictly smaller than their Minkowski dimension (a.k.a. Box-counting dimension). The figure above has Hausdorff dimension \(\log_{2}{(1+2^{\log_{3}2})}=1.349\cdots\) and Minkowski dimension \(1+\log_{3}\frac{3}{2}=1.369\cdots\).
+
+The sets \(K(T,D)\) for \(r\geq 3\) are called _self-affine sponges_. Kenyon-Peres [11] calculated their Hausdorff dimension for the general case (see Theorem 1.5 in this section). In addition, they showed the following variational principle for the Hausdorff dimension of \(K(T,D)\);
+
+\[\dim_{H}K(T,D)=\sup_{\mu\in\mathscr{M}^{T}(\mathbb{T}^{r})}\Bigg{\{}\frac{1}{ \log m_{r}}h_{\mu}(T)+\sum_{i=2}^{r}\left(\frac{1}{\log m_{r-i+1}}-\frac{1}{ \log m_{r-i+2}}\right)h_{\mu_{i}}(T_{i})\Bigg{\}}. \tag{1.1}\]
+
+Figure 1. First four generations of Bedford-McMullen carpet
+Here, the endomorphism \(T_{i}\) on \(\mathbb{T}^{r-i+1}\) is defined from \(A_{i}=\operatorname{diag}(m_{1},m_{2},\ldots,m_{r-i+1})\), and \(\mu_{i}\) is defined as the push-forward measure of \(\mu\) on \(\mathbb{T}^{r-i+1}\) by the projection onto the first \(r-i+1\) coordinates. Feng-Huang's definition of weighted topological entropy of \(K(T,D)\) equals \(\dim_{H}K(T,D)\) with a proper setting.
+
+### The original definition of the weighted topological pressure
+
+Motivated by the geometry of self-affine sponges described in the previous subsection, Feng-Huang introduced a generalized notion of pressure. Consider dynamical systems \((X_{i},T_{i})\)\((i=1,\,2,\,\ldots,\,r)\) and factor maps \(\pi_{i}:X_{i}\to X_{i+1}\)\((i=1,\,2,\,\ldots,\,r-1)\):
+
+\[(X_{1},T_{1})\xrightarrow{\pi_{1}}(X_{2},T_{2})\xrightarrow{\pi_{2}}\cdots \xrightarrow{\pi_{r-1}}(X_{r},T_{r})\.\]
+
+We refer to this as a **sequence of dynamical systems**. Let the weight \(\boldsymbol{w}=(w_{1},w_{2},\ldots,w_{r})\) with \(w_{1}>0\) and \(w_{i}\geq 0\) for \(i\geq 2\). Feng-Huang [10] ingeniously defined the \(\boldsymbol{w}\)-weighted topological pressure \(P^{\boldsymbol{w}}_{\text{FH}}(f)\) for a continuous function \(f:X_{1}\to\mathbb{R}\) and established the variational principle [10, Theorem 1.4]
+
+\[P^{\boldsymbol{w}}_{\text{FH}}(f)=\sup_{\mu\in\mathscr{M}^{T_{1}}(X_{1})} \left(\sum_{i=1}^{r}w_{i}h_{\pi^{(i-1)}\ast\mu}(T_{i})+w_{1}\int_{X_{1}}fd\mu \right). \tag{1.2}\]
+
+Here \(\pi^{(i)}\) is defined by
+
+\[\pi^{(0)}=\operatorname{id}_{X_{1}}:X_{1}\to X_{1},\] \[\pi^{(i)}=\pi_{i}\circ\pi_{i-1}\circ\cdots\circ\pi_{1}:X_{1}\to X _{i+1},\]
+
+and \(\pi^{(i-1)}{}_{\ast}\mu\) is the push-forward measure of \(\mu\) by \(\pi^{(i-1)}\) on \(X_{i}\). The \(\boldsymbol{w}\)-weighted topological entropy \(h^{\boldsymbol{w}}_{\text{top}}(T_{1})\) is the value of \(P^{\boldsymbol{w}}_{\text{FH}}(f)\) when \(f\equiv 0\). In this case, (1.2) becomes
+
+\[h^{\boldsymbol{w}}_{\text{top}}(T_{1})=\sup_{\mu\in\mathscr{M}^{T_{1}}(X_{1}) }\left(\sum_{i=1}^{r}w_{i}h_{\pi^{(i-1)}\ast\mu}(T_{i})\right). \tag{1.3}\]
+
+We will explain here Feng-Huang's method of defining \(h^{\boldsymbol{w}}_{\text{top}}(T_{1})\). For the definition of \(P^{\boldsymbol{w}}_{\text{FH}}(f)\), see their original paper [10].
+
+Let \(n\) be a natural number and \(\varepsilon\) a positive number. Let \(d^{(i)}\) be a metric on \(X_{i}\). For \(x\in X_{1}\), define the \(\boldsymbol{n}\)**-th \(\boldsymbol{w}\)-weighted Bowen ball of radius \(\boldsymbol{\varepsilon}\) centered at \(\boldsymbol{x}\)** by
+
+\[B^{\boldsymbol{w}}_{n}(x,\varepsilon)=\left\{y\in X_{1}\left|\begin{array}{ l}d^{(i)}\big{(}T_{i}^{j}(\pi^{(i-1)}(x)),T_{i}^{j}(\pi^{(i-1)}(y))\big{)}< \varepsilon\text{ for every}\\ 0\leq j\leq\lceil(w_{1}+\cdots+w_{i})n\rceil\text{ and }1\leq i\leq k. \end{array}\right.\right\}.\]
+
+Consider \(\Gamma=\{B^{\boldsymbol{w}}_{n_{j}}(x_{j},\varepsilon)\}_{j}\), an at-most countable cover of \(X_{1}\) by Bowen balls. Let \(n(\Gamma)=\min_{j}n_{j}\). For \(s\geq 0\) and \(N\in\mathbb{N}\), let
+
+\[\Lambda^{\boldsymbol{w},s}_{N,\varepsilon}=\inf\left\{\sum_{j}e^{-sn_{j}} \Bigg{|}\ \Gamma=\{B^{\boldsymbol{w}}_{n_{j}}(x_{j},\varepsilon)\}_{j}\text{ covers }X_{1}\text{ and }n(\Gamma)\geq N\right\}.\]
+This quantity is non-decreasing as \(N\to\infty\). The following limit hence exists:
+
+\[\Lambda_{\varepsilon}^{\mathbf{w},s}=\lim_{N\to\infty}\Lambda_{N,\varepsilon}^{\mathbf{w},s}.\]
+
+There is a value of \(s\) where \(\Lambda_{\varepsilon}^{\mathbf{w},s}\) jumps from \(\infty\) to \(0\), which we will denote by \(h_{\mathrm{top}}^{\mathbf{w}}(T_{1},\varepsilon)\):
+
+\[\Lambda_{\varepsilon}^{\mathbf{w},s}=\left\{\begin{array}{ll}\infty&(s<h_{ \mathrm{top}}^{\mathbf{w}}(T_{1},\varepsilon))\\ 0&(s>h_{\mathrm{top}}^{\mathbf{w}}(T_{1},\varepsilon))\end{array}\right..\]
+
+The value \(h_{\mathrm{top}}^{\mathbf{w}}(T_{1},\varepsilon)\) is non-decreasing as \(\varepsilon\to 0\). Therefore, we can define the \(\mathbf{w}\)-weighted topological entropy \(h_{\mathrm{top}}^{\mathbf{w}}(T_{1})\) by
+
+\[h_{\mathrm{top}}^{\mathbf{w}}(T_{1})=\lim_{\varepsilon\to 0}h_{\mathrm{top}}^{\mathbf{w} }(T_{1},\varepsilon).\]
+
+An important point about this definition is that in some dynamical systems, such as self-affine sponges, the quantity \(h_{\mathrm{top}}^{\mathbf{w}}(T_{1})\) is directly related to the Hausdorff dimension of \(X_{1}\).
+
+**Example 1.1**.: Consider the self-affine sponges introduced in subsection 1.2. Define \(p_{i}:\mathbb{T}^{r-i+1}\to\mathbb{T}^{r-i}\) by
+
+\[p_{i}(x_{1},x_{2},\ldots,x_{r-i},x_{r-i+1})=(x_{1},x_{2},\ldots,x_{r-i}).\]
+
+Let \(X_{1}=K(T,D)\), \(X_{i}=p_{i-1}\circ p_{i}\circ\cdots\circ p_{1}(X_{1})\), and \(T_{i}:X_{i}\to X_{i}\) be the endomorphism defined from \(A_{i}=\mathrm{diag}(m_{1},m_{2},\ldots,m_{r-i+1})\). Define the factor maps \(\pi_{i}:X_{i}\to X_{i+1}\) as the restrictions of \(p_{i}\). Let
+
+\[\mathbf{w}=\left(\frac{\log m_{1}}{\log m_{r}},\quad\frac{\log m_{1}}{\log m_{r-1 }}-\frac{\log m_{1}}{\log m_{r}},\ldots,\quad\frac{\log m_{1}}{\log m_{2}}- \frac{\log m_{1}}{\log m_{3}},\quad 1-\frac{\log m_{1}}{\log m_{2}}\right). \tag{1.4}\]
+
+Then \(n\)-th \(\mathbf{w}\)-weighted Bowen ball is approximately a square with a side length of \(\varepsilon m_{1}^{-n}\). Therefore,
+
+\[\dim_{H}K(T,D)=\frac{h_{\mathrm{top}}^{\mathbf{w}}(T_{1})}{\log m_{1}}. \tag{1.5}\]
+
+### Tsukamoto's approach and its extension
+
+Following the work of Feng-Huang [17] described in the previous subsection, Tsukamoto [14] published an intriguing approach to these invariants. There, he gave a new definition of the weighted topological pressure for two dynamical systems and a factor map:
+
+\[\begin{CD}(X_{1},T_{1})@>{\pi}>{}>(X_{2},T_{2}).\end{CD}\]
+
+He then proved the variational principle using his definition, showing the surprising coincidence of the two definitions. His expression of weighted topological entropy allowed for relatively easy calculations for sets like self-affine carpets.
+
+We will extend Tsukamoto's idea, redefine the weighted topological pressure for an arbitrary length of a sequence of dynamical systems, and establish the variational principle. Here we will explain our definition in the case \(f\equiv 0\). See section 2 for the general setting.
+We will not introduce Tsukamoto's definition since it is obtained by letting \(r=2\) in the following argument.
+
+Let \(\boldsymbol{a}=(a_{1},\,a_{2},\,\cdots,a_{r-1})\) with \(0\leq a_{i}\leq 1\) for each \(i\). Let \(N\) be a natural number and \(\varepsilon\) a positive number. We define a new metric \(d_{N}^{(i)}\) on \(X_{i}\) by
+
+\[d_{N}^{(i)}(x_{1},\,x_{2})=\max_{0\leq n<N}d^{(i)}(T_{i}^{\,n}x_{1},T_{i}^{\,n }x_{2}).\]
+
+For \(\Omega\subset X_{1}\), we define
+
+\[\#_{1}^{\boldsymbol{a}}(\Omega,N,\varepsilon)=\min\left\{n\in\mathbb{N} \left|\begin{array}{l}\mbox{There exists an open cover }\{U_{j}\}_{j=1}^{n}\mbox{ of }\Omega\\ \mbox{with diam}(U_{j},\,d_{N}^{(1)})<\varepsilon\mbox{ for all }1\leq j\,\leq n \end{array}\right.\right\}.\]
+
+Let \(\Omega\subset X_{i+1}\). If \(\#_{i}^{\boldsymbol{a}}\) is already defined, let
+
+\[\left.\begin{array}{l}\#_{i+1}^{\boldsymbol{a}}(\Omega,N, \varepsilon)\\ =\min\left\{\sum_{j=1}^{n}\left(\#_{i}^{\boldsymbol{a}}(\pi_{i}^{-1}(U_{j}),N, \varepsilon)\right)^{a_{i}}\left|\begin{array}{l}n\in\mathbb{N},\,\{U_{j}\}_ {j=1}^{n}\mbox{ is an open cover of }\Omega\\ \mbox{with diam}(U_{j},\,d_{N}^{(i+1)})<\varepsilon\mbox{ for all }1\leq j\,\leq n \end{array}\right.\right\}.\end{array}\right\}.\]
+
+We define the **topological entropy of \(\boldsymbol{a}\)-exponent**\(h^{\boldsymbol{a}}(\boldsymbol{T})\), where \(\boldsymbol{T}=(T_{i})_{i}\), by
+
+\[h^{\boldsymbol{a}}(\boldsymbol{T})=\lim_{\varepsilon\to 0}\left(\lim_{N\to\infty} \frac{\log\#_{r}^{\boldsymbol{a}}(X_{r},\,N,\varepsilon)}{N}\right).\]
+
+This limit exists since \(\log\#_{r}^{\boldsymbol{a}}(X_{r},\,N,\,\varepsilon)\) is sub-additive in \(N\) and non-decreasing as \(\varepsilon\) tends to \(0\).
+
+From \(\boldsymbol{a}\), define \(\boldsymbol{w}_{\boldsymbol{a}}=(w_{1},\,\cdots,\,w_{r})\) by
+
+\[\left\{\begin{array}{l}w_{1}=a_{1}a_{2}a_{3}\cdots a_{r-1}\\ w_{2}=(1-a_{1})a_{2}a_{3}\cdots a_{r-1}\\ w_{3}=(1-a_{2})a_{3}\cdots a_{r-1}\\ \qquad\qquad\vdots\\ w_{r-1}=(1-a_{r-2})a_{r-1}\\ w_{r}=1-a_{r-1}\end{array}\right.\quad.\]
+
+Then our main result Theorem 2.1 below yields
+
+**Theorem 1.2**.: _For \(\boldsymbol{a}=(a_{1},\,a_{2},\,\cdots,a_{r-1})\) with \(0\leq a_{i}\leq 1\) for each \(i\),_
+
+\[h^{\boldsymbol{a}}(\boldsymbol{T})=\sup_{\mu\in\mathscr{M}^{T_{1}}(X_{1})} \left(\sum_{i=1}^{r}w_{i}h_{\pi^{(i-1)},\mu}(T_{i})\right). \tag{1.6}\]
+
+The strategy of the proof is adopted from Tsukamoto's paper. However, there are some additional difficulties. Let \(h^{\boldsymbol{a}}_{\rm var}(\boldsymbol{T})\) be the right-hand side of (1.6). We use the "zero-dimensional trick" for proving \(h^{\boldsymbol{a}}(\boldsymbol{T})\leq h^{\boldsymbol{a}}_{\rm var}( \boldsymbol{T})\), meaning we reduce the proof to the case where all dynamical systems are zero-dimensional. Merely taking a zero-dimensional extension for each \(X_{i}\) does not work. Therefore we realize this by taking step by step
+an extension of the whole sequence of dynamical systems (see subsection 3.3). Then we show \(h^{\mathbf{a}}(\mathbf{T})\leq h^{\mathbf{a}}_{\mathrm{var}}(\mathbf{T})\) by using an appropriate measure, the definition of which is quite sophisticated (see \(\sigma_{N}\) in the proof of Theorem 4.1). In proving \(h^{\mathbf{a}}(\mathbf{T})\geq h^{\mathbf{a}}_{\mathrm{var}}(\mathbf{T})\), the zero-dimensional trick can not be utilized. The proof, therefore, requires a detailed estimation of these values for arbitrary covers, which is more complicated than the original argument in [13].
+
+Theorem 1.2 and Feng-Huang's version of variational principle (1.3) yield
+
+**Corollary 1.3**.: _For \(\mathbf{a}=(a_{1},a_{2},\cdots,a_{r-1})\) with \(0<a_{i}\leq 1\) for each \(i\),_
+
+\[h^{\mathbf{a}}(\mathbf{T})=h^{\mathbf{w}_{\mathbf{a}}}_{\mathrm{top}}(T_{1}).\]
+
+This corollary is rather profound, connecting the two seemingly different quantities. We can calculate the Hausdorff dimension of certain self-affine sets using this result, as seen in the following example and section 6.
+
+**Example 1.4**.: Let us take another look at self-affine sponges. Kenyon-Peres [11, Theorem 1.2] calculated their Hausdorff dimension as follows (recall that \(m_{1}\leq m_{2}\leq\cdots\leq m_{r}\)).
+
+**Theorem 1.5**.: _Define a sequence of real numbers \((Z_{j})_{j}\) as follows. Let \(Z_{r}\) be the indicator of \(D\), namely, \(Z_{r}(i_{1},\ldots,i_{r})=1\) if \((i_{1},\ldots,i_{r})\in D\) and \(0\) otherwise. Define \(Z_{r-1}\) by_
+
+\[Z_{r-1}(i_{1},\ldots,i_{r-1})=\sum_{i_{r}=0}^{m_{r}-1}Z_{r}(i_{1},\ldots,i_{r- 1},i_{r}).\]
+
+_More generally, if \(Z_{j+1}\) is already defined, let_
+
+\[Z_{j}(i_{1},\ldots,i_{j})=\sum_{i_{j+1}=0}^{m_{j+1}-1}Z_{j+1}(i_{1},\ldots,i_{ j},i_{j+1})^{\log m_{j+1}/\log m_{j+2}}.\]
+
+_Then_
+
+\[\dim_{H}K(T,D)=\frac{\log Z_{0}}{\log m_{1}}.\]
+
+We can prove this result fairly elementary by Corollary 1.3 without requiring measure theory on the surface. Set \(a_{i}=\log_{m_{r-i+1}}m_{r-i}\) for each \(i\), then \(\mathbf{w}_{\mathbf{a}}\) equals \(\mathbf{w}\) in (1.4). Combining (1.5) and Corollary 1.3,
+
+\[\dim_{H}K(T,D)=\frac{h^{\mathbf{w}_{\mathbf{a}}}_{\mathrm{top}}(T_{1})}{\log m_{1}}= \frac{h^{\mathbf{a}}(\mathbf{T})}{\log m_{1}}.\]
+
+Hence, we need to show the following claim.
+
+**Claim 1.6**.: _We have_
+
+\[h^{\mathbf{a}}(\mathbf{T})=\log Z_{0}.\]
+Proof.: Observe first that taking the infimum over closed covers instead of open ones in the definition of \(h^{\boldsymbol{a}}(\boldsymbol{T})\) does not change its value. Define a metric \(d^{(i)}\) on each \(X_{i}\) by
+
+\[d^{(i)}(x,y)=\min_{n\in\mathbb{Z}^{r-i+1}}|x-y-n|.\]
+
+Let
+
+\[D_{j}=\{(e_{1},\ldots,e_{j})|\text{ there are }e_{j+1},\ldots,e_{r}\text{ with }(e_{1}, \ldots,e_{r})\in D\}.\]
+
+Define \(p_{i}:D_{r-i+1}\to D_{r-i}\) by \(p_{i}(e_{1},\ldots,e_{r-i+1})=(e_{1},\ldots,e_{r-i})\). Fix \(0<\varepsilon<\frac{1}{m_{r}}\) and take a natural number \(n\) with \(m_{1}^{-n}<\varepsilon\). Fix a natural number \(N\) and let \(\psi_{i}:D_{r-i+1}^{N+n}\to D_{r-i}^{N+n}\) be the product map of \(p_{i}\), i.e., \(\psi_{i}(v_{1},\ldots,v_{N+n})=(p_{i}(v_{1}),\ldots,p_{i}(v_{N+n}))\).
+
+For \(x\in D_{r-i+1}^{N+n}\), define (recall that \(A_{i}=\operatorname{diag}(m_{1},m_{2},\ldots,m_{r-i+1})\))
+
+\[U_{x}^{(i)}=\left\{\sum_{k=0}^{\infty}A_{i}^{-k}e_{k}\in X_{i}\middle|e_{k} \in D_{r-i+1}\text{ for each }k\text{ and }(e_{1},\ldots,e_{N+n})=x\right\}.\]
+
+Then \(\{U_{x}^{(i)}\}_{x\in D_{r-i+1}^{N+n}}\) is a closed cover of \(X_{i}\) with \(\operatorname{diam}(U_{x}^{(i)},d_{N}^{(i)})<\varepsilon\). For \(x,y\in D_{r-i+1}^{N+n}\), we write \(x\backsim y\) if and only if \(U_{x}^{(i)}\cap U_{y}^{(i)}\neq\varnothing\). We have for any \(i\) and \(x\in D_{r-i}^{N+n}\)
+
+\[\pi_{i}^{-1}(U_{x}^{(i+1)})\subset\bigcup_{\begin{subarray}{c}x^{\prime}\in D _{r-i}^{N+n}\\ x^{\prime}\backsim x\end{subarray}}\bigcup_{y\in\psi_{i}^{-1}(x^{\prime})}U_{y }^{(i)}.\]
+
+Notice that for each \(x\in D_{r-i}^{N+n}\), the number of \(x^{\prime}\in D_{r-i}^{N+n}\) with \(x^{\prime}\backsim x\) is not more than \(3^{r}\). Therefore, for every \(v=(v_{1}^{(1)},\ldots,v_{N+n}^{(1)})\in D_{r-1}^{N+n}\), there are \((v_{1}^{(k)},\ldots,v_{N+n}^{(k)})\in D_{r-1}^{N+n}\), \(k=2,3,\ldots,L\), and \(L\leq 3^{r}\), with
+
+\[\#_{1}^{\boldsymbol{a}}(\pi_{1}^{-1}(U_{v}^{(2)}),\,N,\,\varepsilon)\leq\sum_ {k=1}^{L}Z_{r-1}(v_{1}^{(k)})\cdots Z_{r-1}(v_{N+n}^{(k)}).\]
+
+We inductively continue while considering that the multiplicity is at most \(3^{r}\) and obtain
+
+\[\#_{r}^{\boldsymbol{a}}(X_{r},\,N,\,\varepsilon)\] \[\leq 3^{r(r-1)}\sum_{x_{1}\in D_{1}^{N+n}}\left(\sum_{\begin{subarray} {c}x_{2}\in\psi_{2}^{-1}(x_{1})\\ x_{2}\in\psi_{2}^{-1}(x_{1})\end{subarray}}\left(\cdots\left(\sum_{x_{r-2}\in \psi_{r-2}^{-1}(x_{r-3})}\right.\right.\right.\] \[\left.\left.\left.\left(\sum_{\begin{subarray}{c}(v_{1},\ldots,v_ {N+n})\in\psi_{r-1}^{-1}(x_{r-2})\\ v_{j}\in D_{r-1}\text{ for each }j\end{subarray}}\left(Z_{r-1}(v_{1})\cdots Z_{r-1}(v_{N+n}) \right)^{a_{1}}\right)^{a_{2}}\right)^{a_{3}}\cdots\right)^{a_{r-2}}\right)^{a_{ r-1}}\] \[=3^{r(r-1)}\left\{\sum_{x_{1}\in D_{1}}\left(\sum_{x_{2}\in p_{2 }^{-1}(x_{1})}\left(\cdots\left(\sum_{x_{r-1}\in p_{r-1}^{-1}(x_{r-2})}Z_{r-1}( x_{1},\ldots,x_{r-1})^{a_{1}}\right)^{a_{2}}\cdots\right)^{a_{r-2}}\right)^{a_{r-1}} \right\}^{N+n}\] \[=3^{r(r-1)}Z_{0}^{\,N+n}.\]
+Therefore,
+
+\[h^{\boldsymbol{a}}(\boldsymbol{T})=\lim_{\varepsilon\to 0}\left(\lim_{N\to \infty}\frac{\log\#_{r}^{\boldsymbol{a}}(X_{r},\,N,\,\varepsilon)}{N}\right) \leq\log Z_{0}.\]
+
+Next, we prove \(h^{\boldsymbol{a}}(\boldsymbol{T})\geq\log Z_{0}\). We fix \(0<\varepsilon<\frac{1}{m_{r}}\) and utilize \(\varepsilon\)-separated sets. Take and fix \(\boldsymbol{s}=(t_{1},\ldots,t_{r})\in D\), and set \(\boldsymbol{s}_{i}=(t_{1},\ldots,t_{r-i+1})\). Fix a natural number \(N\) and let \(\psi_{i}:D_{r-i+1}^{N}\to D_{r-i}^{N}\) be the product map of \(p_{i}\) as in the previous definition. Define
+
+\[Q_{i}=\left\{\sum_{k=1}^{N}{A_{i}}^{-k}e_{k}+\sum_{k=N+1}^{\infty}{A_{i}}^{-k} \boldsymbol{s}_{i}\in X_{i}\right|e_{1},\ldots,e_{N}\in D_{r-i+1}\right\}.\]
+
+Then \(Q_{i}\) is an \(\varepsilon\)-separated set with respect to the metric \(d_{N}^{(i)}\) on \(X_{i}\). Consider an arbitrary open cover \(\mathscr{F}^{(i)}\) of \(X_{i}\) for each \(i\) with the following properties (this \((\mathscr{F}^{(i)})_{i}\) is defined as \(\boldsymbol{\mathfrak{a}}\)**chain of open (\(N\), \(\varepsilon\))-covers** of \((X_{i})_{i}\) in Definition 3.1).
+
+1. For every \(i\) and \(V\in\mathscr{F}^{(i)}\), we have \(\operatorname{diam}(V,d_{N}^{(i)})<\varepsilon\).
+2. For each \(1\leq i\leq r-1\) and \(U\in\mathscr{F}^{(i+1)}\), there is \(\mathscr{F}^{(i)}(U)\subset\mathscr{F}^{(i)}\) such that \[\pi_{i}^{-1}(U)\subset\bigcup\mathscr{F}^{(i)}(U)\] and \[\mathscr{F}^{(i)}=\bigcup_{U\in\mathscr{F}^{(i+1)}}\mathscr{F}^{(i)}(U).\]
+
+We have \(\#(V\cap Q_{i})\leq 1\) for each \(V\in\mathscr{F}^{(i)}\) by (1). Let \((e_{1}^{(2)},e_{2}^{(2)},\cdots,e_{N}^{(2)})\in D_{r-1}^{N}\) and suppose \(U\in\mathscr{F}^{(2)}\) satisfies
+
+\[\sum_{k=1}^{N}{A_{2}}^{-k}e_{k}^{(2)}+\sum_{k=N+1}^{\infty}{A_{2}}^{-k} \boldsymbol{s}_{2}\in U\cap Q_{2}.\]
+
+Then \(\pi_{1}^{-1}(U)\) contains at least \(Z_{r-1}(e_{1}^{(2)})\cdots Z_{r-1}(e_{N}^{(2)})\) points of \(Q_{1}\). Hence,
+
+\[\#_{1}^{\boldsymbol{a}}(\pi_{1}^{-1}(U),\,N,\,\varepsilon)\geq Z_{r-1}(e_{1}^ {(2)})\cdots Z_{r-1}(e_{N}^{(2)}).\]
+
+We continue this reasoni
+
+# Sound Source Localization is All about Cross-Modal Alignment
+
+###### Abstract
+
+Humans can easily perceive the direction of sound sources in a visual scene, termed sound source localization. Recent studies on learning-based sound source localization have mainly explored the problem from a localization perspective. However, prior arts and existing benchmarks do not account for a more important aspect of the problem, cross-modal semantic understanding, which is essential for genuine sound source localization. Cross-modal semantic understanding is important in understanding semantically mismatched audio-visual events, e.g., silent objects, or off-screen sounds. To account for this, we propose a cross-modal alignment task as a joint task with sound source localization to better learn the interaction between audio and visual modalities. Thereby, we achieve high localization performance with strong cross-modal semantic understanding. Our method outperforms the state-of-the-art approaches in both sound source localization and cross-modal retrieval. Our work suggests that jointly tackling both tasks is necessary to conquer genuine sound source localization.
+
+## 1 Introduction
+
+Humans can easily perceive where the sound comes from in a scene. We naturally attend to the sounding direction and associate incoming audio-visual signals to understand the event. To achieve human-level audio-visual perception, sound source localization in visual scenes has been extensively studied [50, 51, 4, 47, 8, 35, 31, 33, 53, 54, 52, 36, 39, 38, 20]. Motivated by that humans learn from natural audio-visual correspondences without explicit supervision, most of the studies have been developed on a fundamental assumption that audio and visual signals are temporally correlated. With the assumption, losses of the sound source localization task are modeled by audio-visual correspondence as a self-supervision signal and are implemented by contrasting audio-visual pairs,, contrastive learning.
+
+While these approaches appear to be unsupervised methods, they strongly rely on partial supervision information;, using supervisedly pretrained vision networks [50, 51, 47, 53, 54, 20] and visual objectness estimators for post-processing [39, 38]. Without leveraging such strong initial representations, the performance is degraded. Thus, the previous methods are not purely self-supervised approaches. Even further, there are recent studies [45, 39, 38] that point out visual objectness bias in existing sound source localization benchmarks and exploit the objectness prior to improve the localization accuracy. They show that, even without interaction between visual and audio signals, a model may achieve strong accuracy in localization by only referring visual signals alone, which is not the true intention of the sound source localization task. In short, the current evaluation and setting of the sound source localization do not capture the true sound source localization performance.
+
+In this work, we first sort out evaluating sound source localization methods by introducing a cross-modal retrieval task as an auxiliary evaluation task. By this task, we can measure whether the learned representation have the capability to accurately interact between audio and visual modalities;, more fine-grained audio-visual correspondence which is essential for genuine sound source localization. This aspect has been missed in existing sound source localization benchmarks. Indeed, our experiments show that higher sound localization performance does not guarantee higher cross-modal retrieval performance.
+
+Figure 1: **A conceptual difference between prior approaches and our alignment-based sound source localization.**
+Second, given this additional criterion, we revisit the importance of semantic understanding shared across audio and visual modalities in both sound source localization and cross-modal retrieval. In the previous methods [50, 51, 54, 47], the cross-modal semantic alignment is induced by instance-level cross-modal contrastive learning,, cross-modal instance discrimination between visual and audio features. However, they are aided by labels or supervisedly pretrained encoder 2 for easing challenging cross-modal feature alignment. Instead, our method learns from scratch supporting the lack of guidance by incorporating multiple positive samples into cross-modal contrastive learning. Specifically, we construct a positive set for each modality using both multi-view [10] and conceptually similar samples [17]. Thereby, we enhance feature alignment and achieve high localization performance and strong cross-modal semantic understanding.
+
+Footnote 2: Typically, an image encoder is pretrained on ImageNet [16] and an audio encoder is pretrained on AudioSet [25] in supervised ways.
+
+We evaluate our method on the VGG-SS and SoundNet-Flickr benchmarks for sound source localization and cross-modal retrieval. As aforementioned, the sound source localization task is closely related to the cross-modal retrieval task, but our experiments show that existing works have a weak performance correlation between them. This implies that we need to evaluate both tasks for evaluating the genuine sound source localization. The proposed method performs favorably against the recent state-of-the-art approaches in both tasks.
+
+We summarize the contributions of our work as follows:
+
+* We analyze that sound source localization benchmarks are not capable of evaluating cross-modal semantic understanding, thereby sound source localization methods may perform poorly in cross-modal retrieval tasks.
+* We propose semantic alignment to improve cross-modal semantic understanding of sound source localization models.
+* We expand semantic alignment with multi-views and conceptually similar samples which leads to state-of-the-art performance on both sound source localization and cross-modal retrieval.
+
+## 2 Related work
+
+**Sound source localization.** Sound source localization in visual scenes has been investigated by exploiting correspondences between audio and visual modalities. The most widely used approach for sound source localization is cross-modal attention [50, 51, 57] with contrastive loss [13, 29, 42]. Later, the attention-based method is improved by intra-frame hard sample mining [8], iterative contrastive learning with pseudo labels [35], feature regularization [36], positive mining [52], negative free learning [54] with stop-gradient operation [12], or momentum encoders [38].
+
+Some sound localization approaches exploit additional semantic labels [47, 33, 53] or object prior [39, 63]. Semantic labels are used to pretrain audio and vision encoders with classification loss [33, 53] or refine audio-visual feature alignment [47]. A more explicit way to refine localization output is to use object prior. EZVSL [39] proposes post-processing to combine attention based localization output with a pretrained visual feature activation map. Similarly, Xuan [63] propose to combine off-the-shelf object proposals with attention based sound localization results. However, postprocessing by object prior may generate a false positive output as it is solely based on vision without audio-visual interaction.
+
+In addition to the localization, there has been an attempt to localize sounding objects and recover the separated sounds simultaneously, also known as the cocktail party problem [27, 37]. The separation of sound mixture is achieved by predicting masks of spectrogram guided by visual features [19, 1, 64, 23, 62, 21, 2, 65, 24, 58, 56]. Furthermore, a number of recent papers are presented on audio-visual navigation for a given sound source [7, 22].
+
+**Self-supervised representation learning.** In a broader categorization, sound source localization belongs to self-supervised multimodal learning. Our work is also relevant to self-supervised audio-visual representation learning, and other multimodal learning studies.
+
+Contrastive learning aims to learn robust representations from large-scale raw data without annotations. Recent representation learning approaches [60, 10, 28, 11] use instance discrimination by contrastive learning [13, 29, 42] as a pretext task with notable advancements in visual recognition tasks. Recently, positive mining by nearest-neighbor search are used to learn representations of images [17, 18, 61], videos [26], neural recordings [6], and text-image [34]. In this work, we expand the previous works by incorporating both multi-views and conceptually similar samples into audio-visual modalities for cross-modal feature alignment.
+
+A series of audio-visual representation learning studies have shown that audio and visual contents in a video are correlated, therefore a visual representation can be learned by sound prediction [44] or audio representation can be distilled from visual representation [5, 55]. Later, a variety of joint audio-visual representation learning methods are proposed with an assumption that there is a semantic [3, 30, 41, 40] or temporal [14, 43, 32, 15] correspondence between them. However, simply learning sound source localization by audio-visual correspondence with instance discrimination ignores the semantic similarity of audio-visual contents among samples, introducing false negatives or positives. In order to mitigate this issue, clustering [30], sampling [41], weighting [40], and hard mining [32] are proposed. Similarly, in this work, we go beyond instance discrimination by using multiple positive samples
+to enforce semantic understanding across modalities.
+
+## 3 Method
+
+### Preliminaries
+
+**Contrastive learning** learns representation by containing positive and negative pairs. Given an encoded query sample \(q\) and its encoded positive pair \(k^{+}\) and negative pairs \(k\), the loss can be defined as:
+
+\[\mathcal{L}=-\mathrm{log}\frac{\mathrm{exp}(q\cdot k^{+}/\tau)}{\sum_{i} \mathrm{exp}(q\cdot k_{i}/\tau)} \tag{1}\]
+
+where \(\tau\) is the temperature parameter.
+
+**Cross-modal contrastive learning** extends contrastive learning across multiple modalities. In sound source localization, audio-visual correspondence is used to define positive and negative cross-modal pairs. With an audio-visual dataset \(\mathcal{D}=\{(v_{i},a_{i}):i=1,...,N\}\) and its encoded features \(\mathbf{v}_{i}=f_{v}(v_{i})\) and \(\mathbf{a}_{i}=f_{a}(a_{i})\), cross-modal contrastive learning loss is defined as:
+
+\[\mathcal{L}_{i}=-\mathrm{log}\frac{\mathrm{exp}(s(\mathbf{v}_{i},\mathbf{a}_{ i})/\tau)}{\sum_{j}\mathrm{exp}(s(\mathbf{v}_{i},\mathbf{a}_{j})/\tau)} \tag{2}\]
+
+where \(s\) is a cross-modal similarity function. The cross-modal contrastive loss Eq. (2) can be extended to symmetric form [48] as used in a few previous works [39, 38].
+
+### Cross-Modal Feature Alignment
+
+We consider both spatial localization and semantic feature alignment for sound source localization. To this end, we use two different similarity functions \(s_{L}\) and \(s_{A}\) for contrastive learning (Eq. (2)), \(s_{L}\) for localization and \(s_{A}\) for cross-modal feature alignment.
+
+Recent studies rely on audio-visual spatial correspondence maps to learn sound source localization by contrasting them. Given a spatial visual feature \(\mathbf{v}\in\mathbb{R}^{c\times h\times w}\) and audio feature \(\mathbf{a}\in\mathbb{R}^{\text{e}}\), audio-visual similarity with a correspondence map can be calculated as follows:
+
+\[s_{L}(\mathbf{v},\mathbf{a})=\sum_{xy\in M}\frac{1}{|M|}\frac{\mathbf{v}^{xy} \cdot\mathbf{a}}{\|\mathbf{v}^{xy}\|\|\mathbf{a}\|} \tag{3}\]
+
+where \(\mathbf{v}^{xy}\) is a feature vector at location \((x,y)\), and \(M\) is an optional binary mask when an annotation or pseudo-mask [8, 36] is available. Since we assume no supervision for sound source localization, we do not use any mask, therefore, \(M=\mathbf{1}\).
+
+The contrastive loss with localization similarity \(s_{L}\) enforces location dependent alignment giving sparse but strong audio-visual correspondence which enables to perform localization. However, our empirical studies on cross-modal retrieval indicate that strong localization performance does not guarantee semantic understanding. To overcome the low semantic understanding in recent studies, we propose to add instance-level contrastive loss. Instance-level contrasting encapsulates the whole context in a scene, enforcing better audio-visual semantic alignment. However, instance-level contrasting may smooth out spatial discriminativeness learned by Eq. (3). Inspired by SimCLR [10], we adopt a projection layer to align audio-visual semantics in a projection space. The projection layer separates the latent space of localization and semantic alignment, thereby preventing the alignment loss smoothing out the spatial discriminativeness. The similarity function for cross-modal feature alignment is defined as follows:
+
+\[s_{A}(\mathbf{v},\mathbf{a})=\frac{p_{v}(\mathsf{avg}(\mathbf{v}))\cdot p_{a} (\mathbf{a})}{\|p_{v}(\mathsf{avg}(\mathbf{v}))\|\|p_{a}\mathbf{a}\|} \tag{4}\]
+
+where \(\mathsf{avg}(\cdot)\) is spatial average pooling, \(p_{v}\) is a projection
+
+Figure 2: **Our sound source localization framework.** Our model construct multiple positive pairs with augmentation and Nearest Neighbor Search (Conceptually Similar Samples). By using these newly constructed 9 pairs, our model employs spatial localization, \(s_{L}\), and semantic feature alignment, \(s_{A}\), for each pair to learn a better sound source localization ability.
+layer for visual features, and \(p_{a}\) is a projection layer for audio features.
+
+### Expanding with Multiple Positive Samples
+
+Typically, contrastive learning contrasts between one positive pair and multiple negative pairs as shown in Eq. (1). In audio-visual learning, by an audio-visual correspondence assumption, an audio-image pair from the same clip is used as a positive pair while negative pairs are sampled from different clips. However, single-instance discrimination may not be sufficient to achieve strong cross-modal alignment. In this section, we expand contrastive learning beyond single instance discrimination by positive set construction and pairing them. To construct a positive set, we incorporate both hand-crafted positive and conceptual positive samples for each modality. Later, we adjust the contrastive learning to incorporate multiple positive pairs to enforce cross-modal alignment.
+
+Obtaining hand-crafted positive samples.Using randomly augmented samples as positive multi-view pairs are widely adopted in self-supervised representation learning, _i.e_., instance discrimination. Similarly, we extend a single anchor audio-image pair to multiple positive pairs by applying simple augmentations on image and audio samples separately. While we utilize common image transformations on images, we apply temporal shifting to audios. It is worth noting that sound source localization task learns from the underlying semantic consistency rather than subtle time differences as in videos. Thus, a slight shift in the audio may not alter contextual information significantly. As a result of hand-crafted multi-view positive pair generation, we obtain additional \(\mathbf{v}^{aug}\) and \(\mathbf{a}^{aug}\) samples.
+
+Obtaining conceptual positive samples.Apart from manually created augmented views, we additionally expand our positive set with conceptually similar samples. The sampling strategy with nearest neighbor search can be performed in a various way, such as on-the-fly sampling [17, 49, 61, 34], sampling by pretrained encoders [52], or guided sampling [26, 18] using another modality. For selecting our conceptually similar samples, we utilize pretrained encoders. Note that pretrained encoders trained either with supervised or self-supervised learning are effective in positive sample mining as shown in the experiment section. By employing readily available image and audio encoders, we use the \(k\)-nearest neighborhood search to sample semantically similar samples in both modalities. In particular, given a pair of image and audio, we compute cosine similarity with all other samples and choose the top-\(k\) most similar samples among the training set for each modality. From a set of \(k\) samples, we randomly select one sample to obtain conceptually similar samples for each modality, \(\mathbf{v}^{conc}\). and \(\mathbf{a}^{conc}\). By utilizing the conceptually similar samples as positive samples, our model expands semantic understanding.
+
+Pair Construction.Once we obtain the conceptual and hand-crafted positive samples for each modality, we proceed to create 9 distinct audio-visual pairs by pairing \(\mathbf{V}=\{\mathbf{v},\mathbf{v}^{aug},\mathbf{v}^{conc}\}\) and \(\mathbf{A}=\{\mathbf{a},\mathbf{a}^{aug},\mathbf{a}^{conc}\}\). This is done to ensure semantic alignment and consistency between them through contrastive learning. The negative pairs are randomly paired from the remaining samples in a training set. It is worth noting that some of these pairs are a combination of hand-crafted and conceptually similar samples, which further enhances the feature alignment of our model during training.
+
+### Training
+
+Our loss formulation incorporates both localization and instance-level similarity functions with multiple positive pairs constructed by augmentation and conceptually similar sample search. The final loss term is defined as follows:
+
+\[\begin{split}\mathcal{L}_{i}=-\sum_{\mathbf{v}_{i}\in\mathbf{V} }\sum_{\mathbf{a}_{i}\in\mathbf{A}}\Bigg{[}\mathrm{log}\frac{\exp(s_{L}( \mathbf{v}_{i},\mathbf{a}_{i})/\tau)}{\sum_{j}\exp(s_{L}(\mathbf{v}_{i}, \mathbf{a}_{j})/\tau)}\\ +\mathrm{log}\frac{\exp(s_{A}(\mathbf{v}_{i},\mathbf{a}_{i})/ \tau)}{\sum_{j}\exp(s_{A}(\mathbf{v}_{i},\mathbf{a}_{j})/\tau)}\Bigg{]}\end{split} \tag{5}\]
+
+where \(\mathbf{V}\) and \(\mathbf{A}\) indicate positive sample sets.
+
+## 4 Experiments
+
+Our proposed method for sound source localization is validated through experiments conducted on VGGSound [9] and SoundNet-Flickr [5]. First, we conduct a quantitative analysis to evaluate the accuracy of the localization, cross-modal retrieval, and the impact of various components of our model. Then, we visualize our sound source localization results across different categories of sounds.
+
+### Experiment Setup
+
+Datasets.Our method is trained using the VGGSound [9] and SoundNet-Flickr-144K [50, 51]. VGGSound is an audio-visual dataset containing around \(\sim\)200K videos. SoundNet-Flickr-144K set is the subset of SoundNet-Flickr [5]. After training, we test the sound localization performance with VGG-SS [8] and SoundNet-Flickr-Test [50] datasets for the main experiments. These evaluation sets have bounding box annotations of sound sources for \(\sim\)5K and 250 samples, respectively. Moreover, we employ the AVSBench [66] and Extended VGGSound/SoundNet-Flickr [38] datasets for additional evaluations. AVSBench dataset provides binary segmentation maps that show the
+audio-visually correspondent pixels for roughly 5k five-second videos belonging to 23 categories. Lastly, the Extended VGGSound /SoundNet-Flickr dataset, proposed by [38], is used to understand non-visible sound sources.
+
+**Implementation details.** We use two ResNet18 models for both audio and vision encoding. Unlike prior approaches, we do not fine-tune (or use a pretrained) a visual encoder from ImageNet pretrained weights. Instead, we train both the audio and vision encoders from scratch. We preprocess images and audios following the previous works [52, 8]. To create multiple pairs, we utilize both NN search and generic augmentation approaches. For NN search, we experiment on two different setups to retrieve k conceptually similar samples: (1) For supervisedly pretrained encoder experiments, We employ ResNet and VGGSound models pretrained on ImageNet and VGGSound respectively, (2) For self-supervisedly pretrained encoder experiments, we utilize the CLIP [48] Vision Encoder and Wav2CLIP [59] Audio Encoder. We use 
+
+Effect of interatomic repulsion on Majorana zero modes in a coupled quantum-dot-superconducting-nanowire hybrid system
+
+###### Abstract
+
+We study the low-energy eigenstates of a topological superconductor wire modeled by a Kitaev chain coupled at one of its ends to a quantum dot by nearest-neighbor (NN) hopping and NN Coulomb repulsion. Using an unrestricted Hartree-Fock approximation to decouple the Coulomb term, we obtain that the quality of the Majorana end states is seriously affected by this term only when the dependence of the low-lying energies with the energy of the quantum dot shows a "diamond" shape, characteristic of short wires.
+
+## I Introduction
+
+In recent years, topological superconducting wires is a field of intense research in condensed matter physics, because of both the interesting basic physics involved [1], but also because of possible applications in decoherence-free quantum computing based on the Majorana zero modes (MZMs) at their ends. [2; 3; 4; 5; 6; 7]
+
+The simplest model that presents MZMs at the ends is the Kitaev chain for p-wave superconductors [8]. Lutchyn _et al._[9] and Oreg _et al._[10] proposed a model for topological superconducting wires that includes spin-orbit coupling (SOC), proximity-induced s-wave superconductivity, and an applied magnetic field perpendicular to the direction of the SOC. The phase diagram of the lattice version of this model has been calculated recently [11]. For reasonable parameters the model has a topological phase with MZMs localized at its ends as the Kitaev chain. MZMs of similar wires were found experimentally [12; 13; 14; 15].
+
+A difficulty of these experiments is to identify unambiguously that the zero modes are of topological origin, which implies that they remain at zero energy and localized at the end of the nanowire if small perturbations are applied to the system. Using the model mentioned above for s-wave topological superconducting wires, Prada _et al._ proposed that a quantum dot (QD) at the end of the nanowire may be used as a powerful spectroscopic tool to quantify the degree of Majorana nonlocality through a local transport measurement [16]. This proposal has been confirmed experimentally [17]. A similar procedure has been also proposed for the Kitaev spinless model [18], and further theoretical studies have been made recently for the spinfull model [19] and a minimal Kitaev chain [20].
+
+In general, the energy of the dot level is varied changing the gate potential, and the low-energy levels detected by the conductance show either a crossing ("bowtie" shape like if Fig. 4) or a "diamond" pattern (like in Fig. 6 top) [16; 20; 22].
+
+Compared to the large amount of theoretical works studying non-interacting superconducting wires, studies of the effects of interactions are rare [21]. Recently Ricco _et al._ pointed out that Coulomb repulsion between the electrons of the dot and the nanowire might lead to spoiling of the quality of the MZMs due to an effective increase of the coupling between the MZMs localized at the left and at the right of the nanowire [22]. They considered a spinless model consisting of a Kitaev chain with a QD at its left end. There is hopping between the QD and the chain and also an interaction
+
+\[H_{V}=Vn_{d}n_{w}, \tag{1}\]
+
+where \(n_{d}\) is the number of electrons in the dot and \(n_{w}\) is the total number of electrons in the superconducting wire. The authors replaced this operator by the parity operator at low energies \(n_{w}\sim i\gamma_{L}\gamma_{R}+1/2\) (neglecting the excited states), where \(\gamma_{\nu}\) is the Majorana at the end \(\nu\) (left or right) of the wire _at a given chemical potential_. Neglecting the states at higher energy, the authors solve exactly the effective low-energy model and show that \(H_{V}\) contributes to the displacement of the MZMs from zero energy, spoiling the Majorana quality and the topological properties.
+
+Usually the low-energy effective Hamiltonian is a very good approximation of the full one. For example, quantitative agreement has been found between both descriptions for the Josephson current between two topological superconducting wires [23]. However, a simple argument suggests that this might not be the case for the interaction given by Eq. (1). A simple mean field decoupling of this term gives
+
+\[Vn_{d}n_{w}\simeq V\left(\langle n_{d}\rangle n_{w}+n_{d}\langle n_{w}\rangle -\langle n_{d}\rangle\langle n_{w}\rangle\right). \tag{2}\]
+
+The first term on the right hand side is a correction to the chemical potential, and the second is a correction to the on-site energy of the dot. We obtain that even in the presence of hopping between the dot and the wire, the MZMs remain under these changes. In other words the states described by \(\gamma_{\nu}\)_change their form_ and accommodate to the new situation, as might be expected from the robustness of end states of topological character. This change is not captured by the low-energy effective Hamiltonian.
+
+In this work we calculate the low-energy spectrum of a Kitaev chain in which the leftmost side has a hopping and
+also a repulsion to a QD state. The latter is treated in the unrestricted Hartree-Fock approximation. In Section II we describe the model and the approximation. In Section III we show the numerical results. We summarize the results in Section IV.
+
+## II Model and approximation
+
+The Hamiltonian of the Kitaev chain interacting with a QD is
+
+\[H = \sum_{j=1}^{N-1}(-tc_{j+1}^{\dagger}c_{j}+\Delta c_{j+1}^{\dagger} c_{j}^{\dagger}+\text{H.c.})-\mu\sum_{j=1}^{N}c_{j}^{\dagger}c_{j} \tag{3}\] \[+E_{d}d^{\dagger}d-t^{\prime}(d^{\dagger}c_{1}+\text{H.c.})\] \[+V\left(n_{d}-\frac{1}{2}\right)\left(n_{w}-\frac{1}{2}\right),\]
+
+where \(n_{d}=d^{\dagger}d\) and \(n_{1}=c_{1}^{\dagger}c_{1}\). The first two terms of Eq. (3) describe the Kitaev chain with hopping \(t\), p-wave superconducting order parameter \(\Delta\) and chemical potential \(\mu\). The third term describes the QD. The fourth term is the hopping between the QD and the Kitaev chain and the last term is the Coulomb repulsion between the electrons in the QD and the ones at the leftmost site of the chain. We treat this term in the unrestricted Hartree-Fock approximation:
+
+\[n_{d}n_{1} \simeq \left\langle n_{d}\right\rangle n_{1}+n_{d}\left\langle n_{1} \right\rangle-\left\langle n_{d}\right\rangle\left\langle n_{1}\right\rangle \tag{4}\] \[-\left\langle d^{\dagger}c_{1}\right\rangle c_{1}^{\dagger}d-d^{ \dagger}c_{1}\left\langle c_{1}^{\dagger}d\right\rangle+\left\langle d^{ \dagger}c_{1}\right\rangle\left\langle c_{1}^{\dagger}d\right\rangle\] \[+\left\langle d^{\dagger}c_{1}^{\dagger}\right\rangle c_{1}d+d^{ \dagger}c_{1}^{\dagger}\left\langle c_{1}d\right\rangle-\left\langle d^{ \dagger}c_{1}^{\dagger}\right\rangle\left\langle c_{1}d\right\rangle.\]
+
+We note that our model is different from that of Ricco _et al._[22], because they considered a repulsion with all the sites of the wire with the same intensity. We believe that our model is more realistic. Another difference is that they treated the repulsion exactly in an effective model within a low-energy subspace. We include all states but treat the repulsion using the approximation of Eq. (4).
+
+## III Results
+
+We take \(t=1\) as the unit of energy and choose \(\Delta=0.2\). For later comparison, we discuss first the isolated Kitaev chain (without the quantum dot) for two different lengths of the chain. The resulting energies are shown in Fig. 1 as a function of the chemical potential \(\mu\). The curve is symmetric under the change of sign of \(\mu\), and therefore only positive values of \(\mu\) are displayed in the figure. As it is known, the system is topological for \(|\mu|<2t\). In this region, there are two low-energy states at energies near zero. For the infinite chain, these states correspond to the left and right MZMs \(\gamma_{L}\) and \(\gamma_{R}\) localized at the ends of the chain. In a finite chain, these modes are mixed with an effective term \(\lambda i\gamma_{L}\gamma_{R}\) and the energies are split in \(\pm\lambda\). As expected, \(\lambda\) decays exponentially with increasing system size. From Fig. 1, one can see that \(\lambda\) decreases almost four orders of magnitude when the length of the chain is increased from 20 to 50 sites.
+
+One can also see from the figures that \(\lambda\) oscillates as the chemical potential is varied. The period of oscillation is more that two times smaller for 50 sites in comparison with 20 sites, and it is also smaller for larger \(|\mu|\) near the topological transition to the trivial phase.
+
+For future discussion of the effects of the nearest-neighbor repulsion \(V\), we represent in Fig. 2, the independent expectation values that enter in the unrestricted Hartree-Foch approximation, Eq. 4, determined selfconsistently. We have chosen \(t^{\prime}=0.2\), \(V=1\), \(\mu=0\) and a chain of 50 sites excluding the quantum dot. The results are rather insensitive to system size.
+
+As expected, the occupancy of the dot is near 1, when its energy is negative and large in magnitude compared to \(t^{\prime}\) (\(-\epsilon_{d}\gg t^{\prime}\)), it is equal to 1/2 for \(\epsilon_{d}=0\) and it is near 0 for \(\epsilon_{d}\gg t^{\prime}\).
+
+In contrast, the occupancy of the first site of the dot \(\left\langle n_{1}\right\rangle\) follows qualitatively the opposite behavior: when \(\left\langle n_{d}\right\rangle>1/2\), the first site feels the repulsion with the electrons in the dot and its occupancy decreases, but its
+
+Figure 1: (Color online) Eigenvalues of the Kitaev chain for 20 sites (top) and 50 sites (middle and bottom) as a function of the chemical potential.
+hopping with the rest of the chain moderates this effect and the occupancy deviates from 0.5 in less than 0.2.
+
+The expectation value of the hopping \(\langle d^{\dagger}c_{1}\rangle\) follows qualitatively the behavior expected for a diatomic heteronuclear molecule, with a single orbital per atom, in which the two atomic states are hybridized. The expectation value is maximum when both atomic levels coincide (\(\epsilon_{d}=0\)) and decreases symmetrically with the difference between atomic levels. Te half width of the curve is expected to be of the order of the effective hopping, which in this case is \(t^{\prime}_{\rm eff}=t^{\prime}+V\langle d^{\dagger}c_{1}\rangle\). For \(\epsilon_{d}=0\), this value is near 0.5, considerably larger than the bare value \(t^{\prime}=0.2\).
+
+The pairing expectation value \(\langle d^{\dagger}c_{1}^{\dagger}\rangle\) follows qualitatively a similar dependence with the dot energy as the hopping contribution discussed above, but with smaller values. Its dependence with \(\epsilon_{d}\) is also narrower. Its physical origin is a proximity induced \(p\)-wave superconductivity, which is larger when the energy of the dot is nearer to the chemical potential of the wire.
+
+The resulting eigenvalues of the system as a function of the dot energy for \(V=0\) and \(V=1\) are compared in Fig. 3 for a chain of 20 sites. For 50 sites the discussion below is practically the same, but the results are displayed more clearly in the smaller system. For the sake of brevity we omit displaying the results for 50 sites. We discuss first the case \(V=0\). For large \(|\epsilon_{d}|\), the eigenvalues at small energies (of absolute value less than 1) are practically the same as those of the isolated Kitaev chain shown in Fig. 1. For \(\mu=0\), the results are symmetric under interchange of the sign of \(\epsilon_{d}\). In addition to the states of the isolated chain, there are roughly speaking two other symmetric states at energies \(\pm E_{m}\), which at a first approximation corresponds to that of higher absolute vale of an heteronuclear molecule (as that mentioned above) that mixes two states with energies \(\epsilon_{d}\) and zero. For large \(|\epsilon_{d}|\), \(E_{m}\sim\epsilon_{d}\) and for \(\epsilon_{d}=0\), \(E_{m}\sim t^{\prime}\). These states actually hybridize with the states of the isolated Kitaev chain showing several anticrossings that are evident in Fig. 3.
+
+When \(V\) is included, the higher energy eigenvalues are modified, particularly those related with the mixing of the dot state near \(\epsilon_{d}=0\). Since as explained above, the effective hopping between the dot and the first state of the chain increases from \(t^{\prime}=0.2\) to \(t^{\prime}\sim 0.5\), when \(V\) is increased from 0 to 1, a similar change takes place for the energies that are near \(\pm t^{\prime}\) in Fig. 3. However, the two energies with lowest absolute value, related with the splitting of the MZMs, are very little modified by \(V\).
+
+In Fig. 4 we display the energies related to the MZMs for two values of \(\mu\) and a chain of 50 sites. One can see that for \(\mu=0\), the inclusion of nearest-neighbor repulsion \(V\), at least within our unrestricted Hartree-Fock approximation slightly _decreases_ the splitting of the two low-energy states, indicating that the quality of the MZMs actually is _improved_ when the repulsion is added. For \(\mu\neq 0\), the symmetry under change of sign of the dot energy \(\epsilon_{d}\) is lost, and the asymmetry is increased with \(V\). In any case, the effect of \(V\) on the quality of the MZMs remains very small. The shape of the curve is similar to that found in previous experiments [17] and theory [16; 22].
+
+In Fig. 5, we show the coefficients of the lowest eigenstate with positive energy for the parameters indicated inside the figure. The fermion is written as \(\sum_{i}\alpha_{i}f_{i}\), where \(\alpha_{i}\) are the 102 coefficients and the order of the
+
+Figure 3: (Color online) Energies of the system as a function of the energy of the dot for \(V=0\) (top) and \(V=1\) (bottom).
+
+Figure 2: (Color online) Expectation values entering Eq. (4) as a function of dot energy.
+corresponding fermions \(f_{i}\) is \(f_{1}=d^{\dagger}\), \(f_{2}=d\), \(f_{3}=c_{1}^{\dagger}\), \(f_{4}=c_{1}\),... \(f_{102}=c_{50}\). As expected, the state is a mixture of the MZMs at the ends with negligible weight in the middle of the chain. However, in contrast to the isolated Kitaev chain, there is a significant weight of the state also at the dot, with a probability which is about \(1/10\) compared to that of the first site in the chain. This probability increases with decreasing \(|\epsilon_{d}|\).
+
+Finally in Fig. 6 we display the energies for a short chain of 5 sites, with a significant mixing of both MZMs at the ends of the chain. In this case, the weight of the MZM at the right end is significant at the left end, and therefore it also feels the repulsion with the quantum dot. For \(V=0\) the shape is characteristic of the "diamond" shape observed in experiment [17] and in calculations [16; 22] when the hopping between the quantum dot and the MZM at the right end \(\gamma_{R}\) is important [16; 22].
+
+In contrast to the previous cases, now the effect of adding the Coulomb repulsion is significant, leading to a strong further splitting of the MZMs, of the order of a fraction of \(t^{\prime}\)
+
+## IV Summary and discussion
+
+We have solved a model for a Kitaev chain on a lattice, connected to a quantum dot at one of its ends by a hopping term and a Coulomb repulsion between the relevant state of the quantum dot and the end site of the chain.
+
+As the energy of the state of the quantum dot is varied, the energies of the two eigenstates of the system nearer to zero have one of the two characteristic shapes seen in experiment and previous theories, signaling the presence of Majorana zero modes (MZMs) at the ends of the wire, coupled between them. In one of them, the energies of the two states cross when the energy of the quantum dot is near to the Fermi energy. In this case, the coupling between MZMs is weak and analyzing the wave function of these eigenstates, one sees that the one of the MZMs has a substantial weight at the quantum dot. Treating the Coulomb repulsion in the unrestricted Hartree-Fock approximation, we find that it does not affect essentially the quality of the MZMs.
+
+In contrast in the other case, in which the energies of the low-lying states as a function of the dot level has a "diamond" shape, signaling a stronger coupling be
+
+Figure 5: (Color online) Coefficients of the lowest eigenstate of the system.
+
+Figure 4: (Color online) Comparison of the two energies nearer to zero in the system as a function of the energy of the dot between \(V=0\) and \(V=1\) for \(\mu=0\) (top) and \(\mu=0.5\) (bottom).
+
+Figure 6: (Color online) Energies of the system as a function of the energy of the dot for \(V=0\) (top) and \(V=1\) (bottom).
+tween the MZMs (shorter chains), the effect of the interatomic Coulomb repulsion is significant splitting further the MZMs.
+
+###### Acknowledgements.
+
+ R. K. T. P. has a scholarship of Instituto Balseiro. A. A. A. acknowledges financial support provided by PICT 2017-2726 and PICT 2018-01546 of the ANPCyT, Argentina.

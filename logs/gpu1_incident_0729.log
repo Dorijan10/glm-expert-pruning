@@ -1,0 +1,612 @@
+[Sun Jul 26 07:11:31 2026] NVRM: loading NVIDIA UNIX Open Kernel Module for x86_64  580.173.02  Release Build  (dvs-builder@U22-I3-AK02-24-4)  Tue Jun 23 08:17:01 UTC 2026
+[Sun Jul 26 07:11:34 2026] NVRM: kbifInitLtr_GB202: LTR is disabled in the hierarchy
+[Sun Jul 26 07:11:35 2026] NVRM: kbifInitLtr_GB202: LTR is disabled in the hierarchy
+[Sun Jul 26 07:11:36 2026] NVRM: kbifInitLtr_GB202: LTR is disabled in the hierarchy
+[Sun Jul 26 07:11:37 2026] NVRM: kbifInitLtr_GB202: LTR is disabled in the hierarchy
+[Sun Jul 26 07:11:38 2026] NVRM: kbifInitLtr_GB202: LTR is disabled in the hierarchy
+[Sun Jul 26 07:11:39 2026] NVRM: kbifInitLtr_GB202: LTR is disabled in the hierarchy
+[Sun Jul 26 07:11:40 2026] NVRM: kbifInitLtr_GB202: LTR is disabled in the hierarchy
+[Sun Jul 26 07:11:42 2026] NVRM: kbifInitLtr_GB202: LTR is disabled in the hierarchy
+[Wed Jul 29 16:47:11 2026] NVRM: GPU at PCI:0000:25:00: GPU-27d53db3-cb39-3f3a-f1e2-d593bb04bbe7
+[Wed Jul 29 16:47:11 2026] NVRM: GPU Board Serial Number: 0
+[Wed Jul 29 16:47:11 2026] NVRM: Xid (PCI:0000:25:00): 79, GPU has fallen off the bus.
+[Wed Jul 29 16:47:11 2026] NVRM: GPU 0000:25:00.0: GPU has fallen off the bus.
+[Wed Jul 29 16:47:11 2026] NVRM: GPU 0000:25:00.0: GPU serial number is 0.
+[Wed Jul 29 16:47:11 2026] NVRM: kgspRcAndNotifyAllChannels_IMPL: RC all channels for critical error 79.
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: _threadNodeCheckTimeout: API_GPU_ATTACHED_SANITY_CHECK failed!
+[Wed Jul 29 16:47:11 2026] NVRM: prbEncStartAlloc: Can't allocate memory for protocol buffers.
+[Wed Jul 29 16:47:11 2026] NVRM: A GPU crash dump has been created. If possible, please run
+                           NVRM: nvidia-bug-report.sh as root to collect this data before
+                           NVRM: the NVIDIA kernel module is unloaded.
+[Wed Jul 29 16:47:11 2026] NVRM: GPU at PCI:0000:61:00: GPU-d312a568-6284-3ddb-8f64-0ad6a8068488
+[Wed Jul 29 16:47:11 2026] NVRM: GPU Board Serial Number: 0
+[Wed Jul 29 16:47:11 2026] NVRM: Xid (PCI:0000:61:00): 154, GPU recovery action changed from 0x0 (None) to 0x2 (Node Reboot Required)
+[Wed Jul 29 16:47:11 2026] NVRM: GPU at PCI:0000:41:00: GPU-6d515b00-311a-8626-b368-d6a12e077347
+[Wed Jul 29 16:47:11 2026] NVRM: GPU Board Serial Number: 0
+[Wed Jul 29 16:47:11 2026] NVRM: Xid (PCI:0000:41:00): 154, GPU recovery action changed from 0x0 (None) to 0x2 (Node Reboot Required)
+[Wed Jul 29 16:47:11 2026] NVRM: GPU at PCI:0000:01:00: GPU-d72fce74-9926-86db-c59b-d191387a99b8
+[Wed Jul 29 16:47:11 2026] NVRM: GPU Board Serial Number: 0
+[Wed Jul 29 16:47:11 2026] NVRM: Xid (PCI:0000:01:00): 154, GPU recovery action changed from 0x0 (None) to 0x2 (Node Reboot Required)
+[Wed Jul 29 16:47:11 2026] NVRM: Xid (PCI:0000:25:00): 154, GPU recovery action changed from 0x0 (None) to 0x2 (Node Reboot Required)
+[Wed Jul 29 16:47:11 2026] NVRM: GPU at PCI:0000:e1:00: GPU-550254c7-64e9-010b-57d4-8c4fb152181a
+[Wed Jul 29 16:47:11 2026] NVRM: GPU Board Serial Number: 0
+[Wed Jul 29 16:47:11 2026] NVRM: Xid (PCI:0000:e1:00): 154, GPU recovery action changed from 0x0 (None) to 0x2 (Node Reboot Required)
+[Wed Jul 29 16:47:11 2026] NVRM: GPU at PCI:0000:c1:00: GPU-f401bf66-c81f-95a2-55d6-6395cc3c31c8
+[Wed Jul 29 16:47:11 2026] NVRM: GPU Board Serial Number: 0
+[Wed Jul 29 16:47:11 2026] NVRM: Xid (PCI:0000:c1:00): 154, GPU recovery action changed from 0x0 (None) to 0x2 (Node Reboot Required)
+[Wed Jul 29 16:47:11 2026] NVRM: GPU at PCI:0000:81:00: GPU-f7b89500-b5ab-f576-436a-c52b862d38f1
+[Wed Jul 29 16:47:11 2026] NVRM: GPU Board Serial Number: 0
+[Wed Jul 29 16:47:11 2026] NVRM: Xid (PCI:0000:81:00): 154, GPU recovery action changed from 0x0 (None) to 0x2 (Node Reboot Required)
+[Wed Jul 29 16:47:11 2026] NVRM: GPU at PCI:0000:a1:00: GPU-1dcdc058-89e3-022a-249f-8b58dc550fad
+[Wed Jul 29 16:47:11 2026] NVRM: GPU Board Serial Number: 0
+[Wed Jul 29 16:47:11 2026] NVRM: Xid (PCI:0000:a1:00): 154, GPU recovery action changed from 0x0 (None) to 0x2 (Node Reboot Required)
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85785!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85786!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85787!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85788!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85789!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85790!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85791!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85792!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85793!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85794!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85795!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85796!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85797!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85798!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85799!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85800!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85801!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85802!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85803!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85804!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85805!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85806!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85807!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85808!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 78 sequence 85809!
+[Wed Jul 29 16:47:11 2026] NVRM: nvCheckOkFailedNoLog: Check failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from nvdEngineDumpCallbackHelper(pGpu, pPrbEnc, pNvDumpState, pEngineCallback) @ nv_debug_dump.c:273
+[Wed Jul 29 16:47:11 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ journal.c:2270
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, retainedChannel->session->handle, retainedChannel->rmSubDevice->subDeviceHandle, NV2080_CTRL_CMD_GPU_EVICT_CTX, &params, sizeof(params)) @ nv_gpu_ops.c:10981
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, retainedChannel->session->handle, retainedChannel->rmSubDevice->subDeviceHandle, NV2080_CTRL_CMD_GPU_EVICT_CTX, &params, sizeof(params)) @ nv_gpu_ops.c:10981
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, retainedChannel->session->handle, retainedChannel->rmSubDevice->subDeviceHandle, NV2080_CTRL_CMD_GPU_EVICT_CTX, &params, sizeof(params)) @ nv_gpu_ops.c:10981
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, retainedChannel->session->handle, retainedChannel->rmSubDevice->subDeviceHandle, NV2080_CTRL_CMD_GPU_EVICT_CTX, &params, sizeof(params)) @ nv_gpu_ops.c:10981
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, retainedChannel->session->handle, retainedChannel->rmSubDevice->subDeviceHandle, NV2080_CTRL_CMD_GPU_EVICT_CTX, &params, sizeof(params)) @ nv_gpu_ops.c:10981
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, retainedChannel->session->handle, retainedChannel->rmSubDevice->subDeviceHandle, NV2080_CTRL_CMD_GPU_EVICT_CTX, &params, sizeof(params)) @ nv_gpu_ops.c:10981
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, retainedChannel->session->handle, retainedChannel->rmSubDevice->subDeviceHandle, NV2080_CTRL_CMD_GPU_EVICT_CTX, &params, sizeof(params)) @ nv_gpu_ops.c:10981
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, RES_GET_CLIENT_HANDLE(pKernelChannel), RES_GET_HANDLE(pKernelChannel), NVA06F_CTRL_CMD_STOP_CHANNEL, &stopChannelParams, sizeof(stopChannelParams)) @ nv_gpu_ops.c:10961
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertOkFailedNoLog: Assertion failed: GPU lost from the bus [NV_ERR_GPU_IS_LOST] (0x0000000F) returned from pRmApi->Control(pRmApi, retainedChannel->session->handle, retainedChannel->rmSubDevice->subDeviceHandle, NV2080_CTRL_CMD_GPU_EVICT_CTX, &params, sizeof(params)) @ nv_gpu_ops.c:10981
+[Wed Jul 29 16:47:13 2026] NVRM: nvGpuOpsReportFatalError: uvm encountered global fatal error 0x60, requiring os reboot to recover.
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85810!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4098c; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85811!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40988; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85812!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40987; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85813!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40983; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85814!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40982; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85815!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4097e; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85816!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4097d; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85817!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40979; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85818!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40978; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85819!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40974; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85820!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40973; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85821!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4096f; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85822!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4096e; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85823!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4096a; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85824!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40969; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85825!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40965; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85826!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40964; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85827!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40963; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10341
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85828!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40961; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85829!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40960; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85830!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4095f; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10341
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85831!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4095d; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85832!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4095c; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85833!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4095b; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10341
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85834!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40959; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85835!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40958; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85836!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40957; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10341
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85837!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40955; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85838!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40954; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85839!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40953; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10341
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85840!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40951; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85841!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40950; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85842!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4094f; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10341
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85843!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4094d; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85844!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4094c; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85845!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4094b; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10341
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85846!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40949; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85847!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40948; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10332
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85848!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40947; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10341
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85849!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40945; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10347
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:10353
+[Wed Jul 29 16:47:13 2026] NVRM: nvGpuOpsReportFatalError: uvm encountered global fatal error 0x60, requiring os reboot to recover.
+[Wed Jul 29 16:47:13 2026] NVRM: nvGpuOpsReportFatalError: uvm encountered global fatal error 0x60, requiring os reboot to recover.
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85850!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4093d; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ vaspace_api.c:573
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85851!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40726; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85852!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40725; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85853!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40724; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85854!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4071d; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85855!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4071c; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85856!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40719; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85857!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40711; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85858!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40710; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85859!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4070f; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85860!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf4070e; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85861!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40707; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85862!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40706; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85863!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf40703; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85864!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf406f7; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85865!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf406f2; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ vaspace_api.c:573
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: status == NV_OK @ nv_gpu_ops.c:9569
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 76 sequence 85866!
+[Wed Jul 29 16:47:13 2026] NVRM: kgmmuFaultBufferReplayableDestroy_IMPL: Unregistering Replayable Fault buffer failed (status=0x0000000f), proceeding...
+[Wed Jul 29 16:47:13 2026] NVRM: uvmTerminateAccessCntrBuffer_IMPL: Unloading UVM Access counters failed (status=0x0000000f), proceeding...
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85867!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf406ee; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85868!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d0005f; hObject=0xcaf406ed; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85869!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000f6; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85870!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000f5; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85871!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000f3; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85872!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000f2; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85873!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000f1; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85874!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000ef; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85875!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000ee; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85876!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000ec; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85877!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000eb; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85878!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000ea; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85879!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000e8; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85880!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000e7; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85881!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000e5; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85882!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000e4; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85883!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000e3; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85884!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000e1; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85885!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000e0; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85886!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000dc; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85887!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000143; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85888!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000142; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85889!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000141; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85890!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000140; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85891!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1e013dc; hObject=0xcaf00001; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85892!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1e013dc; hObject=0xcaf00000; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85893!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000db; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85894!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000da; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85895!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000d4; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85896!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000d3; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85897!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000104; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85898!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000103; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85899!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000101; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85900!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000100; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85901!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000fe; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85902!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000fd; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85903!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000fb; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85904!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000fa; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85905!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000f8; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85906!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000112; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85907!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000111; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85908!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c00010f; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85909!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c00010e; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85910!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c00010c; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85911!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c00010b; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85912!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000109; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85913!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000108; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85914!
+[Wed Jul 29 16:47:13 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000106; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:13 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:14 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85915!
+[Wed Jul 29 16:47:14 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000021; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:14 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ vaspace_api.c:573
+[Wed Jul 29 16:47:14 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85916!
+[Wed Jul 29 16:47:14 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000020; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:14 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ vaspace_api.c:573
+[Wed Jul 29 16:47:14 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85917!
+[Wed Jul 29 16:47:14 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c00001c; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:14 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:14 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:14 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:14 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85918!
+[Wed Jul 29 16:47:14 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000113; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:14 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85919!
+[Wed Jul 29 16:47:14 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000105; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:14 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85920!
+[Wed Jul 29 16:47:14 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c0000f7; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:14 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85921!
+[Wed Jul 29 16:47:14 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c00001b; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:14 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85922!
+[Wed Jul 29 16:47:14 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c000139; paramsStatus=0x00000000; status=0x0000000f
+[Wed Jul 29 16:47:14 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_client.c:844
+[Wed Jul 29 16:47:14 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:259
+[Wed Jul 29 16:47:14 2026] NVRM: nvAssertFailedNoLog: Assertion failed: (status == NV_OK) || (status == NV_ERR_GPU_IN_FULLCHIP_RESET) @ rs_server.c:1375
+[Wed Jul 29 16:47:14 2026] NVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 76 sequence 85923!
+[Wed Jul 29 16:47:14 2026] NVRM: _deviceTeardown: Disable of Cuda limit activation failedNVRM: _issueRpcAndWait: rpcSendMessage failed with status 0x0000000f for fn 10 sequence 85924!
+[Wed Jul 29 16:47:14 2026] NVRM: rpcRmApiFree_GSP: GspRmFree failed: hClient=0xc1d013d2; hObject=0x5c00001a; paramsStatus=0x00000000; status=0x0000000f

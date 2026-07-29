@@ -1,0 +1,38 @@
+nohup: ignoring input
+0.03.125.340 W load: special_eot_id is not in special_eog_ids - the tokenizer config may be incorrect
+0.03.125.350 W load: special_eom_id is not in special_eog_ids - the tokenizer config may be incorrect
+0.03.210.790 W model has unused tensor blk.78.attn_norm.weight (size = 24576 bytes) -- ignoring
+0.03.210.801 W model has unused tensor blk.78.attn_q_a_norm.weight (size = 8192 bytes) -- ignoring
+0.03.210.805 W model has unused tensor blk.78.attn_kv_a_norm.weight (size = 2048 bytes) -- ignoring
+0.03.210.810 W model has unused tensor blk.78.attn_q_a.weight (size = 8650752 bytes) -- ignoring
+0.03.210.815 W model has unused tensor blk.78.attn_q_b.weight (size = 35651584 bytes) -- ignoring
+0.03.210.819 W model has unused tensor blk.78.attn_kv_a_mqa.weight (size = 3760128 bytes) -- ignoring
+0.03.210.823 W model has unused tensor blk.78.attn_k_b.weight (size = 6684672 bytes) -- ignoring
+0.03.210.828 W model has unused tensor blk.78.attn_v_b.weight (size = 8912896 bytes) -- ignoring
+0.03.210.832 W model has unused tensor blk.78.attn_output.weight (size = 69206016 bytes) -- ignoring
+0.03.210.837 W model has unused tensor blk.78.ffn_norm.weight (size = 24576 bytes) -- ignoring
+0.03.210.842 W model has unused tensor blk.78.indexer.k_norm.weight (size = 512 bytes) -- ignoring
+0.03.210.847 W model has unused tensor blk.78.indexer.k_norm.bias (size = 512 bytes) -- ignoring
+0.03.210.852 W model has unused tensor blk.78.indexer.proj.weight (size = 786432 bytes) -- ignoring
+0.03.210.857 W model has unused tensor blk.78.indexer.attn_k.weight (size = 835584 bytes) -- ignoring
+0.03.210.864 W model has unused tensor blk.78.indexer.attn_q_b.weight (size = 8912896 bytes) -- ignoring
+0.03.210.870 W model has unused tensor blk.78.ffn_gate_inp.weight (size = 6291456 bytes) -- ignoring
+0.03.210.885 W model has unused tensor blk.78.ffn_gate_exps.weight (size = 1056964608 bytes) -- ignoring
+0.03.210.889 W model has unused tensor blk.78.ffn_down_exps.weight (size = 1384120320 bytes) -- ignoring
+0.03.210.894 W model has unused tensor blk.78.ffn_up_exps.weight (size = 1056964608 bytes) -- ignoring
+0.03.210.899 W model has unused tensor blk.78.ffn_gate_shexp.weight (size = 8650752 bytes) -- ignoring
+0.03.210.904 W model has unused tensor blk.78.ffn_down_shexp.weight (size = 10321920 bytes) -- ignoring
+0.03.210.909 W model has unused tensor blk.78.ffn_up_shexp.weight (size = 8650752 bytes) -- ignoring
+0.03.210.914 W model has unused tensor blk.78.nextn.eh_proj.weight (size = 80216064 bytes) -- ignoring
+0.03.210.919 W model has unused tensor blk.78.nextn.enorm.weight (size = 24576 bytes) -- ignoring
+0.03.210.925 W model has unused tensor blk.78.nextn.hnorm.weight (size = 24576 bytes) -- ignoring
+0.03.210.940 W model has unused tensor blk.78.nextn.shared_head_norm.weight (size = 24576 bytes) -- ignoring
+0.50.324.606 I 
+0.50.324.738 I system_info: n_threads = 128 (n_threads_batch = 128) / 256 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.50.324.758 I perplexity: tokenizing the input ..
+0.50.403.104 I perplexity: tokenization took 78.339 ms
+0.50.403.203 I perplexity: calculating perplexity over 7 chunks, n_ctx=4096, batch_size=2048, n_seq=1
+0.57.575.833 I perplexity: 7.17 seconds per pass - ETA 0.83 minutes
+[1]2.0825,[2]2.3333,[3]2.2223,[4]2.1972,[5]2.0551,[6]2.0251,[7]1.9392,
+1.17.501.225 I Final estimate: PPL = 1.9392 +/- 0.02704
+

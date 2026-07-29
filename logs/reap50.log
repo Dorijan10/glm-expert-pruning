@@ -1,0 +1,6 @@
+nohup: ignoring input
+=== reap50 corpus_code_eval 2026-07-28T16:08:11+00:00
+/work/logs/g0/ppl_corpus_code_eval_reap50.log:8.30.171.751 I Final estimate: PPL = 2.0376 +/- 0.02961
+=== reap50 corpus 2026-07-28T16:16:47+00:00
+/work/logs/g0/ppl_corpus_reap50.log:1.21.379.975 I Final estimate: PPL = 3.4696 +/- 0.04693
+=== REAP50 DONE 2026-07-28T16:18:10+00:00

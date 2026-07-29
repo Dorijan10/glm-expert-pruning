@@ -1,0 +1,18 @@
+nohup: ignoring input
+=== parent code_v2_eval 2026-07-28T17:07:59+00:00
+/work/logs/g1/ppl_code_v2_eval_parent.log:21.21.708.255 I Final estimate: PPL = 2.1401 +/- 0.01492
+=== parent general_v2_eval 2026-07-28T17:29:26+00:00
+/work/logs/g1/ppl_general_v2_eval_parent.log:2.40.611.908 I Final estimate: PPL = 3.7753 +/- 0.03215
+=== reap50 code_v2_eval 2026-07-28T17:32:08+00:00
+/work/logs/g1/ppl_code_v2_eval_reap50.log:4.44.182.184 I Final estimate: PPL = 2.4217 +/- 0.01782
+=== reap50 general_v2_eval 2026-07-28T17:36:54+00:00
+/work/logs/g1/ppl_general_v2_eval_reap50.log:2.08.708.748 I Final estimate: PPL = 6.5462 +/- 0.06417
+=== code108 code_v2_eval 2026-07-28T17:39:06+00:00
+/work/logs/g1/ppl_code_v2_eval_code108.log:3.18.901.822 I Final estimate: PPL = 2.5240 +/- 0.01884
+=== code108 general_v2_eval 2026-07-28T17:42:27+00:00
+/work/logs/g1/ppl_general_v2_eval_code108.log:1.42.101.448 I Final estimate: PPL = 10.5173 +/- 0.11376
+=== code96 code_v2_eval 2026-07-28T17:44:11+00:00
+/work/logs/g1/ppl_code_v2_eval_code96.log:2.32.229.442 I Final estimate: PPL = 2.6339 +/- 0.02012
+=== code96 general_v2_eval 2026-07-28T17:46:45+00:00
+/work/logs/g1/ppl_general_v2_eval_code96.log:1.33.839.783 I Final estimate: PPL = 12.3949 +/- 0.13883
+=== SCOREBOARD DONE 2026-07-28T17:48:21+00:00

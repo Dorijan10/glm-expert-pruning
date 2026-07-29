@@ -1,0 +1,20 @@
+nohup: ignoring input
+skip general_parent
+skip code_parent
+=== code_code96_k8 2026-07-28T15:30:34+00:00
+/work/logs/g0/ppl_code_code96_k8.log:18.37.456.948 I Final estimate: PPL = 2.0669 +/- 0.02996
+=== general_code96_k8 2026-07-28T15:49:14+00:00
+/work/logs/g0/ppl_general_code96_k8.log:0.55.666.328 I Final estimate: PPL = 3.6246 +/- 0.04858
+=== code_code96_k10 2026-07-28T15:50:12+00:00
+/work/logs/g0/ppl_code_code96_k10.log:0.44.348.851 I Final estimate: PPL = 2.0386 +/- 0.02934
+=== general_code96_k10 2026-07-28T15:50:58+00:00
+/work/logs/g0/ppl_general_code96_k10.log:0.58.016.302 I Final estimate: PPL = 3.5887 +/- 0.04836
+=== code_code96_k12 2026-07-28T15:51:58+00:00
+/work/logs/g0/ppl_code_code96_k12.log:0.44.924.889 I Final estimate: PPL = 2.0290 +/- 0.02911
+=== general_code96_k12 2026-07-28T15:52:45+00:00
+/work/logs/g0/ppl_general_code96_k12.log:0.58.199.718 I Final estimate: PPL = 3.5952 +/- 0.04849
+=== code_code96_k16 2026-07-28T15:53:45+00:00
+/work/logs/g0/ppl_code_code96_k16.log:0.45.343.401 I Final estimate: PPL = 2.0407 +/- 0.02934
+=== general_code96_k16 2026-07-28T15:54:33+00:00
+/work/logs/g0/ppl_general_code96_k16.log:1.00.259.910 I Final estimate: PPL = 4.4102 +/- 0.06777
+=== QUEUE DONE 2026-07-28T15:55:35+00:00

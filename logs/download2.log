@@ -1,0 +1,8 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+GOT open-r1/Mixture-of-Thoughts None code/train-00000-of-00008.parquet
+GOT open-r1/Mixture-of-Thoughts None math/train-00000-of-00004.parquet
+GOT open-r1/Mixture-of-Thoughts None science/train-00000-of-00004.parquet
+GOT sedthh/gutenberg_english None data/train-00000-of-00037-f5fce855b93d2d02.parquet
+GOT ccdv/arxiv-summarization None document/train-00000-of-00015.parquet
+GOT abisee/cnn_dailymail None 3.0.0/train-00000-of-00003.parquet
+DOWNLOADS DONE

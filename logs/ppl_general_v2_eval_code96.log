@@ -1,0 +1,11 @@
+0.02.540.445 W load: special_eot_id is not in special_eog_ids - the tokenizer config may be incorrect
+0.02.540.455 W load: special_eom_id is not in special_eog_ids - the tokenizer config may be incorrect
+0.23.084.157 I 
+0.23.084.312 I system_info: n_threads = 128 (n_threads_batch = 128) / 256 | CUDA : ARCHS = 1200 | USE_GRAPHS = 1 | BLACKWELL_NATIVE_FP4 = 1 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+0.23.084.336 I perplexity: tokenizing the input ..
+0.23.483.862 I perplexity: tokenization took 399.509 ms
+0.23.484.016 I perplexity: calculating perplexity over 32 chunks, n_ctx=4096, batch_size=2048, n_seq=1
+0.28.919.922 I perplexity: 5.44 seconds per pass - ETA 2.88 minutes
+[1]18.8818,[2]25.2952,[3]28.0724,[4]27.6600,[5]32.3208,[6]29.7910,[7]29.0073,[8]30.0264,[9]29.6102,[10]27.3760,[11]26.9141,[12]26.1501,[13]26.1213,[14]25.7250,[15]25.6286,[16]25.3132,[17]24.9711,[18]24.7237,[19]22.9048,[20]21.6927,[21]20.3676,[22]19.4328,[23]19.1333,[24]17.9361,[25]17.1132,[26]16.2032,[27]15.4397,[28]14.7254,[29]14.0974,[30]13.4397,[31]12.8938,[32]12.3949,
+1.33.839.783 I Final estimate: PPL = 12.3949 +/- 0.13883
+

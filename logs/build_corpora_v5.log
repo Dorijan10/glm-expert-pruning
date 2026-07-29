@@ -1,0 +1,13 @@
+code_raw        calib   642,081B/   63 docs   eval   246,057B/   20 docs
+code_instruct   calib   643,292B/  293 docs   eval   240,409B/  115 docs
+web             calib   840,779B/  321 docs   eval   173,103B/   68 docs
+wiki            calib   843,837B/   51 docs   eval   178,275B/   10 docs
+chat            calib   807,709B/  140 docs   eval   167,868B/   26 docs
+math            calib   700,264B/ 1236 docs   eval   140,303B/  248 docs
+books           calib   840,000B/   42 docs   eval   160,000B/    8 docs
+science         calib   856,645B/   44 docs   eval   177,015B/    9 docs
+news            calib   841,131B/  223 docs   eval   171,298B/   46 docs
+reasoning       calib 1,005,589B/   52 docs   eval   207,674B/   11 docs
+code_v2_eval.txt: 486,935 B
+general_v2_eval.txt: 661,836 B
+MANIFEST /work/oracle/v2/manifest.json
