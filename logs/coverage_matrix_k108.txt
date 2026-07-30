@@ -1,0 +1,11 @@
+Coverage at K=108: rows = which domain's list is used, cols = domain evaluated
+list from           books       chat  code_inst   code_raw     min
+books               1.000      0.742      0.575      0.416   0.416
+chat                0.702      1.000      0.697      0.440   0.440
+code_instruct       0.485      0.723      1.000      0.762   0.485
+code_raw            0.455      0.557      0.765      1.000   0.455
+UNIFORM BLEND       0.879      0.869      0.879      0.853   0.853
+
+Union across 4 domains: K=96 -> 198.2 (max 221); K=108 -> 208.8 (max 229);
+                        K=116 -> 214.5 (max 234); K=128 -> 223.0 (max 240)
+Blend coverage min by K: 96 -> 0.832; 108 -> 0.853; 116 -> 0.866; 128 -> 0.883
