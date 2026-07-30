@@ -1,0 +1,5 @@
+=== attempt 1: 61 remaining 2026-07-30T09:53:53+00:00
+/work/tools/g2_multifile.sh: line 9:  8289 Aborted                 (core dumped) SAL_FILELIST=$L $B/bin/llama-moe-saliency -m "$M" -ngl 99 -fa 1 -ctk q8_0 -ctv q8_0 -c 4096 -b 512 > /work/logs/g2/mf_attempt_${ATTEMPT}.log 2>&1
+    exit=134  done=26/80
+    died on /work/oracle/shards/code_raw_calib_02.txt (first time)
+=== attempt 2: 54 remaining 2026-07-30T10:16:16+00:00

@@ -134,6 +134,18 @@ int main(int argc, char** argv){
     if (getenv("SAL_GATE")) S.n_gate=getenv("SAL_GATE");
     if (getenv("SAL_DOWN")) S.n_down=getenv("SAL_DOWN");
     const char* outp = getenv("SAL_OUT") ? getenv("SAL_OUT") : "/work/logs/saliency.json";
+    // SAL_FILELIST: each line "<corpus_path> <output_json>"; one model load for all of them
+    std::vector<std::pair<std::string,std::string>> work;
+    if (const char* fl = getenv("SAL_FILELIST")) {
+        std::ifstream lf(fl); std::string line;
+        while (std::getline(lf, line)) {
+            if (line.empty() || line[0]=='#') continue;
+            size_t sp = line.find(' ');
+            if (sp == std::string::npos) continue;
+            work.emplace_back(line.substr(0,sp), line.substr(sp+1));
+        }
+        if (work.empty()) { fprintf(stderr,"SAL_FILELIST empty/unparseable\n"); return 1; }
+    }
 
     params.cb_eval = sal_cb; params.cb_eval_user_data = &S; params.warmup = false;
     common_init_result_ptr res = common_init_from_params(params);
@@ -148,9 +160,15 @@ int main(int argc, char** argv){
     if (S.n_expert<=0) S.n_expert=256;
     fprintf(stderr,"[sal] arch=%s n_expert=%d norms=%d gate=%s\n",arch,S.n_expert,(int)S.with_norms,S.n_gate.c_str());
 
-    std::ifstream f(params.prompt_file);
+    if (work.empty()) work.emplace_back(params.prompt_file, outp);
+    for (size_t wi = 0; wi < work.size(); ++wi) {
+    const std::string cur_in = work[wi].first, cur_out = work[wi].second;
+    S.acc.clear(); S.topk.clear(); S.gate.clear(); S.nused.clear(); S.tokens = 0; S.n_flush = 0;
+    llama_memory_clear(llama_get_memory(ctx), true);
+    fprintf(stderr, "[sal] === %zu/%zu %s\n", wi+1, work.size(), cur_in.c_str());
+    std::ifstream f(cur_in);
     std::string text((std::istreambuf_iterator<char>(f)),std::istreambuf_iterator<char>());
-    if (text.empty()){ fprintf(stderr,"empty corpus: pass -f <file>\n"); return 1; }
+    if (text.empty()){ fprintf(stderr,"[sal] SKIP empty %s\n", cur_in.c_str()); continue; }
     std::vector<llama_token> toks = common_tokenize(ctx,text,true,true);
     fprintf(stderr,"[sal] %zu tokens\n",toks.size());
 
@@ -173,7 +191,7 @@ int main(int argc, char** argv){
     if (S.list_mode) return 0;
     if (S.acc.empty()){ fprintf(stderr,"[sal] NO DATA - wrong tensor names? run SAL_LIST=1\n"); return 1; }
 
-    FILE* o=fopen(outp,"w");
+    FILE* o=fopen(cur_out.c_str(),"w");
     fprintf(o,"{\n \"arch\":\"%s\",\n \"n_expert\":%d,\n \"tokens\":%lld,\n \"layers\":{\n",
         arch,S.n_expert,S.tokens);
     bool first=true;
@@ -189,6 +207,7 @@ int main(int argc, char** argv){
         fprintf(o,"]}");
     }
     fprintf(o,"\n }\n}\n"); fclose(o);
-    fprintf(stderr,"[sal] wrote %s (%zu layers, %lld flushes)\n",outp,S.acc.size(),S.n_flush);
+    fprintf(stderr,"[sal] wrote %s (%zu layers, %lld flushes)\n",cur_out.c_str(),S.acc.size(),S.n_flush);
+    }
     return 0;
 }

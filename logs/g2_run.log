@@ -1,0 +1,8 @@
+=== books_calib_00 2026-07-29T16:37:18+00:00
+    tokens=27686 layers=75 OK
+=== books_calib_01 2026-07-29T16:41:45+00:00
+    tokens=27904 layers=75 OK
+=== books_calib_02 2026-07-29T16:46:11+00:00
+/work/tools/g2_saliency.sh: line 7: 495353 Aborted                 (core dumped) SAL_OUT="$OUT" $B/bin/llama-moe-saliency -m "$M" -ngl 99 -fa 1 -ctk q8_0 -ctv q8_0 -c 4096 -b 512 -f "$S" > /work/logs/g2/run_${N}.log 2>&1
+*** FAILED books_calib_02
+=== books_calib_03 2026-07-29T16:47:11+00:00

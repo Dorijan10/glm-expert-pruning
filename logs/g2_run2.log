@@ -1,0 +1,40 @@
+skip books_calib_00
+skip books_calib_01
+=== books_calib_02 2026-07-29T17:32:37+00:00
+    tokens=23919 layers=75 OK
+=== books_calib_03 2026-07-29T17:41:20+00:00
+/work/tools/g2_saliency.sh: line 7:  6367 Aborted                 (core dumped) SAL_OUT="$OUT" $B/bin/llama-moe-saliency -m "$M" -ngl 99 -fa 1 -ctk q8_0 -ctv q8_0 -c 4096 -b 512 -f "$S" > /work/logs/g2/run_${N}.log 2>&1
+*** FAILED books_calib_03
+=== books_calib_04 2026-07-29T17:42:48+00:00
+    tokens=22524 layers=75 OK
+=== books_calib_05 2026-07-29T18:30:19+00:00
+    tokens=23838 layers=75 OK
+=== books_calib_06 2026-07-29T19:20:37+00:00
+    tokens=23528 layers=75 OK
+=== books_calib_07 2026-07-29T20:10:07+00:00
+    tokens=23798 layers=75 OK
+=== chat_calib_00 2026-07-29T21:00:23+00:00
+    tokens=19101 layers=75 OK
+=== chat_calib_01 2026-07-29T21:41:08+00:00
+    tokens=18690 layers=75 OK
+=== chat_calib_02 2026-07-29T22:20:49+00:00
+    tokens=22839 layers=75 OK
+=== chat_calib_03 2026-07-29T23:08:47+00:00
+    tokens=22125 layers=75 OK
+=== chat_calib_04 2026-07-29T23:56:36+00:00
+    tokens=19734 layers=75 OK
+=== chat_calib_05 2026-07-30T00:38:16+00:00
+    tokens=18346 layers=75 OK
+=== chat_calib_06 2026-07-30T01:17:45+00:00
+    tokens=16539 layers=75 OK
+=== chat_calib_07 2026-07-30T01:52:36+00:00
+    tokens=20505 layers=75 OK
+=== code_instruct_calib_00 2026-07-30T02:36:55+00:00
+    tokens=19353 layers=75 OK
+=== code_instruct_calib_01 2026-07-30T03:18:05+00:00
+    tokens=19968 layers=75 OK
+=== code_instruct_calib_02 2026-07-30T04:01:02+00:00
+    tokens=22063 layers=75 OK
+=== code_instruct_calib_03 2026-07-30T04:49:14+00:00
+    tokens=14989 layers=75 OK
+=== code_instruct_calib_04 2026-07-30T05:21:43+00:00
