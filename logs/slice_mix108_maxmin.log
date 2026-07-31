@@ -1,0 +1,8 @@
+nohup: ignoring input
+arch=glm-dsa src_experts=256 keep=108 moe_layers=75 drop_blocks=[78]
+  KV glm-dsa.block_count: 79 -> 78
+  KV glm-dsa.expert_count: 256 -> 108
+  KV glm-dsa.nextn_predict_layers: 1 -> 0
+experts_sliced=225 routers_sliced=150 copied=1407 dropped=27
+bytes in=222.18 GiB  out=100.32 GiB
+wrote /work/GLM-5.2-GGUF/cand/mix108_maxmin.gguf

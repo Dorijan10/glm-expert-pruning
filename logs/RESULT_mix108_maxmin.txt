@@ -1,0 +1,7 @@
+mix108_maxmin (100.32 GiB, K=108, max-min blend of 10 domains)
+  code_v2_eval    2.7751  ratio 1.297  (parent 2.1401)
+  general_v2_eval 6.2115  ratio 1.645  (parent 3.7753)
+  byte-exact 25/0 | tg128 51.16 t/s | pp512 1159.8
+vs REAP-50 (169.3 GiB): code 1.132 / general 1.734
+vs code108 (100.32 GiB): code 1.179 / general 2.786
+=> beats REAP-50 on general at 59.3% of its size; loses on code.

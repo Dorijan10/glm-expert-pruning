@@ -1,0 +1,23 @@
+BEST MIN=0.8136 mean=0.8192   (uniform 0.720, code2x 0.774, search#1 0.799)
+weights:
+  code_raw       2.003
+  web            1.613
+  science        1.225
+  code_instruct  1.074
+  books          0.844
+  wiki           0.738
+  chat           0.626
+  math           0.626
+  news           0.626
+  reasoning      0.626
+coverage:
+  books          0.814
+  chat           0.820
+  code_instruct  0.814
+  code_raw       0.814
+  math           0.848
+  news           0.825
+  reasoning      0.815
+  science        0.814
+  web            0.814
+  wiki           0.814

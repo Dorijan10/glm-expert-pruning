@@ -1,0 +1,46 @@
+=== slice log tail ===
+-rw-rw-r-- 1 turintech turintech 101G Jul 31 09:51 /work/GLM-5.2-GGUF/cand/mix108_maxmin.gguf
+
+=== 1. BYTE-EXACTNESS ===
+src=1809 dst=1782 (expect src-27)  blk78 present: False
+attn_output untouched: True
+RESULT byte-exact=25 failures=0
+
+=== 2. CODE PROBE (temp 0) ===
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
+
+// Function to reverse the singly linked list in-place.
+// Takes a pointer to the head node and returns the new head node.
+ListNode* reverseList(ListNode* head) {
+    // Initialize three pointers to keep track of the nodes we are working with.
+    ListNode* prev = nullptr;
+    ListNode* current = head;
+    ListNode* nextNode = nullptr;
+
+    // Traverse the list until 'current' reaches the end (nullptr)
+    while (current != nullptr) {
+        // 1. Store the next node
+
+[ Prompt: 77.2 t/s | Generation: 50.8 t/s ]
+
+
+Exiting...
+
+=== 3. PPL / KLD vs IQ2_M (baseline code PPL = 1.9392) ===
+chunk             PPL               ln(PPL(Q)/PPL(base))          KL Divergence              Δp RMS            Same top p
+Mean PPL(Q)                   :   2.828884 ±   0.049135
+Mean PPL(base)                :   1.938267 ±   0.026941
+Mean PPL(Q)/PPL(base)         :   1.459491 ±   0.015761
+Mean PPL(Q)-PPL(base)         :   0.890617 ±   0.032649
+RMS Δp    : 24.494 ± 0.294 %
+
+=== 4. SPEED ===
+| glm-dsa ?B IQ2_M - 2.7 bpw     | 100.32 GiB |   324.83 B | CUDA       |  99 |   q8_0 |   q8_0 |   1 |           pp512 |       1159.76 ± 0.25 |
+| glm-dsa ?B IQ2_M - 2.7 bpw     | 100.32 GiB |   324.83 B | CUDA       |  99 |   q8_0 |   q8_0 |   1 |           tg128 |         51.16 ± 0.29 |
+
+build: 7f575c39d (10005)
+=== DONE 10:23:42 ===
