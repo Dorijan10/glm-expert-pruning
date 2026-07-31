@@ -1,0 +1,30 @@
+model      set   n  distinct4  maxrep  wordrun  words    code  verdict
+------------------------------------------------------------------------------------
+parent     IN    8      0.965       2        2    209    7/8  clean (0/8 bad)
+parent     OOD   5      0.991       1        1    208    1/5  clean (0/5 bad)
+code96     IN    8      0.957       2        2    212    7/8  clean (0/8 bad)
+code96     OOD   5      0.476       2      202    223    1/5  DEGENERATE (3/5 bad)
+spark96    IN    8      0.846       2        2    214    6/8  some-degen (1/8 bad)
+spark96    OOD   5      0.570       1        2    252    0/5  some-degen (2/5 bad)
+code96_guard IN    8      0.948       3        2    211    8/8  clean (0/8 bad)
+code96_guard OOD   5      0.520       2      267    268    2/5  DEGENERATE (3/5 bad)
+code80     IN    8      0.725       2      120    232    7/8  some-degen (2/8 bad)
+code80     OOD   5      0.165       1      276    281    0/5  DEGENERATE (5/5 bad)
+code108    IN    8      0.954       2        2    192    6/8  clean (0/8 bad)
+code108    OOD   5      0.424       2      287    274    3/5  DEGENERATE (3/5 bad)
+gen96      IN    8      0.868       6        2    227    7/8  some-degen (1/8 bad)
+gen96      OOD   5      0.421       1      299    258    2/5  DEGENERATE (4/5 bad)
+random96   IN    8      0.367      11      256    164    1/8  DEGENERATE (6/8 bad)
+random96   OOD   5      0.543       1      295    138    0/5  some-degen (2/5 bad)
+mix108_maxmin IN    8      0.954       2        2    213    8/8  clean (0/8 bad)
+mix108_maxmin OOD   5      0.855       2        1    186    3/5  clean (0/5 bad)
+mix108_maxmin_guard IN    8      0.963       2        2    212    7/8  clean (0/8 bad)
+mix108_maxmin_guard OOD   5      0.996       1        1    196    3/5  clean (0/5 bad)
+reap50     IN    8      0.952       2        2    210    6/8  clean (0/8 bad)
+reap50     OOD   5      0.883       1        1    219    2/5  some-degen (1/5 bad)
+
+distinct4 = unique 4-gram ratio (1.0 = none repeated; <0.55 = looping)
+maxrep    = most-repeated line;  wordrun = longest run of one repeated word
+code      = responses containing code-like content
+
+bad prompt indices: {('code96', 'OOD'): [2, 3, 4], ('spark96', 'IN'): [5], ('spark96', 'OOD'): [3, 4], ('code96_guard', 'OOD'): [2, 3, 4], ('code80', 'IN'): [3, 5], ('code80', 'OOD'): [1, 2, 3, 4, 5], ('code108', 'OOD'): [2, 3, 5], ('gen96', 'IN'): [1], ('gen96', 'OOD'): [2, 3, 4, 5], ('random96', 'IN'): [1, 2, 4, 5, 7, 8], ('random96', 'OOD'): [2, 4], ('reap50', 'OOD'): [2]}
