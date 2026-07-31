@@ -1,0 +1,13 @@
+books                  tokens=  197,393 shards= 8 layers=75 OK
+chat                   tokens=  157,879 shards= 8 layers=75 OK
+code_instruct          tokens=  152,485 shards= 8 layers=75 OK
+code_raw               tokens=  180,557 shards= 8 layers=75 OK
+math                   tokens=  202,826 shards= 8 layers=75 OK
+news                   tokens=  178,914 shards= 8 layers=75 OK
+reasoning              tokens=  275,133 shards= 8 layers=75 OK
+science                tokens=  214,916 shards= 8 layers=75 OK
+web                    tokens=  179,709 shards= 8 layers=75 OK
+wiki                   tokens=  191,804 shards= 8 layers=75 OK
+ALL                    tokens=1,931,616 shards=80 layers=75 OK
+
+wrote 11 files to /work/logs/g3

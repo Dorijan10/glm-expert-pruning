@@ -1,0 +1,33 @@
+domains: ['books', 'chat', 'code_instruct', 'code_raw', 'math', 'news', 'reasoning', 'science', 'web', 'wiki']
+
+UNION of per-domain top-K lists
+  K= 96   232.4 experts/layer (max 251)
+  K=104   236.3 experts/layer (max 253)
+  K=108   237.8 experts/layer (max 253)
+  K=112   239.6 experts/layer (max 253)
+  K=116   240.8 experts/layer (max 254)
+  K=128   244.7 experts/layer (max 255)
+
+COVERAGE at K=108 — rows = whose keep-list, cols = domain evaluated
+list from          books     chat  code_in  code_ra     math     news  reasoni  science      web     wiki     MIN
+books              1.000    0.742    0.575    0.424    0.590    0.765    0.580    0.566    0.779    0.746   0.424
+chat               0.702    1.000    0.697    0.444    0.606    0.759    0.577    0.623    0.854    0.662   0.444
+code_instruct      0.485    0.723    1.000    0.775    0.698    0.494    0.804    0.732    0.631    0.517   0.485
+code_raw           0.463    0.561    0.773    1.000    0.605    0.467    0.668    0.680    0.552    0.518   0.463
+math               0.636    0.738    0.714    0.568    1.000    0.662    0.714    0.619    0.743    0.663   0.568
+news               0.745    0.766    0.556    0.420    0.606    1.000    0.550    0.583    0.880    0.846   0.420
+reasoning          0.570    0.666    0.790    0.633    0.751    0.575    1.000    0.738    0.646    0.602   0.570
+science            0.506    0.693    0.751    0.658    0.623    0.554    0.767    1.000    0.678    0.602   0.506
+web                0.639    0.816    0.580    0.381    0.594    0.868    0.540    0.588    1.000    0.769   0.381
+wiki               0.740    0.692    0.578    0.460    0.622    0.871    0.571    0.616    0.799    1.000   0.460
+BLEND uniform      0.853    0.842    0.788    0.720    0.874    0.870    0.831    0.783    0.816    0.854   0.720
+BLEND code2x       0.819    0.822    0.846    0.810    0.867    0.831    0.835    0.774    0.780    0.821   0.774
+BLEND code3x       0.793    0.801    0.876    0.853    0.859    0.798    0.834    0.770    0.752    0.792   0.752
+
+BLEND(uniform) MIN coverage vs K
+  K= 96  min=0.686  mean=0.801
+  K=104  min=0.707  mean=0.816
+  K=108  min=0.720  mean=0.823
+  K=112  min=0.731  mean=0.830
+  K=116  min=0.741  mean=0.837
+  K=128  min=0.770  mean=0.857
