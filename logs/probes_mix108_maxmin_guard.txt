@@ -1,0 +1,349 @@
+
+=====[IN-1] Write a C++ function that reverses a singly linked list in place, and explain the pointer updates.
+> Write a C++ function that reverses a singly linked list in place, and explain the pointer updates.
+Here is the complete C++ code containing both a `Node` struct definition and the `reverseList` function, along with an explanation of how the pointers are updated.
+
+### The Code
+```cpp
+#include <iostream>
+
+// Definition for a singly linked list node.
+struct Node {
+    int data;
+    Node* next;
+    
+    // Constructor for convenience
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+// Function to reverse the singly linked list in place
+Node* reverseList(Node* head) {
+    // Edge cases: If the list is empty or has only one node, return it as is.
+    if (head == nullptr || head->next == nullptr) {
+        return head;
+    }
+
+    Node* prev = nullptr;   // Pointer to store the previous node
+    Node* current = head;   // Pointer to traverse the list
+    Node* nextNode = nullptr; // Pointer to temporarily store the next node
+
+    while (current != nullptr) {
+        // 1. Save the next node so we don't lose the rest of the list
+        nextNode = current->next;
+        
+        // 2. Reverse the pointers: make the current node point backwards
+        current->next = prev;
+        
+        // 3. Move the pointers one step forward for the next iteration
+        prev = current;      // 'prev' becomes the new head of the reversed list
+        current = nextNode;  //
+
+[ Prompt: 77.0 t/s | Generation: 47.2 t/s ]
+
+
+Exiting...
+
+=====[IN-2] Explain how to convert a naive matrix multiply into a tiled version that reuses data from shared memory.
+> Explain how to convert a naive matrix multiply into a tiled version that reuses data from shared memory.
+Here's a thorough explanation of converting a naive matrix multiply into a tiled version using shared memory, focusing on GPU/ROCm/CUDA terminology with key concepts in standard `C++` terms:
+
+...
+
+**Tiling and Shared Memory Optimization**
+
+The naive matrix multiplication algorithm suffers from two primary problems: global memory bottlenecks and the lack of arithmetic intensity. By dividing the matrices into blocks (tiles) and loading these tiles into shared memory, we can drastically reduce global memory traffic and increase the arithmetic intensity.
+
+**Key Concepts in C++ terms**
+
+1. `constexpr int TM; // Tile size in the M-dimension`
+2. `constexpr int TN; // Tile size in the N-dimension`
+
+Here's a detailed explanation of how to convert a naive matrix multiply into a tiled version that reces data from shared memory.
+
+## The Problem with Naive Matrix Multiplication
+
+In a naive matrix multiplication kernel, every thread computes one element of the output matrix $C$. For example:
+`// C[i,j] += A[i,k] * B[k,j]`
+
+This means each thread loops over `k`, reading a row of `A` and a column of `B` from global memory. Because GPU cores are heavily "starved" by global memory bandwidth, this approach is highly inefficient.
+
+**Key Concepts in C++ Terms**
+
+1. `constexpr int BM; // Block size in the M-dimension`
+2. `constexpr int TM = 8; // Tile size in
+
+[ Prompt: 76.8 t/s | Generation: 47.7 t/s ]
+
+
+Exiting...
+
+=====[IN-3] Given a loop that sums an array of floats, describe two changes that let the compiler vectorize it.
+> Given a loop that sums an array of floats, describe two changes that let the compiler vectorize it.
+To allow a compiler to automatically vectorize a loop that sums an array of floating-point numbers, you generally need to make the underlying operations mathematically compatible with SIMD execution and remove hidden control-flow dependencies. 
+
+Here are two specific changes that enable this optimization:
+
+### 1. Change: Removing the `restrict` qualifier (Pointer Alias Optimizations)
+If your loop looks something like `void sum_arrays(float* a, float* b)`, you should add the C++ `std::exec::float* restrict` or C-style `__restrict__` keyword to the pointers. 
+**Why it helps:** By default, compilers assume pointers might alias (overlap). If an array is being summed alongside another array in the same loop, the compiler will serialize the loop to prevent potential memory writes from affecting subsequent reads. Adding `restrict` guarantees no overlap, allowing the compiler to safely unload and process multiple iterations simultaneously without needing to check for side effects.
+
+### 2. Change: Breaking the Loop-Carry Dependency Chain (Loop Interdependence)
+If you are summing an array using a scalar accumulator like `float sum = 0;`, change it to accumulate into a temporary array or use explicit vector accumulators (e.g., `vec4 sum = {0,0,0,0};`). 
+**Why it helps:** A standard floating-point reduction loop has a sequential dependency: each iteration must wait for the previous addition to finish before adding the next element. By breaking this chain
+
+[ Prompt: 77.4 t/s | Generation: 47.7 t/s ]
+
+
+Exiting...
+
+=====[IN-4] Write a Python function that computes pairwise Euclidean distances between two sets of points without explicit loops.
+> Write a Python function that computes pairwise Euclidean distances between two sets of points without explicit loops.
+To compute pairwise Euclidean distances between two sets of points (let's say one set has shape \\(M \times D\\) and the other has shape \\(N \times D\\)) without using explicit loops, we can leverage broadcasting and linear algebra operations in NumPy for a highly efficient solution.
+
+Here is the Python function:
+
+```python
+import numpy as np
+
+def pairwise_euclidean_distances(A, B):
+    """
+    Computes the Euclidean distances between two sets of points.
+    
+    Parameters:
+    A : array with shape (M, D)
+    B : array with shape (N, D)
+        
+    Returns:
+    dists : array with shape (M, N), where element [i, j] is the 
+            Euclidean distance from A[i] to B[j].
+    """
+    # Ensure input arrays are NumPy arrays
+    A = np.asarray(A)
+    B = np.asarray(B)
+    
+    # Step 1: Compute the difference between every pair of points using broadcasting
+    # diff will have shape (M, N, D)
+    diff = A[:, None, :] - B[None, :, :]
+    
+    # Step 2: Square the differences element-wise
+    sq_diff = np.square(diff)
+    
+    # Step 3: Sum along the last axis to get the sum of squared differences
+    # sum_sq has shape (M, N)
+    sum_sq = np.sum(sq_diff, axis=-1
+
+[ Prompt: 72.5 t/s | Generation: 47.7 t/s ]
+
+
+Exiting...
+
+=====[IN-5] Explain why an atomic increment in a hot loop can destroy multithreaded scaling, and give an alternative.
+> Explain why an atomic increment in a hot loop can destroy multithreaded scaling, and give an alternative.
+To understand why an atomic increment in a hot loop can destroy multithreaded scaling, we have to look at the underlying hardware architecture—specifically, how CPUs handle memory and cache coherence.
+
+### The Problem: False Sharing (Cache Tralition)
+
+Modern multicore CPUs rely heavily on **cache coherence**. When multiple threads are running, they rarely modify the same data simultaneously. Instead, they tend to operate on distinct memory locations. 
+
+CPU caches are typically organized into "cache lines" (often 64 bytes or 128 bytes). Because cache lines represent contiguous chunks of virtual memory, adjacent threads operating on nearby elements in an array will often end up sharing a cache line. This can be harmless and even beneficial if the threads only read the shared data; but hardware uses coherence to maintain correct state.
+
+However, when two threads attempt to write to different locations within the same cache line simultaneously, **the illusion of safe multithreaded scaling shatters**.
+
+### Why Atomic Increments Suffer
+
+Consider a scenario where multiple threads are running a hot loop. Each thread processes elements and increments a counter in an array `count[ThreadIdx]`. 
+
+If you use a standard atomic operation like:
+```cpp
+atomicAdd(&count[ThreadIdx], 1);
+```
+
+You might imagine that this scales beautifully. However, because the counters for adjacent threads sit side-by side in memory, they share a cache line. When Thread A increments `count[A]`, it triggers a read
+
+[ Prompt: 83.3 t/s | Generation: 47.7 t/s ]
+
+
+Exiting...
+
+=====[IN-6] Describe how to tell whether a kernel is memory-bound or compute-bound from measurements alone.
+> Describe how to tell whether a kernel is memory-bound or compute-bound from measurements alone.
+Determining whether a computational kernel (operation) is memory-bound or compute-bound from measurement data involves analyzing the relationship between its execution time, memory traffic, and computational requirements.
+
+To classify a kernel's bottleneck using only empirical measurements, you can use the **operational intensity** (also known as the arithmetic-to-memory ratio) and compare it against hardware limits. Here’s how to assess this:
+
+1. Compute $I_{\text{kernel}}$:
+   - Let $N_f$ be the measured number of floating-point operations executed.
+   - Let $B_r$ be the measured global memory traffic in bytes (ie: loads + stores).
+   - The kernel's operational intensity is calculated as $I_{\text{kernel}} = N_f / B_r$.
+2. Compute the hardware limits:
+   - Determine the machine's compute-to-memory ratio, $R_h$. This represents the balance point of the hardware where it can perform operations and memory accesses perfectly balanced without bottlenecking on either. It is derived from the peak FLOPs/sec (compute bandwidth) and peak Bytes/s (memory bandwidth). The formula is:
+   - $R_h = \frac{\text{Peak FLOPs/sec}}{\text{Peak Bytes/sec}}$
+3. Compare the two values to classify the bottleneck:
+   - If $I_{\text{kernel}} < R_h$, the kernel is **memory-bound**.
+   - If $I_{k} > R_h$,
+
+[ Prompt: 66.5 t/s | Generation: 47.6 t/s ]
+
+
+Exiting...
+
+=====[IN-7] Write a function that merges two sorted vectors into one sorted vector, and state its complexity.
+> Write a function that merges two sorted vectors into one sorted vector, and state its complexity.
+Here are the two most common approaches to merge two sorted vectors in C++. 
+
+### Approach 1: The Iterative Two-Pointer Method
+This approach manually steps through both vectors, comparing elements one by one.
+
+```cpp
+#include <vector> // Standard C++ header
+
+// Function definition using standard C++ vectors
+std::vector<int> mergeSortedVectors(const std::vector<int>& vec1, const std::vector<int>& vec2) {
+    std::vector<int> mergedVec;
+    
+    // Reserve enough space to prevent reallocation overhead (optional optimization)
+    merged_vec.reserve(vec1.size() + vec2.size());
+    
+    int i = 0; // Pointer for vec1
+    int j = 0; // Pointer for vec2
+    
+    // Traverse both vectors, pushing the smallest current element
+    while (i < vec1.size() && j < vec2.size()) {
+        if vec1[i] <= vec2[j]) {
+            merged_vec.push_back(vec1[i]);
+            i++;
+        } else {
+            merged_vec.push_back(vec2[j]);
+            j++;
+        }
+    }
+    
+    // If there are remaining elements in vec1, append them
+    while (i < vec1.size()) {
+        merged_vec.push_back(vec1[i]);
+        i++;
+    }
+    
+    // If there are remaining elements in vec2, append them
+    while (j < vec2.size()) {
+        merged_vec.push_back(vec2
+
+[ Prompt: 71.6 t/s | Generation: 47.8 t/s ]
+
+
+Exiting...
+
+=====[IN-8] Explain what happens to numerical results when floating point additions are reassociated.
+> Explain what happens to numerical results when floating point additions are reassociated.
+Floating-point addition is **not associative**. Unlike exact mathematical real numbers (where $(a + b) + c = a + (b + c)$ always holds), the finite precision of floating-point arithmetic means that $(a \oplus b) \oplus c$ and $a \oplus (b \oplus c)$ often produce **different results**, where $\oplus$ denotes floating-point addition with rounding. 
+
+This non-commutativity/non-associativity is a fundamental property of how computers handle numbers, and it has profound implications for numerical computing.
+
+Here’s what happens to the numerical results when floating-point additions are reassociated:
+
+### 1. The Results Differ
+When you change the grouping (or order) of floating-point additions, the final value can change. This is due to rounding errors introduced at each intermediate addition step.
+
+Mathematically, a floating-point operation $\oplus$ on two numbers $a$ and $b$ produces:
+$a \oplus b = fl(a + b)$
+where $fl(\cdot)$ denotes rounding to the nearest representable floating-point number. When you perform multiple additions, the order of operations dictates exactly *when* and *how* intermediate values are rounded.
+
+If $(a \oplus b) \oplus c$ is computed, the intermediate sum $s_1 = a \oplus b$ is first rounded to a representable value before adding $c$. In contrast, if $a \
+
+[ Prompt: 62.7 t/s | Generation: 47.5 t/s ]
+
+
+Exiting...
+
+=====[OOD-1] Explain how a B-tree stays balanced during insertion.
+> Explain how a B-tree stays balanced during insertion.
+A "B-tree" is an abstraction that refers to **B-trees**, which are essentially $m$-ary trees (like 2-3 Trees or 4-8 Trees) used as the foundational structure in modern database implementations, often referred to by the term B-Tree (where 'B' stands for balanced). 
+
+To understand how a B-tree stays balanced during insertion, it helps to understand that it enforces strict structural balance using two main strategies: **capacity limits** and **splitting/merging**. 
+
+Here is the step-by-step explanation of how a B-tree maintains its perfectly balanced height during an insertion:
+
+### 1. The Structural Rules
+A B-tree (specifically a $B$-order tree, often implemented as a 2-3 or 4-8 tree) operates under strict minimum/maximum rules for node capacity. 
+* Every node has a maximum capacity of $m$ elements.
+* If a node is not the root, it must maintain a minimum number of elements to stay balanced.
+
+For example, in a standard 2-3 B-tree:
+* A **2-node** can hold 1 element and has 2 children.
+* A **3-node** can hold 2 elements and has 3 children.
+All leaves are kept at the same depth, meaning the path from the root to any leaf is exactly the same length. 
+
+### 2. The Splitting Mechanism
+When you insert a new
+
+[ Prompt: 51.7 t/s | Generation: 47.1 t/s ]
+
+
+Exiting...
+
+=====[OOD-2] Summarize the main causes of the French Revolution.
+> Summarize the main causes of the French Revolution.
+The French Revolution (1785–1799) was a complex civil uprising driven by systemic issues within France at the time. The primary causes can be summarized into three main categories:
+
+**1. Internal Feudal System:** The political/military elite and the ruling class were disconnected from the populace, leading to misarchia (a neo-feudal state where elites act as warlords over their subjects). This detachment resulted in a lack of absolute leadership, which was a root cause of the revolution.
+
+**2. Internal Financial Strain:**
+France was essentially bankrupt, with its wealth controlled by the elite. The country lacked a bourgeoisie merchant class and professional guilds to manage commerce and taxes. Consequently, the nation relied on arbitrary taxation, debt-serving (debt-tracking), and a form of feudal overtaxation (overly taxations). This financial burden fell heavily upon the peasantry.
+
+**3. Internal Foreign Invasions:** France was subject to multiple foreign invasions and was essentially warfaring as both a state and military. The French ruling class often treated foreign entities and influences as assets, treating them above native peoples. These foreign elements were given higher status than domestic military forces, creating an environment where the peasantry saw foreigners being treated as better than themselves.
+
+These internal issues—feudal systems, financial strain, and foreign invasions—were compounded by a lack of professionalized (modernized) commercial infrastructures and a lack of modernist statecraft. This
+
+[ Prompt: 52.1 t/s | Generation: 47.6 t/s ]
+
+
+Exiting...
+
+=====[OOD-3] Write a short paragraph describing a rainy morning in a coastal town.
+> Write a short paragraph describing a rainy morning in a coastal town.
+The gray dawn broke over the seaside town with a steady, drumming rain that rattled the windowpanes and washed the cobblestone streets in a cool, silver light. Down by the harbor, the fishing boats bobbed at their moorings, their tarped coats glistening under the sweeping circles of the lamplight. The salty breeze was thick with petleed droplets and the tangy scent of wet sea-foam; it carried over the slate roofs a chorus not so much of church-bells but of clattering drops on slate and tin, while the green-and-white Atlantic rollers crashed high upon the beach with a muffled, rhythmic thunder.
+
+[ Prompt: 57.5 t/s | Generation: 47.0 t/s ]
+
+
+Exiting...
+
+=====[OOD-4] Explain the difference between weather and climate to a ten year old.
+> Explain the difference between weather and climate to a ten year old.
+Think about it this way: imagine you’re planning a picnic. 
+
+**Weather** is what you check on the weather app on your phone *that morning* to see if you need to grab an umbrella or put on sunscreen. Weather is what's happening outside right now—today, tomorrow, or this week. It changes all the time!
+
+**Climate** is like a giant, long-term diary of a place. It records the average weather over a whole year, or 30 years, or hundreds of years. It tells you the story of what a place is *usually* like.
+
+Here’s an easy way to remember it:
+
+*   **Weather:** "It's raining right now!" (What's happening outside today).
+*   **Climate:** "This city almost always gets rain in April." (The big picture over years).
+
+**Why does it matter?**
+Knowing the weather helps you decide what jacket to wear today. Knowing the climate helps you figure out if you should move to a new city because you hate having cold, snowy winters all year long!
+
+[ Prompt: 59.3 t/s | Generation: 47.2 t/s ]
+
+
+Exiting...
+
+=====[OOD-5] What were the main consequences of the invention of the printing press?
+> What were the main consequences of the invention of the printing press?
+The invention of the printing press, pioneered by Johannes Gutenberg in the 15th century (around 1440), is widely considered one of the most influential events in history. It broke humanity's reliance on a small literate elite and changed how information was produced, distributed, and consumed. 
+
+Here can break this down into four main consequences:
+
+**1. Mass Production:** The printing press allowed for the mass production of books and pamphlets at a fraction of the previous cost and time. Before the press, books were handwritten and incredibly expensive. Gutenberg’s Bible, the first major book printed using movable type, took years to produce but once the press was set up, copies could be generated much faster.
+
+**2. Increased Literacy:** Because information could now be produced cheaply and quickly, literacy rates outside of the clergy began to grow. When books became cheaper and more widely available, an outright reading public emerged. This allowed citizens to learn at a standardized rate alongside their peers with textbooks.
+
+**3. Standardization of Language:** The printing press brought a "common sense" standard to the spoken word represented in print. Because written words were produced in one place, distributed over a massive geography, and read by another; readers learned the styles and structure of the language printed, bringing uniformity to languages that had previously had inconsistent rules (such as English or German).
+
+**4. Preservation of Information:** The printing press suppressed a centralization of information—aka making the survival of ancient texts commonplace since
+
+[ Prompt: 56.1 t/s | Generation: 47.6 t/s ]
+
+
+Exiting...

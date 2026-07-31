@@ -39,6 +39,7 @@ files = {os.path.basename(p)[7:-4]: p for p in glob.glob('/work/logs/probes_*.tx
 print(f"{'model':<10} {'set':<4} {'n':>2} {'distinct4':>10} {'maxrep':>7} {'wordrun':>8} {'words':>6} {'code':>7}  verdict")
 print("-"*84)
 detail = {}
+order = list(order) + [t for t in sorted(files) if t not in order]
 for tag in order:
     if tag not in files: continue
     for kind in ('IN','OOD'):
