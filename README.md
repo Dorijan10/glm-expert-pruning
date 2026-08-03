@@ -266,7 +266,7 @@ on a different model.
 | path | contents |
 |---|---|
 | `src/` | llama.cpp additions — `moe-saliency.cpp` (eval-callback observer) and its `CMakeLists.txt`. Drop into `examples/moe-saliency/` at the pinned commit. |
-| `tools/` | the pipeline, in run order: `build_corpora_v2.py` → `g2_multifile.sh` → `merge_saliency.py` / `convergence.py` / `crossdomain.py` → `analyze_saliency.py` → `glm_prune_gguf.py` → `verify_candidate.sh` → `run_probes.sh` + `score_probes.py`. Also `g1_scoreboard.sh` and `g7_mc.sh` for the perplexity and benchmark sweeps. |
+| `tools/` | the pipeline, in run order: `build_corpora_v2.py` → `g2_multifile.sh` → `merge_saliency.py` / `convergence.py` / `crossdomain.py` → `make_blend.py` → `analyze_saliency.py` → `glm_prune_gguf.py` → `verify_candidate.sh` → `run_probes.sh` + `score_probes.py`. Also `g1_scoreboard.sh` and `g7_mc.sh` for the perplexity and benchmark sweeps. |
 | `corpora/` | v2 calibration data — ten domains, disjoint calib/eval splits, JSONL sidecars, `manifest.json` with per-document SHA-256, and the chat template extracted from the GGUF. |
 | `oracle/` | iteration-1 corpora (85,607 tokens, llama.cpp-derived). Retained as evidence for the retractions above, not for reuse. |
 | `saliency/` | 80 raw per-shard saliency JSONs (10 domains × 8 shards), the direct output of the observer. |
