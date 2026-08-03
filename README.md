@@ -261,6 +261,21 @@ pre-registered neutral-corpus test before any new artefact was built, and indepe
 by EvoESAP (arXiv:2603.06003), which reports the same C4-versus-evol-codealpaca effect
 on a different model.
 
+## Repository layout
+
+| path | contents |
+|---|---|
+| `src/` | llama.cpp additions — `moe-saliency.cpp` (eval-callback observer) and its `CMakeLists.txt`. Drop into `examples/moe-saliency/` at the pinned commit. |
+| `tools/` | the pipeline, in run order: `build_corpora_v2.py` → `g2_multifile.sh` → `merge_saliency.py` / `convergence.py` / `crossdomain.py` → `analyze_saliency.py` → `glm_prune_gguf.py` → `verify_candidate.sh` → `run_probes.sh` + `score_probes.py`. Also `g1_scoreboard.sh` and `g7_mc.sh` for the perplexity and benchmark sweeps. |
+| `corpora/` | v2 calibration data — ten domains, disjoint calib/eval splits, JSONL sidecars, `manifest.json` with per-document SHA-256, and the chat template extracted from the GGUF. |
+| `oracle/` | iteration-1 corpora (85,607 tokens, llama.cpp-derived). Retained as evidence for the retractions above, not for reuse. |
+| `saliency/` | 80 raw per-shard saliency JSONs (10 domains × 8 shards), the direct output of the observer. |
+| `logs/` | every measurement: perplexity runs, probe transcripts and scores, `logs/g7/` benchmark logs and `G7_SCOREBOARD.txt`, plus merged per-domain saliency, blend weights and emitted keep-lists. |
+| `env.sh.example` | path definitions — copy to `env.sh` and edit. |
+
+Scripts that produced retired artefacts (`chain_random96.sh`, `run_code80.sh`,
+`run_code108.sh`) are kept: they generated rows still cited in the tables above.
+
 ## Pipeline
 
 1. `src/moe-saliency.cpp` — llama.cpp eval-callback observer (drop into
