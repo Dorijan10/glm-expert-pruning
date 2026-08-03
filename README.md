@@ -124,14 +124,61 @@ reasoning block; `/nothink` does not). See `env.sh.example` for paths.
 Build hardware: 8 × RTX 5090, 503 GB RAM. Peak ~160 GB RSS per slice; run
 candidates sequentially.
 
-## Deployment target
+## Deployment: measured on GB10 Spark
 
-NVIDIA GB10 Spark — 128 GB LPDDR5X unified (~273 GB/s), sm_121, aarch64.
-llama.cpp builds natively at the same commit with
-`-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=121 -DLLAMA_USE_PREBUILT_UI=OFF -DLLAMA_CURL=OFF`
-under CUDA 13.0 — no patches or elevated privileges required.
-Decode prediction to verify: ~15–18 tok/s (~9–11 GB active weights per token
-÷ 273 GB/s).
+code96 runs on a single NVIDIA GB10 Spark (128 GB LPDDR5X unified, ~273 GB/s,
+sm_121, aarch64, 20 x Cortex-X925). llama.cpp builds natively at the same commit
+with `-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=121 -DLLAMA_USE_PREBUILT_UI=OFF
+-DLLAMA_CURL=OFF` under CUDA 13.0 — no patches, no elevated privileges.
+
+| measurement | 8 x RTX 5090 | 1 x GB10 Spark |
+|---|---:|---:|
+| code PPL (held-out) | 2.0669 | **2.0643** |
+| decode, tg128 | 51.2 tok/s | **8.16 +/- 0.02 tok/s** |
+| prefill, pp512 | 1222.5 tok/s | 251.5 +/- 7.7 tok/s |
+| resident | 90.72 GiB across 8 cards | 96 of 121 GB unified |
+
+**Cross-architecture validation.** Perplexity differs by 0.13%, inside the
++/-0.030 error bar, so aarch64/sm_121 computes identically to x86_64/sm_120
+modulo floating-point reduction order. The frozen temperature-0 probe reproduces
+the same correct `reverseList` — guard clause, three-pointer walk, same comment
+structure — and live generation (8.3 tok/s) agrees with the benchmark (8.16).
+
+**Why decode is 8.16 tok/s.** Decode is memory-bandwidth-bound, so throughput is
+set by bytes read per token, not by expert count:
+
+| component | active params | precision | bytes/token |
+|---|---:|---|---:|
+| routed experts (8 of 96) | 22.6B | ~2.4 bpw | 6.8 GB |
+| attention (MLA, 78 layers) | ~14B | Q8_0 / Q5_K | ~9.6 GB |
+| shared expert, dense FFN, output head | ~4.5B | Q5_K / Q6_K | ~3.1 GB |
+| **total** | **~41B** | | **~19.5 GB** |
+
+19.5 GB / 273 GB/s gives a ceiling near 14 tok/s; the measured 8.16 is ~58%
+bandwidth efficiency, normal for MoE decode where expert gather is scattered and
+GEMV is latency-sensitive.
+
+**Implication.** Experts are only 6.8 GB of the 19.5 GB read per token, because
+the dynamic quantization deliberately upcasts everything except the routed
+experts. Further pruning therefore cannot improve decode — even zero experts
+would leave 12.7 GB, a ceiling near 21 tok/s. The remaining decode lever is
+quantizing the **non-expert** layers lower: dropping attention from ~5.5 to
+~3 bpw would cut roughly 5 GB/token, about +35% decode, at a quality cost that
+has not yet been measured on this model.
+
+**Context.** Comparable configurations, all GLM-5.2:
+
+| configuration | decode | hardware |
+|---|---:|---|
+| IQ2_M resident | 52.5 tok/s | 8 x RTX 5090 |
+| IQ2_M + CPU expert offload | 6.55 tok/s | 1 x RTX 5090, but needs the server's 503 GB host RAM |
+| **code96** | **8.16 tok/s** | **1 x GB10 Spark, standalone** |
+
+The Spark is only ~25% faster than single-GPU offload, but it is a self-contained
+desktop rather than one card inside a large server. That self-containment is the
+deployment result. 8.16 tok/s suits background and agentic use; it is below the
+~20 tok/s commonly cited as an interactive threshold.
+
 
 ## Licence and distribution
 
