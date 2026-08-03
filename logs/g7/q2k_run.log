@@ -1,0 +1,10 @@
+=== parent truthfulqa retry 2026-08-03T15:53:19+00:00
+/work/logs/g7/mc_truthful-qa-validation_parent.log:3.48.369.205 I Final result: 39.1677 +/- 1.7088
+model: /work/GLM-5.2-GGUF/REAP50_Q2K/GLM-5.2-REAP50-Q2_K-00001-of-00004.gguf
+=== reap50q2k mmlu-test 2026-08-03T15:57:13+00:00
+/work/logs/g7/mc_mmlu-test_reap50q2k.log:51.53.717.203 I Final result: 36.0754 +/- 0.4067
+=== reap50q2k arc-challenge-validation 2026-08-03T16:49:10+00:00
+/work/logs/g7/mc_arc-challenge-validation_reap50q2k.log:1.41.540.289 I Final result: 41.8060 +/- 2.8573
+=== reap50q2k truthfulqa 2026-08-03T16:50:55+00:00
+/work/logs/g7/mc_truthful-qa-validation_reap50q2k.log:4.21.704.321 I Final result: 29.4982 +/- 1.5964
+=== Q2K DONE 2026-08-03T16:55:34+00:00

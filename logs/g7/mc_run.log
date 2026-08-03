@@ -1,0 +1,37 @@
+=== mix108 arc-challenge-validation 2026-08-03T12:00:28+00:00
+2.04.159.343 I Random chance: 25.0419 +/- 2.5098
+2.04.159.343 I 
+
+=== mix108 mmlu-test 2026-08-03T12:02:36+00:00
+35.03.180.645 I Random chance: 25.0000 +/- 0.3667
+35.03.180.645 I 
+
+=== mix108 truthful-qa-validation 2026-08-03T12:37:43+00:00
+7	28.57142857
+0.37.931.777 E multiple_choice_score : task 7 requires a higher -np|--parallel value (at least 11)
+
+=== reap50 arc-challenge-validation 2026-08-03T12:38:35+00:00
+3.04.803.375 I Random chance: 25.0419 +/- 2.5098
+3.04.803.375 I 
+
+=== reap50 mmlu-test 2026-08-03T12:41:43+00:00
+45.11.256.044 I Random chance: 25.0000 +/- 0.3667
+45.11.256.045 I 
+
+=== reap50 truthful-qa-validation 2026-08-03T13:26:58+00:00
+7	28.57142857
+0.52.520.999 E multiple_choice_score : task 7 requires a higher -np|--parallel value (at least 11)
+
+=== parent arc-challenge-validation 2026-08-03T13:28:11+00:00
+6.49.211.502 I Random chance: 25.0419 +/- 2.5098
+6.49.211.502 I 
+
+=== parent mmlu-test 2026-08-03T13:35:04+00:00
+54.43.738.439 I Random chance: 25.0000 +/- 0.3667
+54.43.738.439 I 
+
+=== parent truthful-qa-validation 2026-08-03T14:29:51+00:00
+7	57.14285714
+1.02.183.279 E multiple_choice_score : task 7 requires a higher -np|--parallel value (at least 11)
+
+=== MC DONE 2026-08-03T14:30:57+00:00

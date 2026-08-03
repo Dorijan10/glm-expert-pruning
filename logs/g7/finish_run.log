@@ -1,0 +1,12 @@
+=== code108 mmlu-test 2026-08-03T14:45:35+00:00
+/work/logs/g7/mc_mmlu-test_code108.log:35.39.965.964 I Final result: 34.1462 +/- 0.4016
+=== code108 arc-challenge-validation 2026-08-03T15:21:19+00:00
+/work/logs/g7/mc_arc-challenge-validation_code108.log:1.21.101.245 I Final result: 30.1003 +/- 2.6571
+=== mix108 truthfulqa 2026-08-03T15:22:44+00:00
+/work/logs/g7/mc_truthful-qa-validation_mix108.log:4.20.958.069 I Final result: 32.9253 +/- 1.6451
+=== reap50 truthfulqa 2026-08-03T15:27:22+00:00
+/work/logs/g7/mc_truthful-qa-validation_reap50.log:5.49.856.060 I Final result: 31.5789 +/- 1.6272
+=== code108 truthfulqa 2026-08-03T15:33:30+00:00
+/work/logs/g7/mc_truthful-qa-validation_code108.log:3.50.317.061 I Final result: 26.0710 +/- 1.5369
+=== parent truthfulqa 2026-08-03T15:37:38+00:00
+=== FINISH DONE 2026-08-03T15:43:42+00:00
