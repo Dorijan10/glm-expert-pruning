@@ -19,13 +19,20 @@ Ratios are relative to the unpruned IQ2_M parent.
 |---|---:|---:|---:|---:|---:|---:|
 | parent (IQ2_M, 256 experts) | 222.18 GiB | 2.65 | 2.1401 | 1.000 | 3.7753 | 1.000 |
 | REAP-50 Q3_K_M (128 experts) | 169.30 GiB | 3.82 | 2.4217 | **1.132** | 6.5462 | 1.734 |
-| REAP-50 Q2_K (128 experts) | 129 GiB | 2.91 | — | — | — | — |
+| REAP-50 Q2_K (128 experts) | 129 GiB | 2.91 | 2.9607 | 1.383 | 10.7881 | 2.858 |
 | **mix108_maxmin (108 experts)** | **100.32 GiB** | **2.65** | 2.7751 | 1.297 | 6.2115 | **1.645** |
 | code108 (108 experts, code-calibrated) | 100.32 GiB | 2.65 | 2.5240 | 1.179 | 10.5173 | 2.786 |
 | code96 (96 experts, code-calibrated) | 90.72 GiB | 2.65 | 2.6339 | 1.231 | 12.3949 | 3.283 |
 
 **mix108 beats the published REAP-50 Q3_K_M artefact on general-text perplexity at
 59.3% of its size**, and gives up ground on code — a deliberate trade, not a regression.
+
+**At a matched bit budget the comparison is one-sided.** Against REAP-50 Q2_K — 2.91 bpw
+to mix108's 2.65, and 29% larger — mix108 wins both axes: 6.3% lower code perplexity and
+42% lower general perplexity. Q2_K's general ratio of 2.858 is close to code108's 2.786,
+so dropping REAP-50 to a comparable bit budget costs about as much general capability as
+calibrating on a single repository. Quantization and pruning damage the same axis:
+Q3_K_M → Q2_K moves the code ratio +22% but the general ratio +65%.
 
 ## The membership control
 
