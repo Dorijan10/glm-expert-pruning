@@ -302,6 +302,45 @@ Scripts that produced retired artefacts (`chain_random96.sh`, `run_code80.sh`,
    speed. `run_probes.sh` + `score_probes.py` — 13 frozen probes and objective
    degeneration scoring.
 
+## Router repair (in progress)
+
+The shipped `mix108_maxmin` router is **verbatim-sliced**: `glm_prune_gguf.py` row-subsets
+`ffn_gate_inp` / `exp_probs_b` to the 108 survivors with no retraining. Two facts about
+this architecture, established from the model-load dump, govern what repair is possible.
+
+**The routers are not quantized.** `blk.N.ffn_gate_inp.weight` is 6144 × n_expert F32
+(the parent's is 6,291,456 B = 6144 × 256 × 4) and `exp_probs_b.bias` is an F32 vector.
+So a router edit needs **no requantization pass** and is bit-exact, and because each
+tensor is fixed-size at a fixed file offset, a candidate router is applied by *in-place
+byte patching*: 2.65 MB per layer, ~199 MB for all 75 MoE layers, against the 100.32 GiB
+a full re-slice writes. That is ~0.19% of the bytes, and it is what makes a search loop
+affordable at all.
+
+**Gating is sigmoid, not softmax** (`expert_gating_func=sigmoid`,
+`expert_weights_norm=true`, `expert_weights_scale=2.5` — the DeepSeek-V3 `noaux_tc` form).
+Because sigmoid affinities are elementwise, deleting 148 columns leaves every surviving
+expert's *score* unchanged; there is no normalizer to break. The post-slice deficiency is
+therefore a **selection** problem, not a distributional one:
+
+- top-8 is now drawn from a 108-expert pool rather than 256, so the marginal 8th expert is
+  a poorer match than it was in the parent;
+- `exp_probs_b` is a load-balancing bias applied **only to top-k selection**, never to the
+  mixing weight, and it was trained against a 256-expert load equilibrium. The survivors
+  are the high-load experts whose biases were pushed *down* to suppress crowding that no
+  longer exists, so the inherited bias systematically misorders the reduced population.
+
+| tool | role |
+|---|---|
+| `glm_router_io.py` | in-place F32 router read/patch; refuses any write whose byte range is not exactly one router tensor, so frozen expert tensors are untouchable by construction |
+| `verify_router_candidate.sh` | splits the integrity claim: expert tensors **must** stay byte-exact (15/15), router deviation is reported not failed, plus size / tensor-count / KV / finiteness / decode checks |
+| `router_noop_roundtrip.sh` | correctness gate — dump routers, patch them back with their own values, require an identical whole-file SHA-256 and identical held-out PPL before any real edit is trusted |
+| `build_router_fitness.py` | carves the held-out search signal from `*_calib.txt` only, proportionally across all ten domains, and asserts zero line overlap with the frozen eval corpora |
+| `router_load_stats.py` | load-balance diagnostics (max share, normalised entropy, Gini, dead count) and the parent-restricted target load profile — the guard against load collapse |
+
+Eval discipline: router search selects **only** on `corpora/router_fitness.txt`.
+`code_v2_eval` / `general_v2_eval`, the 13 frozen probes and the `--multiple-choice` bins
+are never read during search and are spent once, on the final candidate.
+
 ## Deployment: measured on GB10 Spark
 
 `mix108_maxmin` runs on a single NVIDIA GB10 Spark (128 GB LPDDR5X unified, ~273 GB/s,
