@@ -341,6 +341,56 @@ Eval discipline: router search selects **only** on `corpora/router_fitness.txt`.
 `code_v2_eval` / `general_v2_eval`, the 13 frozen probes and the `--multiple-choice` bins
 are never read during search and are spent once, on the final candidate.
 
+### Re-tuning `expert_used_count` — the capacity lever
+
+Editing `ffn_gate_inp` or `exp_probs_b` changes *which* survivors fire. Neither changes how
+much surviving capacity a token gets, and the parent→mix108 gap is dominated by knowledge
+held in the 148 **deleted** experts, which no reordering of survivors can restore.
+`expert_used_count` is the only lever that changes per-token capacity without touching an
+expert weight: the parent chose top-8 of 256, and the slicer inherits top-8 of 108
+unchanged. Raising k lets a token recruit more surviving experts to cover for deleted
+specialists — compensation by breadth, since depth is gone. Because the k winners are
+renormalised (`expert_weights_norm=true`, then ×2.5), raising k redistributes the same
+total weight over more experts rather than inflating the output scale.
+
+This is the one repair with **measured in-repo precedent**: `tools/g0_queue.sh` already
+swept k on the *code96* artefact (`logs/ALL_PPL_RESULTS.txt`).
+
+| k | code PPL | general PPL |
+|---:|---:|---:|
+| 8 (inherited) | 2.0669 | 3.6246 |
+| 10 | 2.0386 | **3.5887** |
+| 12 | **2.0290** | 3.5952 |
+| 16 | 2.0407 | 4.4102 |
+
+k=10–12 beat the inherited k=8 on **both** axes at once (−1.8% code, −1.0% general); k=16
+is past the cliff. That sweep was never run on `mix108_maxmin` and never carried through to
+MMLU/ARC/TruthfulQA, where the gap actually lives — and since perplexity is a poor
+predictor of the generative cliff, the MC gate is the discriminating test, not the sweep.
+
+**Zero-modification property.** k is a `u32` KV field applied at load time with
+`--override-kv`, exactly as `g0_queue.sh` does, so this repair writes **no bytes at all**:
+every expert tensor *and* every router tensor stays byte-identical and the original
+unmodified `verify_candidate.sh` passes a full **25/25**. That is a stronger artefact
+guarantee than any tensor-editing repair can offer.
+
+**Decode cost is real and is reported, not hidden.** "K governs residency, not decode
+speed" holds only because exactly 8 experts fire per token; raising k breaks that premise.
+From the decode table (routed experts 6.8 GB of 19.5 GB/token at k=8, ~0.85 GB/expert):
+
+| k | GB/token | predicted Spark decode |
+|---:|---:|---:|
+| 6 | ~17.8 | ~9.0 tok/s |
+| 8 | 19.5 | 8.18 tok/s (measured) |
+| 10 | ~21.2 | ~7.5 tok/s |
+| 12 | ~22.9 | ~7.0 tok/s |
+
+`router_k_sweep.py` measures throughput at every k rather than trusting that model, and
+applies a **predeclared** acceptance rule — a k>8 candidate must return at least 0.10% of
+held-out perplexity gain per 1% of decode throughput surrendered — so the trade cannot be
+rationalised after the numbers are in. `r3_k_sweep.sh` then spends the frozen gates once,
+on the single chosen k, and prints the row in this README's table shape.
+
 ## Deployment: measured on GB10 Spark
 
 `mix108_maxmin` runs on a single NVIDIA GB10 Spark (128 GB LPDDR5X unified, ~273 GB/s,
