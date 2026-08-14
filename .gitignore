@@ -1,0 +1,9 @@
+
+*.bin
+*.f16
+*.gguf
+hidden_*/
+# never commit model weights or dumps
+*.npy
+*.npz
+routers_*/

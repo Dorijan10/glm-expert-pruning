@@ -27,6 +27,15 @@ struct sal_state {
     std::map<int,std::vector<float>> gate;
     std::map<int,int> nused;
     std::set<std::string> seen;
+    FILE* trace = nullptr;
+    const char* hid_dir = nullptr;
+    int hid_l0 = 3, hid_l1 = 77;
+    std::map<int,FILE*> hid_f;
+    std::map<int,long long> hid_rows, hid_sat;
+    std::map<int,float> hid_max;
+    const char* moe_dir = nullptr;
+    std::map<int,FILE*> moe_f;
+    std::map<int,long long> moe_rows;
 };
 
 static bool split_name(const std::string& n, std::string& base, int& il){
@@ -65,6 +74,21 @@ static void flush_layer(sal_state* S, int il, const std::vector<float>* norms){
         const float nr = (norms && k<norms->size()) ? (*norms)[k] : 1.0f;
         A.cnt[e]+=1.0; A.gate[e]+=g; A.sal[e]+=(double)g*nr;
     }
+    if (S->trace) {
+        if (nu > 16) { fprintf(stderr,"[sal] nu=%d >16 unsupported\n", nu); exit(1); }
+        for (size_t t=0;t<ntok;++t){
+            int32_t hdr[2] = { (int32_t)il, (int32_t)(S->tokens + t) };
+            int32_t e[16]; float w[16];
+            for (int j=0;j<nu;++j){
+                const size_t k=t*(size_t)nu+j;
+                e[j] = it->second[k];
+                w[j] = k<ig->second.size() ? ig->second[k] : 0.0f;
+            }
+            fwrite(hdr, sizeof(int32_t), 2,  S->trace);
+            fwrite(e,   sizeof(int32_t), nu, S->trace);
+            fwrite(w,   sizeof(float),   nu, S->trace);
+        }
+    }
     S->topk.erase(il); S->gate.erase(il); S->n_flush++;
 }
 
@@ -75,15 +99,60 @@ static bool sal_cb(struct ggml_tensor* t, bool ask, void* ud){
     if (!split_name(name, base, il)) { return ask ? false : true; }
     if (ask){
         if (S->list_mode){
-            if (name.find("ffn_moe")!=std::string::npos && S->seen.insert(base).second)
+            if ((getenv("SAL_LISTALL") || name.find("ffn_moe")!=std::string::npos) && S->seen.insert(base).second)
                 printf("TENSOR %-28s type=%-5s ne=[%lld,%lld,%lld,%lld] nb1=%zu contig=%d\n", base.c_str(),
                     ggml_type_name(t->type),(long long)t->ne[0],(long long)t->ne[1],
                     (long long)t->ne[2],(long long)t->ne[3], t->nb[1], (int)ggml_is_contiguous(t));
             return false;
         }
+        if (S->hid_dir && base=="ffn_norm" && il>=S->hid_l0 && il<=S->hid_l1) return true;
+        if (S->moe_dir && base=="ffn_moe_out" && il>=S->hid_l0 && il<=S->hid_l1) return true;
         return base==S->n_topk || base==S->n_gate || (S->with_norms && base==S->n_down);
     }
     static thread_local std::vector<uint8_t> buf;   // reused: avoids ~68M page faults/shard
+    if (S->moe_dir && base=="ffn_moe_out" && il>=S->hid_l0 && il<=S->hid_l1){
+        if (t->type != GGML_TYPE_F32 || !ggml_is_contiguous(t)){ fprintf(stderr,"[sal] ffn_moe_out unexpected\n"); exit(1); }
+        fetch(t,buf);
+        const size_t ne0=(size_t)t->ne[0], ntok=(size_t)t->ne[1], n=ne0*ntok;
+        const float* pf=(const float*)buf.data();
+        static thread_local std::vector<ggml_fp16_t> m16;
+        m16.resize(n);
+        for (size_t i=0;i<n;++i) m16[i]=ggml_fp32_to_fp16(pf[i]);
+        FILE*& f = S->moe_f[il];
+        if (!f){ char path[512]; snprintf(path,sizeof(path),"%s/M%02d.f16",S->moe_dir,il);
+                 f=fopen(path,"wb"); if(!f){ fprintf(stderr,"[sal] cannot open %s\n",path); exit(1);} }
+        if (fwrite(m16.data(),sizeof(ggml_fp16_t),n,f)!=n){ fprintf(stderr,"[sal] short write M%d\n",il); exit(1); }
+        S->moe_rows[il]+=(long long)ntok;
+        return true;
+    }
+    if (S->hid_dir && base=="ffn_norm" && il>=S->hid_l0 && il<=S->hid_l1){
+        if (t->type != GGML_TYPE_F32){ fprintf(stderr,"[sal] ffn_norm type=%s not f32\n", ggml_type_name(t->type)); exit(1); }
+        if (!ggml_is_contiguous(t)){ fprintf(stderr,"[sal] ffn_norm not contiguous\n"); exit(1); }
+        fetch(t,buf);
+        const size_t ne0=(size_t)t->ne[0], ntok=(size_t)t->ne[1], n=ne0*ntok;
+        const float* pf=(const float*)buf.data();
+        static thread_local std::vector<ggml_fp16_t> h16;
+        h16.resize(n);
+        float mx=0.0f; long long sat=0;
+        for (size_t i=0;i<n;++i){
+            const float v=pf[i]; const float a=fabsf(v);
+            if (a>mx) mx=a;
+            if (!std::isfinite(v) || a>65504.0f) sat++;
+            h16[i]=ggml_fp32_to_fp16(v);
+        }
+        FILE*& f = S->hid_f[il];
+        if (!f){
+            char path[512];
+            snprintf(path,sizeof(path),"%s/L%02d.f16",S->hid_dir,il);
+            f=fopen(path,"wb");
+            if (!f){ fprintf(stderr,"[sal] cannot open %s\n",path); exit(1); }
+        }
+        if (fwrite(h16.data(),sizeof(ggml_fp16_t),n,f)!=n){ fprintf(stderr,"[sal] short write L%d\n",il); exit(1); }
+        S->hid_rows[il]+=(long long)ntok;
+        S->hid_sat[il]+=sat;
+        if (mx>S->hid_max[il]) S->hid_max[il]=mx;
+        return true;
+    }
     if (base==S->n_topk){
         fetch(t,buf);
         S->nused[il]=(int)t->ne[0];
@@ -134,6 +203,20 @@ int main(int argc, char** argv){
     if (getenv("SAL_GATE")) S.n_gate=getenv("SAL_GATE");
     if (getenv("SAL_DOWN")) S.n_down=getenv("SAL_DOWN");
     const char* outp = getenv("SAL_OUT") ? getenv("SAL_OUT") : "/work/logs/saliency.json";
+    if (const char* md = getenv("SAL_MOEOUT")) {
+        S.moe_dir = md;
+        fprintf(stderr,"[sal] MOEOUT dir=%s\n", md);
+    }
+    if (const char* hd = getenv("SAL_HIDDEN")) {
+        S.hid_dir = hd;
+        if (const char* a = getenv("SAL_HID_L0")) S.hid_l0 = atoi(a);
+        if (const char* a = getenv("SAL_HID_L1")) S.hid_l1 = atoi(a);
+        fprintf(stderr,"[sal] HIDDEN dir=%s layers=%d..%d\n", hd, S.hid_l0, S.hid_l1);
+    }
+    if (const char* tp = getenv("SAL_TRACE")) {
+        S.trace = fopen(tp, "wb");
+        if (!S.trace) { fprintf(stderr,"cannot open SAL_TRACE %s\n", tp); return 1; }
+    }
     // SAL_FILELIST: each line "<corpus_path> <output_json>"; one model load for all of them
     std::vector<std::pair<std::string,std::string>> work;
     if (const char* fl = getenv("SAL_FILELIST")) {
@@ -208,6 +291,25 @@ int main(int argc, char** argv){
     }
     fprintf(o,"\n }\n}\n"); fclose(o);
     fprintf(stderr,"[sal] wrote %s (%zu layers, %lld flushes)\n",cur_out.c_str(),S.acc.size(),S.n_flush);
+    }
+    if (S.trace) fclose(S.trace);
+    if (S.moe_dir){
+        long long mt=0;
+        for (auto& kv : S.moe_f) fclose(kv.second);
+        for (auto& kv : S.moe_rows) mt+=kv.second;
+        fprintf(stderr,"[sal] MOEOUT layers=%zu rows_total=%lld\n", S.moe_f.size(), mt);
+    }
+    if (S.hid_dir){
+        long long tot=0, sat=0; float mx=0.0f;
+        for (auto& kv : S.hid_f) fclose(kv.second);
+        for (auto& kv : S.hid_rows) tot+=kv.second;
+        for (auto& kv : S.hid_sat)  sat+=kv.second;
+        for (auto& kv : S.hid_max)  if (kv.second>mx) mx=kv.second;
+        fprintf(stderr,"[sal] HIDDEN layers=%zu rows_total=%lld max_abs=%.4f saturated=%lld\n",
+                S.hid_f.size(), tot, mx, sat);
+        for (auto& kv : S.hid_rows)
+            fprintf(stderr,"[sal] HID L%02d rows=%lld max=%.4f sat=%lld\n",
+                    kv.first, kv.second, S.hid_max[kv.first], S.hid_sat[kv.first]);
     }
     return 0;
 }
