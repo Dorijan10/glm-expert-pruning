@@ -47,9 +47,10 @@ Both keep the same 108 experts per layer — the expert tensors are **byte-ident
 them**. They differ only in the precision of *non-expert* tensors (attention projections and
 the shared expert).
 
-**Use `-fast` on memory-bound hardware:** +13.6% decode and 4.55 GiB more headroom, for
-roughly 1–3% relative capability (−1.16 MMLU, −0.034 MBPP). Use the base variant if you have
-memory to spare or want the reference artifact every number here is anchored to.
+**Use `-fast` unless you have a reason not to.** It is smaller, ~12–14% faster at decode on
+both machines we tested, and frees ~5 GB of resident memory, for roughly 1–3% relative
+capability (−1.16 MMLU, −0.034 MBPP). The base variant is the reference artifact every number
+here is anchored to, and is marginally faster at prefill.
 
 Load shard `00001`; llama.cpp finds the rest automatically.
 
@@ -57,7 +58,7 @@ Load shard `00001`; llama.cpp finds the rest automatically.
 
 ## Benchmarks
 
-Everything below was run **by us, on the same machine, in the same harness**, for all four
+Everything below was run **by us, on the same machines, in the same harnesses**, for all four
 models — including the parent and the comparator. Nothing is quoted from another card.
 
 ### MMLU — `lm-evaluation-harness` `mmlu_generative`, 5-shot, all 14,042 questions
@@ -87,16 +88,16 @@ higher bit budget (3.82 bpw vs 2.65) and larger expert count (128 vs 108).
 **A finding worth its own line: REAP-50 is statistically indistinguishable from the parent on
 MBPP (0.708 vs 0.710) while losing 24.54 MMLU points.** Pruning half the experts costs
 almost nothing on short-form code generation and roughly a quarter of world knowledge. That
-dissociation — expert pruning destroys knowledge far faster than it destroys procedural
-coding ability — is the most transferable result here, and it holds for our artifact too:
-MaxMin108 retains **88.2%** of parent MBPP against only **72.2%** of parent MMLU.
+dissociation — expert pruning destroys knowledge far faster than procedural coding ability —
+is the most transferable result here, and it holds for our artifact too: MaxMin108 retains
+**88.2%** of parent MBPP against only **72.2%** of parent MMLU.
 
-Note this **inverts** what the perplexity ratios below suggest. Code PPL degrades more than
-general PPL, yet downstream code capability degrades *less*. Perplexity ratio and task
-capability disagree here; we report both rather than choosing the flattering one.
+Note this **inverts** what the perplexity ratios below suggest. Code perplexity degrades more
+than general perplexity, yet downstream code *capability* degrades less. Perplexity ratio and
+task capability disagree here; we report both rather than choosing the flattering one.
 
-MaxMin108 is genuinely behind REAP-50 on MBPP (−8.2 points, ~2.8σ). Unlike the MMLU tie,
-that gap is real.
+MaxMin108 is genuinely behind REAP-50 on MBPP (−8.2 points, ~2.8σ). Unlike the MMLU tie, that
+gap is real.
 
 ### Perplexity — `llama-perplexity`, `-c 4096 --chunks 32`, held-out corpora
 
@@ -123,25 +124,40 @@ word repeated ≥ 5× consecutively.
 | **MaxMin108-fast** | 0/8 | **0/5** | 0.984 |
 | code-only ablation | 0/8 | **3/5** | 0.424 |
 
-At **greedy decoding**, where the matched-bit-budget REAP-50 Q2_K variant is documented by
-its own authors to collapse into repetition, both artifacts here produce zero degenerate
-outputs across all thirteen prompts.
+At **greedy decoding**, where the matched-bit-budget REAP-50 Q2_K variant is documented by its
+own authors to collapse into repetition, both artifacts here produce zero degenerate outputs
+across all thirteen prompts.
 
 ### Speed and residency
 
-`llama-bench`, llama.cpp build `b10005`. Spark figures are same-session.
+`llama-bench`, llama.cpp build `b10005`, `-p 512 -n 128 -ngl 99 -fa 1 -ctk q8_0 -ctv q8_0
+-r 3`. Each pair measured in a single session.
 
-| | 1 × GB10 Spark | 8 × RTX 5090 |
+**1 × GB10 Spark** (128 GB unified, ~273 GB/s):
+
+| | decode (tg128) | prefill (pp512) | resident @ 64K ctx |
+|---|---:|---:|---:|
+| MaxMin108 | 8.24 ±0.02 tok/s | 244.12 ±1.82 tok/s | 109 of 121 GB |
+| **MaxMin108-fast** | **9.36 ±0.02** (+13.6%) | 243.94 ±3.28 | **104 of 121 GB** |
+| parent / REAP-50 | — does not fit — | | |
+
+**8 × RTX 5090:**
+
+| | decode (tg128) | prefill (pp512) |
 |---|---:|---:|
-| MaxMin108 decode (tg128) | 8.24 ±0.02 tok/s | 51.16 ±0.29 tok/s |
-| **MaxMin108-fast decode** | **9.36 ±0.02 tok/s** (+13.6%) | — |
-| MaxMin108 prefill (pp512) | 244.12 ±1.82 tok/s | 1159.8 ±0.3 tok/s |
-| resident at 64K context | 109 of 121 GB | 100.32 GiB across 8 cards |
+| MaxMin108 | 51.21 ±0.27 tok/s | 1166.00 ±6.76 tok/s |
+| **MaxMin108-fast** | **57.58 ±0.38** (+12.4%) | 1145.34 ±4.44 (−1.8%) |
 
-Serving config: `-c 65536 -np 1 -t 20 --jinja -rea off`. Roughly 37 s for a 300-token answer
-on the Spark. Decode is memory-bandwidth-bound and exactly 8 experts fire per token
-regardless of how many are resident — so pruning changes what *fits*, not how fast it runs.
-The `-fast` speedup comes entirely from requantising non-expert tensors.
+Two things worth stating plainly. First, the decode gain is **not** hardware-specific: +13.6%
+on a bandwidth-starved 273 GB/s desktop and +12.4% on eight datacentre GPUs. Second, `-fast`
+is **1.8% slower at prefill** on the 5090 box, outside the error bars — lower-bit K-quants
+cost more dequantisation work, which shows up in the compute-bound prefill regime. It is a
+small regression and we would rather report it than have you find it.
+
+Serving config for the residency figure: `-c 65536 -np 1 -t 20 --jinja -rea off`. Roughly
+37 s for a 300-token answer on the Spark. Decode is memory-bandwidth-bound and exactly 8
+experts fire per token regardless of how many are resident — so pruning changes what *fits*,
+not how fast it runs. The `-fast` speedup comes entirely from requantising non-expert tensors.
 
 ---
 
@@ -149,14 +165,14 @@ The `-fast` speedup comes entirely from requantising non-expert tensors.
 
 ### Expert selection
 
-Per-expert saliency uses the REAP criterion — gate weight × ‖expert output‖ — accumulated
-over **1.93 M calibration tokens across ten disjoint English domains** (code_raw,
-code_instruct, web, wiki, chat, math, news, books, science, reasoning), measured on the
-parent with a custom llama.cpp observer.
+Per-expert saliency uses the REAP criterion — gate weight × ‖expert output‖ — accumulated over
+**1.93 M calibration tokens across ten disjoint English domains** (code_raw, code_instruct,
+web, wiki, chat, math, news, books, science, reasoning), measured on the parent with a custom
+llama.cpp observer.
 
 The novel part is **how the domains are combined**. Rather than ranking experts by aggregate
-saliency, weights are chosen to **maximise the worst-served domain's coverage** — the share
-of a domain's routing mass that survives, relative to what that domain's own optimal top-108
+saliency, weights are chosen to **maximise the worst-served domain's coverage** — the share of
+a domain's routing mass that survives, relative to what that domain's own optimal top-108
 would keep. An iterative reweighting search converged to:
 
 ```
@@ -164,8 +180,8 @@ code_raw 2.003 | web 1.613 | science 1.225 | code_instruct 1.074 | books 0.844
 wiki 0.738 | chat 0.626 | math 0.626 | news 0.626 | reasoning 0.626
 ```
 
-Seven of the ten domains land at exactly 0.814 coverage — a shared minimum is the signature
-of a genuine max-min fixed point.
+Seven of the ten domains land at exactly 0.814 coverage — a shared minimum is the signature of
+a genuine max-min fixed point.
 
 | strategy | worst-case coverage @ K=108 |
 |---|---:|
@@ -211,14 +227,16 @@ selector — precision loss there changes *which tokens are attended*, not just 
 A measured side-finding: **effective memory bandwidth falls as quantisation deepens** —
 160.7 GB/s at the parent's non-expert precision, 151.5 for a conservative recipe, 138.8 for
 `-fast`. Cheaper unpacking (Q8_0) buys back part of what the extra bytes cost, which is why
-removing 24% of the bytes read yields 13.6% more speed rather than the naive 32%.
+removing 24% of the bytes read yields 13.6% more speed rather than the naive 32% — and why
+prefill gets slightly slower.
 
 ### Verification
 
 Expert tensors in both released variants are **byte-identical slices** of the source GGUF's
 expert tensors — 25 of 25 sampled tensors across layers 3, 20, 40, 60 and 77, zero failures.
-No expert weight was requantised, merged, or otherwise modified. Router rows and
-`exp_probs_b` are sliced to match; the MTP block is dropped.
+No expert weight was requantised, merged, or otherwise modified. Router rows and `exp_probs_b`
+are sliced to match; the MTP block is dropped. Both shard sets were reloaded after splitting
+and reproduce their unsplit perplexity exactly.
 
 ---
 
@@ -226,22 +244,23 @@ No expert weight was requantised, merged, or otherwise modified. Router rows and
 
 - **World knowledge is substantially reduced** — 24.29 MMLU points below the parent. Answers
   can be fluent and confidently wrong. Aggressive pruning usually manifests as looping; these
-  artifacts do not loop, which arguably makes the remaining errors *harder* to spot, not
-  easier.
-- **Code is behind REAP-50** (MBPP 0.626 vs 0.708, ~2.8σ) though ahead of what the perplexity
+  artifacts do not loop, which arguably makes the remaining errors *harder* to spot.
+- **Code is behind REAP-50** (MBPP 0.626 vs 0.708, ~2.8σ), though ahead of what the perplexity
   ratio implies.
 - **English only.** GLM-5.2 is bilingual (en/zh); calibration was English-only, so the experts
   carrying Chinese were preferentially pruned. Chinese capability is discarded and unmeasured.
-- **Derived from an IQ2_M quantisation, not BF16.** All figures isolate the cost of *pruning
-  on top of* quantisation; quantisation's own cost is not measured here. `-fast` additionally
+- **Derived from an IQ2_M quantisation, not BF16.** All figures isolate the cost of *pruning on
+  top of* quantisation; quantisation's own cost is not measured here. `-fast` additionally
   involves a dequantise→requantise round trip on non-expert tensors.
+- **`-fast` is 1.8% slower at prefill** on multi-GPU hardware. Decode is faster on both
+  machines tested.
 - **Two benchmarks.** MMLU and MBPP cover knowledge and short-form code. We attempted IFEval
-  for instruction-following and could not complete it: llama.cpp's server strictly parses
-  model output against the template's declared reasoning and tool-call grammars and returns
-  HTTP 500 on a parse failure. Roughly 1–4% of IFEval prompts triggered this on the pruned
-  models across four server configurations; the parent never did. **That the compressed models
-  occasionally emit unparseable structured output is itself a compression artifact**, and one
-  we would rather report than hide.
+  for instruction-following on two separate occasions and could not complete it: llama.cpp's
+  server strictly parses model output against the template's declared reasoning and tool-call
+  grammars and returns HTTP 500 on a parse failure. Roughly 1–4% of IFEval prompts triggered
+  this on the pruned models across four server configurations; the parent never did. **That
+  the compressed models occasionally emit unparseable structured output is itself a
+  compression artifact**, and one we would rather report than hide.
 - **The 5 out-of-domain probes are a small sample.** The 3/5 → 0/5 effect is large, but n=5.
 - Sampled decoding (`--temp 0.6 --top-p 0.95`) produces noticeably better output than greedy;
   the greedy numbers above are a deliberately conservative floor.
@@ -279,7 +298,7 @@ python tools/glm_prune_gguf.py \
 ```
 
 Tooling, corpus manifests, per-domain saliency aggregates and the full experiment log:
-**[TODO: repository URL]**
+**https://github.com/Dorijan10/glm-expert-pruning**
 
 ## Usage
 

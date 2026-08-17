@@ -1,0 +1,32 @@
+=== mix108_maxmin 2026-08-17T09:11:44+00:00 ===
+ggml_cuda_init: found 8 CUDA devices (Total VRAM: 256872 MiB):
+  Device 0: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 1: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 2: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 3: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 4: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 5: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 6: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 7: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+| model                          |       size |     params | backend    | ngl | type_k | type_v |  fa |            test |                  t/s |
+| ------------------------------ | ---------: | ---------: | ---------- | --: | -----: | -----: | --: | --------------: | -------------------: |
+| glm-dsa ?B IQ2_M - 2.7 bpw     | 100.32 GiB |   324.83 B | CUDA       |  99 |   q8_0 |   q8_0 |   1 |           pp512 |       1166.00 ± 6.76 |
+| glm-dsa ?B IQ2_M - 2.7 bpw     | 100.32 GiB |   324.83 B | CUDA       |  99 |   q8_0 |   q8_0 |   1 |           tg128 |         51.21 ± 0.27 |
+
+build: 7f575c39d (10005)
+=== mix108_nqB 2026-08-17T09:12:20+00:00 ===
+ggml_cuda_init: found 8 CUDA devices (Total VRAM: 256872 MiB):
+  Device 0: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 1: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 2: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 3: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 4: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 5: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 6: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+  Device 7: NVIDIA GeForce RTX 5090, compute capability 12.0, VMM: yes, VRAM: 32109 MiB
+| model                          |       size |     params | backend    | ngl | type_k | type_v |  fa |            test |                  t/s |
+| ------------------------------ | ---------: | ---------: | ---------- | --: | -----: | -----: | --: | --------------: | -------------------: |
+| glm-dsa ?B IQ2_M - 2.7 bpw     |  95.77 GiB |   324.83 B | CUDA       |  99 |   q8_0 |   q8_0 |   1 |           pp512 |       1145.34 ± 4.44 |
+| glm-dsa ?B IQ2_M - 2.7 bpw     |  95.77 GiB |   324.83 B | CUDA       |  99 |   q8_0 |   q8_0 |   1 |           tg128 |         57.58 ± 0.38 |
+
+build: 7f575c39d (10005)
