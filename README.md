@@ -1,19 +1,38 @@
 # GLM-5.2 domain-blended MoE expert pruning
 
-Compressing GLM-5.2 (753.86B MoE) to run on one NVIDIA GB10 Spark (128 GB unified)
-by pruning routed experts, with a keep-list chosen to serve ten text domains at once.
+Compressing GLM-5.2 (753.86B MoE) to run on one NVIDIA GB10 Spark (128 GB unified) by
+pruning routed experts, with a keep-list chosen to serve ten text domains at once.
 
-**Status:** `mix108_maxmin` built, verified, benchmarked, and deployed on the Spark.
+**Status: published.** Two artifacts are on Hugging Face, with the keep-lists and per-domain
+saliency released alongside so either can be rebuilt from Unsloth's GGUF in about fifteen
+minutes of disk I/O, no GPU required.
+
+- Models: **[turintech/GLM-5.2-MaxMin108-GGUF](https://huggingface.co/turintech/GLM-5.2-MaxMin108-GGUF)**
+- Reproduction data: **[turintech/GLM-5.2-MaxMin108-saliency](https://huggingface.co/datasets/turintech/GLM-5.2-MaxMin108-saliency)**
 
 ## Result
 
-Final artefact: **mix108_maxmin** — keep 108 of 256 experts per layer, selected by a
-max-min-fair blend of expert saliency measured across ten domains.
-100.32 GiB / 107.7 GB, 324.83B params (from 753.86B). Byte-exactness verified 25/25.
+Keep 108 of 256 experts per layer, selected by a max-min-fair blend of expert saliency
+measured across ten domains. 100.32 GiB, 324.83B params from 753.86B, expert tensors copied
+byte for byte (verified 25/25). A second variant requantises non-expert tensors for more
+decode speed.
 
-All perplexity below is on **neutral held-out corpora** (`code_v2_eval` 125,461 tokens,
-`general_v2_eval` 149,778 tokens) that no model in the table was calibrated on.
-Ratios are relative to the unpruned IQ2_M parent.
+All four models below were measured by us, on the same machines, in the same harnesses.
+
+| model | size | MMLU (5-shot gen.) | MBPP pass@1 |
+|---|---:|---:|---:|
+| parent (IQ2_M, 256 experts) | 222.18 GiB | **87.29** ±0.27 | **0.710** ±0.020 |
+| REAP-50 Q3_K_M (128 experts) | 169.30 GiB | 62.75 ±0.39 | 0.708 ±0.020 |
+| **MaxMin108** (108 experts) | **100.32 GiB** | **63.00** ±0.39 | 0.626 ±0.022 |
+| **MaxMin108-fast** | 95.77 GiB | 61.84 ±0.40 | 0.592 ±0.022 |
+
+Level with REAP-50 on knowledge at 59% of its size, behind it on code, on hardware where
+REAP-50 does not fit. The MMLU difference is inside the error bars, so it is a tie, not a win.
+Compression costs 24.29 MMLU points against the parent, which the model card states up front.
+
+Perplexity on **neutral held-out corpora** (`code_v2_eval` 125,461 tokens, `general_v2_eval`
+149,778 tokens) that no model in the table was calibrated on. Ratios are relative to the
+unpruned IQ2_M parent.
 
 | model | size | bpw | code PPL | ratio | general PPL | ratio |
 |---|---:|---:|---:|---:|---:|---:|
@@ -21,18 +40,17 @@ Ratios are relative to the unpruned IQ2_M parent.
 | REAP-50 Q3_K_M (128 experts) | 169.30 GiB | 3.82 | 2.4217 | **1.132** | 6.5462 | 1.734 |
 | REAP-50 Q2_K (128 experts) | 129 GiB | 2.91 | 2.9607 | 1.383 | 10.7881 | 2.858 |
 | **mix108_maxmin (108 experts)** | **100.32 GiB** | **2.65** | 2.7751 | 1.297 | 6.2115 | **1.645** |
+| **mix108_nqB (fast variant)** | 95.77 GiB | 2.53 | 2.8260 | 1.321 | 6.2790 | 1.663 |
 | code108 (108 experts, code-calibrated) | 100.32 GiB | 2.65 | 2.5240 | 1.179 | 10.5173 | 2.786 |
 | code96 (96 experts, code-calibrated) | 90.72 GiB | 2.65 | 2.6339 | 1.231 | 12.3949 | 3.283 |
 
-**mix108 beats the published REAP-50 Q3_K_M artefact on general-text perplexity at
-59.3% of its size**, and gives up ground on code — a deliberate trade, not a regression.
+Note that perplexity ratio and task capability disagree here: code perplexity degrades more
+than general perplexity, yet downstream code capability degrades less.
 
-**At a matched bit budget the comparison is one-sided.** Against REAP-50 Q2_K — 2.91 bpw
-to mix108's 2.65, and 29% larger — mix108 wins both axes: 6.3% lower code perplexity and
-42% lower general perplexity. Q2_K's general ratio of 2.858 is close to code108's 2.786,
-so dropping REAP-50 to a comparable bit budget costs about as much general capability as
-calibrating on a single repository. Quantization and pruning damage the same axis:
-Q3_K_M → Q2_K moves the code ratio +22% but the general ratio +65%.
+**Router repair does not work after expert pruning**, and the campaign has the evidence rather
+than an intuition. Retraining the router improved layer-local reconstruction by 9.90% and made
+real perplexity 2.61% worse. See `handover.md` for the five negative results and their
+mechanisms, and `playbook.md` for the procedure to port a future GLM release.
 
 ## The membership control
 
