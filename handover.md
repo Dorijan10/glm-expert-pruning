@@ -160,11 +160,11 @@ resolving to 13.3.
 Everything lives under `/data/container-runtime/glm` (898 GB, root-owned so new directories
 need `sudo mkdir` plus `chown`):
 
-- `GLM-5.2-GGUF/` — the UD-IQ2_M parent (6 shards, 222.18 GiB) and REAP-50 Q3_K_M (5 shards)
-- `GLM-5.2-pcuenq/GLM-5.2-q3_k_m.gguf` — **334 GiB Q3-class parent**, never used
-- `oracle/` — the 10-domain calibration corpora, 59 GB
-- `llama.cpp/` — source tree with GLM-DSA support
-- `build-n08b/` — freshly built llama-bench, llama-perplexity, llama-server, llama-quantize
+- `GLM-5.2-GGUF/`: the UD-IQ2_M parent (6 shards, 222.18 GiB) and REAP-50 Q3_K_M (5 shards)
+- `GLM-5.2-pcuenq/GLM-5.2-q3_k_m.gguf`: **334 GiB Q3-class parent**, never used
+- `oracle/`: the 10-domain calibration corpora, 59 GB
+- `llama.cpp/`: source tree with GLM-DSA support
+- `build-n08b/`: freshly built llama-bench, llama-perplexity, llama-server, llama-quantize
 
 Root filesystem is small (98 GB, roughly 5 GB free) and Docker holds 429 GB on the data mount
 with about 200 GB reclaimable. Do not build or stage anything on root.
